@@ -1,65 +1,205 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import Autoplay from "embla-carousel-autoplay";
+import {
+	ChevronDown,
+	Clipboard,
+	LayoutGrid,
+	LocateIcon,
+	Menu,
+	Search,
+	Sparkles,
+	Store,
+	User,
+} from "lucide-react";
+import {
+	Carousel,
+	CarouselContent,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+	Card,
+	CardAction,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+	return (
+		<main className="min-h-screen w-full">
+			<header className=" p-4 flex flex-col gap-2 w-full">
+				<div className="flex justify-between">
+					<div className="flex gap-4">
+						<Menu />
+						<span>Hyper</span>
+					</div>
+					<div>
+						<User />
+					</div>
+				</div>
+				<div className="flex w-full items-center gap-2">
+					<div className="flex gap-2 ">
+						<LocateIcon size={20} />
+						<p className="text-sm">Port Harcourt, Rivers</p>
+						<ChevronDown size={20} />
+					</div>
+					<div className="flex-1 w-full">
+						<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">
+							<div className="flex items-center gap-2">
+								<Search size={20} />
+								<p>Search &quot;Milk&quot;</p>
+							</div>
+							<Clipboard size={20} />
+						</div>
+					</div>
+				</div>
+				<div className="flex w-full overflow-hidden">
+					<div className="flex flex-col items-center gap-1 mr-6">
+						<div className="p-2 mt-1 bg-zinc-100 rounded-sm">
+							<LayoutGrid size={20} />
+						</div>
+						<span className="text-sm">All</span>
+					</div>
+					<div className="flex gap-6 overflow-x-auto py-1">
+						{[1, 2, 3, 4, 5, 6, 7].map((item) => (
+							<div key={item} className="flex flex-col items-center gap-1">
+								<div className="p-2 bg-zinc-100 rounded-sm">
+									<LayoutGrid size={20} />
+								</div>
+								<span className="text-sm">Electro</span>
+							</div>
+						))}
+					</div>
+				</div>
+			</header>
+			<section className=" px-4 flex flex-col gap-2 w-full">
+				<div className="h-full w-full">
+					<Swiper
+						slidesPerView={1}
+						spaceBetween={4}
+						modules={[Pagination]}
+						className="mySwiper"
+					
+						>
+						{Array.from({ length: 20 }).map((_, index) => (
+							<SwiperSlide key={index}>
+								<div className=" rounded-sm overflow-hidden w-full">
+									<img
+										src="/images/amori.jpg"
+										alt="slige-image"
+										className="h-full w-full "
+									/>
+								</div>
+							</SwiperSlide>
+						))}
+					</Swiper>
+				</div>
+			</section>
+			<section className=" px-4 flex flex-col gap-2 w-full">
+				<div className="py-4 flex justify-between items-center">
+					<div className="flex items-center gap-2">
+						<div className="p-2 bg-blue-500 rounded-full">
+							<Sparkles className="text-white" size={20} />
+						</div>
+						<div>
+							<h3 className="font-semibold">Featured Brands</h3>
+							<p className="text-xs text-zinc-500">Trusted by millions</p>
+						</div>
+					</div>
+					<span className="text-">See All</span>
+				</div>
+				<div className="h-full w-full">
+					<Swiper
+						spaceBetween={4}
+						modules={[Pagination]}
+						className="mySwiper"
+						breakpoints={{
+							320: {
+								slidesPerView: 5,
+								spaceBetween: 4,
+							},
+							640: {
+								slidesPerView: 6,
+								spaceBetween: 4,
+							},
+							768: {
+								slidesPerView: 7,
+								spaceBetween: 4,
+							},
+						}}>
+						{Array.from({ length: 20 }).map((_, index) => (
+							<SwiperSlide key={index}>
+								<div className=" rounded-sm overflow-hidden h-20 w-full">
+									<img
+										src="/images/amori.jpg"
+										alt="slige-image"
+										className="h-full w-full "
+									/>
+								</div>
+							</SwiperSlide>
+						))}
+					</Swiper>
+				</div>
+			</section>
+
+			<section className=" px-4 flex flex-col gap-2 w-full h-full">
+				<div className="py-4 flex justify-between items-center">
+					<div className="flex items-center gap-2">
+						<div className="p-2 bg-blue-500 rounded-full">
+							<Store className="text-white" size={20} />
+						</div>
+						<div>
+							<h3 className="font-semibold">Browse Stores</h3>
+							<p className="text-xs text-zinc-500">
+								Explore trusted local vendors near you
+							</p>
+						</div>
+					</div>
+					<span className="text-">See All</span>
+				</div>
+				<div className="h-full">
+					<Swiper
+						slidesPerView={2}
+						spaceBetween={30}
+						modules={[Pagination]}
+						className="mySwiper"
+						breakpoints={{
+							320: {
+								slidesPerView: 2,
+								spaceBetween: 4,
+							},
+							640: {
+								slidesPerView: 3,
+								spaceBetween: 4,
+							},
+							768: {
+								slidesPerView: 4,
+								spaceBetween: 6,
+							},
+						}}>
+						{Array.from({ length: 9 }).map((_, index) => (
+							<SwiperSlide key={index}>
+								<div className="w-full rounded-sm overflow-hidden">
+									<img src="/images/amori.jpg" alt="slige-image" />
+								</div>
+							</SwiperSlide>
+						))}
+					</Swiper>
+				</div>
+			</section>
+		</main>
+	);
 }
