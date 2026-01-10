@@ -6,14 +6,14 @@ export default function Footer() {
 			<footer className="mt-10 py-4 px-4 flex flex-col gap-2 w-full h-full bg-[#151b54] text-white">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 					<div>
-						<h1 className="text-white pb-4 text-sm font-bold">Hypermart</h1>
-						<p className="text-zinc-100 text-sm">
+						<h1 className="text-white pb-4 text-md font-bold">Hypermart</h1>
+						<p className="text-zinc-100 text-md">
 							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores,
 							rem quaerat dicta fugit obcaecati ipsam eligendi fuga beatae
 							asperiores voluptates.
 						</p>
 						<div className="flex gap-2 my-4 flex-col">
-							<div className="flex gap-4 text-sm items-center ">
+							<div className="flex gap-4 text-md items-center ">
 								<span>
 									<Box size={16} className="text-purple-400" />
 								</span>
