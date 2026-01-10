@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local"
 import "./globals.css";
-import Footer from "@/components/ui/footer";
 
 const poppins = localFont({
 	src: [
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
   description: "Online market for trusted products...",
 };
 
-export default function RootLayout({
+export default function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -40,7 +39,7 @@ export default function RootLayout({
         className={`antialiased ${poppins.className}`}
       >
 			  {children}
-			  <Footer/>
+			
       </body>
     </html>
   );

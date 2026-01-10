@@ -1,4 +1,5 @@
-import { Box, Facebook, Instagram, Leaf, Mail, Phone, Shield, Twitter, Youtube } from "lucide-react";
+import { BookDashed, Box, Facebook, Instagram, Leaf, Lock, Mail, Phone, Shield, Twitter, Youtube } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
 	return (
@@ -52,7 +53,7 @@ export default function Footer() {
 					<div className="flex flex-col gap-2">
 						<h1>Get In Touch</h1>
 						<div className="flex gap-4 text-sm items-center">
-							<span className="bg-blue-800/50 p-2 rounded-sm">
+							<span className="bg-blue-600/30 p-2 rounded-sm">
 								<Phone size={16} className="text-blue-500" />
 							</span>
 							<p className="flex flex-col">
@@ -61,8 +62,8 @@ export default function Footer() {
 						</div>
 
 						<div className="flex gap-4 text-sm items-center">
-							<span className="bg-green-800/50 p-2 rounded-sm">
-								<Mail size={17} className="text-green-400" />
+							<span className="bg-green-600/30 p-2 rounded-sm">
+								<Mail size={17} className="text-green-500" />
 							</span>
 							<p className="flex flex-col ">
 								Email Us <span className="text-xs">+234 806 815 6622</span>
@@ -96,9 +97,15 @@ export default function Footer() {
 					</div>
 				</div>
 			</footer>
-			<p className="text-center py-3 border-t bg-blue-950 text-white">
-				@{new Date().getFullYear()} Hypermart. All rights reserved
-			</p>
+			<div className="w-full py-3 border-t bg-blue-950 text-white flex gap-4 justify-center items-center">
+				<p>{new Date().getFullYear()} Hypermart. All rights reserved</p>
+				<Link href="/admin">
+					<Lock size={15} />
+				</Link>
+				<Link href="/dashboard">
+					<BookDashed size={15} />
+				</Link>
+			</div>
 		</>
 	);
 }

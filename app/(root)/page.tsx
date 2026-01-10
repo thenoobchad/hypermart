@@ -40,6 +40,7 @@ import Image from "next/image";
 
 import { categories } from "@/public/images";
 import { fashionbg } from "@/public/images";
+import Footer from "@/components/ui/footer";
 
 export default function Home() {
 
@@ -121,7 +122,6 @@ export default function Home() {
 									slidesPerView: 6,
 									spaceBetween: 25,
 								},
-								
 							}}
 							modules={[Pagination]}
 							className="mySwiper">
@@ -464,6 +464,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
+			<Footer />
 		</main>
 	);
 }
