@@ -338,7 +338,7 @@ export default function Home() {
 
 											<div className="flex justify-between">
 												<div>
-													<p className="text-sm">$29.0</p>
+													<p className="text-sm leading-4 ">$29.0</p>
 													<p className="text-xs text-zinc-500">$32.0</p>
 												</div>
 												<div className="bg-blue-500 p-2 text-white rounded-full">
