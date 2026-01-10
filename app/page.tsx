@@ -9,12 +9,13 @@ import {
 	Eye,
 	Headphones,
 	LayoutGrid,
-	Locate,
+
 	LocateFixed,
 	LocateIcon,
+	LogIn,
+	
 	Menu,
-	Repeat,
-	Replace,
+
 	RotateCcw,
 	Search,
 	Shield,
@@ -23,6 +24,7 @@ import {
 	Sparkles,
 	Star,
 	Store,
+	Sun,
 	Truck,
 	User,
 } from "lucide-react";
@@ -35,25 +37,38 @@ import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 
+
+import { categories } from "@/public/images";
+import { fashionbg } from "@/public/images";
+
 export default function Home() {
+
+	console.log(categories[0].name)
 	return (
 		<main className="min-h-screen w-full">
 			<header className=" p-4 flex flex-col gap-2 w-full">
 				<div className="grid grid-cols-2 w-full">
-					<div className="flex flex-col gap-2 md:flex-row justify-start">
-						<div className="flex gap-4">
+					<div className="flex flex-col gap-2 md:flex-row justify-center md:justify-start">
+						<div className="flex gap-4 items-center">
 							<Menu className="md:hidden" />
 							<span>Hyper</span>
 						</div>
-						<div className="flex gap-2 ">
+						<div className="flex gap-2 items-center justify-start">
 							<LocateIcon size={20} />
 							<p className="text-sm">Port Harcourt, Rivers</p>
 							<ChevronDown size={20} />
 						</div>
 					</div>
 					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
-						<div>
-							<User />
+						<div className="flex gap-4 items-center">
+							<User size={20} className="md:hidden" />
+
+							<Sun size={20} className="hidden md:flex text-yellow-500" />
+							<ShoppingCart size={20} className="hidden md:flex" />
+							<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
+								<LogIn size={20} />
+								Login
+							</button>
 						</div>
 						<div className="flex-1 w-full">
 							<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">
@@ -103,28 +118,26 @@ export default function Home() {
 							spaceBetween={30}
 							breakpoints={{
 								620: {
-									slidesPerView: 7,
-									spaceBetween: 20,
-								},
-								820: {
-									slidesPerView: 9,
+									slidesPerView: 6,
 									spaceBetween: 25,
 								},
-
-								1120: {
-									slidesPerView: 12,
-									spaceBetween: 25,
-								},
+								
 							}}
 							modules={[Pagination]}
 							className="mySwiper">
-							{Array.from({ length: 20 }).map((_, index) => (
+							{categories.map((cat, index) => (
 								<SwiperSlide key={index}>
 									<div className="flex flex-col items-center gap-1">
 										<div className="p-2 bg-zinc-100 rounded-sm w-fit">
-											<LayoutGrid size={20} />
+											<div className="w-5 h-5 flex">
+												<img
+													src={`${cat?.img.src}`}
+													alt="category image"
+													className="object-cover"
+												/>
+											</div>
 										</div>
-										<span className="text-sm">Electronics</span>
+										<span className="text-sm capitalize">{cat.name}</span>
 									</div>
 								</SwiperSlide>
 							))}
@@ -144,7 +157,7 @@ export default function Home() {
 							<SwiperSlide key={index}>
 								<div className=" rounded-sm overflow-hidden w-full md:max-h-100">
 									<img
-										src="/images/amori.jpg"
+										src={`${fashionbg.src}`}
 										alt="slige-image"
 										className="h-full w-full "
 									/>
@@ -441,7 +454,7 @@ export default function Home() {
 								Contact-free delivery
 							</p>
 						</div>
-						<div className="flex items-center justify-center h-70">
+						<div className="flex items-center justify-center h-70 ">
 							<img
 								src="/images/background.png"
 								alt="delivery image"
