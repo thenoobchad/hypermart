@@ -7,20 +7,24 @@ import {
 	Clipboard,
 	Clock,
 	Eye,
+	Headphones,
 	LayoutGrid,
 	Locate,
 	LocateFixed,
 	LocateIcon,
 	Menu,
+	Repeat,
+	Replace,
+	RotateCcw,
 	Search,
+	Shield,
 	ShoppingCart,
 	Sparkles,
 	Star,
 	Store,
+	Truck,
 	User,
 } from "lucide-react";
-
-
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -34,54 +38,57 @@ export default function Home() {
 	return (
 		<main className="min-h-screen w-full">
 			<header className=" p-4 flex flex-col gap-2 w-full">
-				<div className="flex justify-between">
-					<div className="flex gap-4">
-						<Menu />
-						<span>Hyper</span>
+				<div className="grid grid-cols-2 w-full">
+					<div className="flex flex-col gap-2 md:flex-row justify-start">
+						<div className="flex gap-4">
+							<Menu className="md:hidden" />
+							<span>Hyper</span>
+						</div>
+						<div className="flex gap-2 ">
+							<LocateIcon size={20} />
+							<p className="text-sm">Port Harcourt, Rivers</p>
+							<ChevronDown size={20} />
+						</div>
 					</div>
-					<div>
-						<User />
-					</div>
-				</div>
-				<div className="flex w-full items-center gap-2">
-					<div className="flex gap-2 ">
-						<LocateIcon size={20} />
-						<p className="text-sm">Port Harcourt, Rivers</p>
-						<ChevronDown size={20} />
-					</div>
-					<div className="flex-1 w-full">
-						<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">
-							<div className="flex items-center gap-6 overflow-hidden h-5">
-								<Search size={20} />
-								<Swiper
-									direction={"vertical"}
-									slidesPerView={1}
-									loop={true}
-									autoplay={{
-										delay: 3500,
-										disableOnInteraction: false,
-									}}
-									modules={[Autoplay]}
-									className="mySwiper"
-									style={{ height: "100%" }}>
-									<SwiperSlide>
-										<p className="text-zinc-500">Search &quot;Milk&quot;</p>
-									</SwiperSlide>
-									<SwiperSlide>
-										<p className="text-zinc-500">Search &quot;Tea&quot;</p>
-									</SwiperSlide>
-									<SwiperSlide>
-										<p className="text-zinc-500">Search &quot;Milk&quot;</p>
-									</SwiperSlide>
-									<SwiperSlide>
-										<p className="text-zinc-500">Search &quot;Sweet&quot;</p>
-									</SwiperSlide>
-								</Swiper>
+					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
+						<div>
+							<User />
+						</div>
+						<div className="flex-1 w-full">
+							<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">
+								<div className="flex items-center gap-6 overflow-hidden h-5">
+									<Search size={20} />
+									<Swiper
+										direction={"vertical"}
+										slidesPerView={1}
+										loop={true}
+										autoplay={{
+											delay: 3500,
+											disableOnInteraction: false,
+										}}
+										modules={[Autoplay]}
+										className="mySwiper"
+										style={{ height: "100%" }}>
+										<SwiperSlide>
+											<p className="text-zinc-500">Search &quot;Milk&quot;</p>
+										</SwiperSlide>
+										<SwiperSlide>
+											<p className="text-zinc-500">Search &quot;Tea&quot;</p>
+										</SwiperSlide>
+										<SwiperSlide>
+											<p className="text-zinc-500">Search &quot;Milk&quot;</p>
+										</SwiperSlide>
+										<SwiperSlide>
+											<p className="text-zinc-500">Search &quot;Sweet&quot;</p>
+										</SwiperSlide>
+									</Swiper>
+								</div>
+								<Clipboard size={20} />
 							</div>
-							<Clipboard size={20} />
 						</div>
 					</div>
 				</div>
+
 				<div className="flex w-full overflow-hidden">
 					<div className="flex flex-col items-center gap-1 mr-6 border-b-3">
 						<div className="p-2 mt-1 bg-zinc-100 rounded-sm">
@@ -247,8 +254,8 @@ export default function Home() {
 											<p className="text-xs flex whitespace-nowrap gap-2 text-zinc-500 pb-1 justify-between">
 												<span className="flex gap-2">
 													<LocateFixed size={18} />
-												
-												Kilimanjaro iwofe</span>
+													Kilimanjaro iwofe
+												</span>
 												<span className="bg-green-200 mx-4 px-1 rounded-md">
 													0 m
 												</span>
@@ -344,6 +351,53 @@ export default function Home() {
 							</SwiperSlide>
 						))}
 					</Swiper>
+				</div>
+			</section>
+
+			{/* Features */}
+
+			<section className="my-10 px-4 flex flex-col gap-2 w-full h-full ">
+				<div className="grid grid-cols-2 gap-4 grid-rows-2">
+					<div className="flex flex-col gap-2 items-center">
+						<div className="bg-blue-500 p-4 rounded-full text-white">
+							<Truck />
+						</div>
+						<h1 className="text-sm">Fast Delivery</h1>
+						<p className="text-xs text-center text-zinc-600">
+							Get your orders within 10-60 minutes. We ensure <br />
+							quick and reliable service to your doorstep
+						</p>
+					</div>
+					<div className="flex flex-col gap-2 items-center">
+						<div className="bg-blue-500 p-4 rounded-full text-white">
+							<RotateCcw />
+						</div>
+						<h1 className="text-sm">Easy Returns</h1>
+						<p className="text-xs text-center text-zinc-600">
+							Hassle-free returns within 24 hours. We prioritize your <br />
+							satisfaction with our flexible return policy.
+						</p>
+					</div>
+					<div className="flex flex-col gap-2 items-center">
+						<div className="bg-blue-500 p-4 rounded-full text-white">
+							<Shield />
+						</div>
+						<h1 className="text-sm">Safe & Secure</h1>
+						<p className="text-xs text-center text-zinc-600">
+							Your data and payments are protected with industry standard <br />
+							security measures. Shop with confidence.
+						</p>
+					</div>
+					<div className="flex flex-col gap-2 items-center">
+						<div className="bg-blue-500 p-4 rounded-full text-white">
+							<Headphones />
+						</div>
+						<h1 className="text-sm">24/7 Support</h1>
+						<p className="text-xs text-center text-zinc-600">
+							Our dedicated support team is always ready to help you. Reach{" "}
+							<br /> out anytime for assistance.
+						</p>
+					</div>
 				</div>
 			</section>
 		</main>

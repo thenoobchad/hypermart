@@ -73,10 +73,24 @@ export default function Footer() {
 								Follow Us
 							</h1>
 							<div className="flex gap-4">
-								<Facebook className="bg-blue-900 p-1 text-white rounded-full" fill="white"/>
-								<Instagram  className="bg-purple-900 p-1 text-white rounded-full" />
-								<Youtube className="bg-red-900 p-1 text-white rounded-full"  />
-								<Twitter className="bg-gray-900 p-1 text-white rounded-full" fill="white" />
+								<Facebook
+									className="bg-blue-900 p-1 text-white rounded-full"
+									fill="white"
+									size={28}
+								/>
+								<Instagram
+									className="bg-purple-900 p-1 text-white rounded-full"
+									size={28}
+								/>
+								<Youtube
+									className="bg-red-900 p-1 text-white rounded-full"
+									size={28}
+								/>
+								<Twitter
+									className="bg-gray-900 p-1 text-white rounded-full"
+									fill="white"
+									size={28}
+								/>
 							</div>
 						</div>
 					</div>
