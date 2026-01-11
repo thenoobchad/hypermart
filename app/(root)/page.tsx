@@ -270,7 +270,7 @@ export default function Home() {
 													<LocateFixed size={18} />
 													Kilimanjaro iwofe
 												</span>
-												<span className="bg-green-200 mx-4 px-1 rounded-md">
+												<span className="bg-green-600/20 mx-4 px-1 rounded-sm">
 													0 m
 												</span>
 											</p>
@@ -332,7 +332,7 @@ export default function Home() {
 									<img src="/images/amori.jpg" alt="slige-image" />
 									<div className="relative">
 										<div className="flex flex-col p-2 mt-4">
-											<div className="flex items-center gap-1 p-1 text-blue-600 bg-blue-200 rounded-md w-fit">
+											<div className="flex items-center gap-1 p-1 text-blue-600 bg-blue-600/10 rounded-sm w-fit">
 												<Clock size={16} />
 												<p className="text-xs">21 Mins</p>
 											</div>

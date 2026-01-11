@@ -1,3 +1,4 @@
+import { Equal, EqualSquare } from "lucide-react"
 
 
 type Props = {
@@ -13,7 +14,8 @@ export default function Header({ onToggle, isActive }: Props) {
   return (
     <header className=" p-4 outline outline-zinc-100 bg-white mx-1 rounded flex flex-col gap-4">
       <div>
-        <button onClick={toggle}>Click</button>
-      </div></header>
+        <button onClick={toggle}><Equal/></button>
+      </div>
+    </header>
   )
 }
