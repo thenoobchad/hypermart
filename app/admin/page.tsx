@@ -236,7 +236,7 @@ const ProgressBar = ({ progress }: { progress: number }) => {
 	return (
 		<div className="relative w-full h-2 bg-zinc-200 rounded">
 			<div
-				className="absolute top-0 left-0 h-full bg-blue-600 rounded"
+				className=" h-full bg-blue-600 rounded"
 				style={{ width: `${progress}%` }}
 			/>
 		</div>
