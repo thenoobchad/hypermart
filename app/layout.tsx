@@ -36,7 +36,7 @@ export default function AppLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased ${poppins.className}`}
+        className={`antialiased ${poppins.className} w-full`}
       >
 			  {children}
 			
