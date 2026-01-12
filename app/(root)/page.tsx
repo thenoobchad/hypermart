@@ -40,7 +40,7 @@ import { Autoplay } from "swiper/modules";
 import Image from "next/image";
 
 
-import { categories } from "@/public/images";
+import { brands, categories } from "@/public/images";
 import { fashionbg } from "@/public/images";
 import Footer from "@/components/ui/footer";
 import { ProductCard } from "@/components/ui/product-card";
@@ -50,6 +50,8 @@ export default function Home() {
 	console.log(categories[0].name)
 	return (
 		<main className="min-h-screen w-full">
+
+			{/* CATEGORIES */}
 			<section className=" px-4 flex flex-col gap-2 w-full pb-4">
 			<div className="flex w-full overflow-hidden">
 				<div className="flex flex-col items-center gap-1 mr-6 border-b-3">
@@ -90,14 +92,20 @@ export default function Home() {
 				</div>
 				</div>
 				</section>
+
+			{/* BANNERS */}
 			<section className=" px-4 flex flex-col gap-2 w-full">
 				<div className="h-full w-full">
 					<Swiper
 						slidesPerView={1}
 						spaceBetween={4}
 						modules={[Pagination]}
+						pagination={{
+							clickable: true,
+							dynamicBullets: true
+						}}
 						className="mySwiper">
-						{Array.from({ length: 20 }).map((_, index) => (
+						{Array.from({ length: 5 }).map((_, index) => (
 							<SwiperSlide key={index}>
 								<div className=" rounded-sm overflow-hidden w-full md:max-h-100">
 									<img
@@ -111,6 +119,8 @@ export default function Home() {
 					</Swiper>
 				</div>
 			</section>
+
+			{/* FEATURED BRANDS */}
 			<section className=" px-4 flex flex-col gap-2 w-full">
 				<div className="py-4 flex justify-between items-center">
 					<div className="flex items-center gap-2">
@@ -148,13 +158,13 @@ export default function Home() {
 								spaceBetween: 4,
 							},
 						}}>
-						{Array.from({ length: 20 }).map((_, index) => (
+						{brands.map((brand, index) => (
 							<SwiperSlide key={index}>
-								<div className=" rounded-sm overflow-hidden h-20 w-full">
+								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100 flex items-center justify-center border border-zinc-300">
 									<img
-										src="/images/amori.jpg"
+										src={brand.logo.src}
 										alt="slige-image"
-										className="h-full w-full "
+										className="h-15 w-15 object-contain"
 									/>
 								</div>
 							</SwiperSlide>

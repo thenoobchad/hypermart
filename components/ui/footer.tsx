@@ -5,7 +5,7 @@ export default function Footer() {
 	return (
 		<>
 			<footer className="mt-10 py-4 px-4 flex flex-col gap-2 w-full h-full bg-[#151b54] text-white">
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 					<div>
 						<h1 className="text-white pb-4 text-md font-bold">Hypermart</h1>
 						<p className="text-zinc-100 text-md">

@@ -13,7 +13,7 @@ import {
 	Sun,
 	User,
 } from "lucide-react";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Breadcrumbs } from "./breadcrumbs";
@@ -80,6 +80,7 @@ export const Header = () => {
 											<p className="text-zinc-500">Search &quot;Sweet&quot;</p>
 										</SwiperSlide>
 									</Swiper>
+									
 								</div>
 								<Clipboard size={20} />
 							</div>

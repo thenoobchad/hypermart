@@ -1,4 +1,4 @@
-import electronics from "../../public/images/categories/electronic.png"
+import electronics from "../../public/images/categories/electronic.png";
 import kids from "../../public/images/categories/kids.png";
 import beauty from "../../public/images/categories/beauty.png";
 import fashion from "../../public/images/categories/fashion.png";
@@ -6,7 +6,18 @@ import gadgets from "../../public/images/categories/gadgets.png";
 import groceries from "../../public/images/categories/groceries.png";
 import fashionbg from "../../public/images/backgrounds/fashionbg.jpg";
 
-export { fashionbg }
+import nestle from "../../public/images/brands/nestle.png";
+import dangote from "../../public/images/brands/dangote.png";
+import lg from "../../public/images/brands/lg.png";
+import rexona from "../../public/images/brands/rexona.png";
+import unilever from "../../public/images/brands/unilever.png";
+import cadbury from "../../public/images/brands/cadbury.png";
+import samsung from "../../public/images/brands/smasung.png";
+import sony from "../../public/images/brands/sony.png";
+import yamaha from "../../public/images/brands/yamaha.png";
+import hisense from "../../public/images/brands/hisense.png";
+
+export { fashionbg };
 
 export const categories = [
 	{
@@ -32,5 +43,48 @@ export const categories = [
 	{
 		name: "groceries",
 		img: groceries,
+	},
+];
+
+export const brands = [
+	{
+		name: "nestle",
+		logo: nestle,
+	},
+	{
+		name: "dangote",
+		logo: dangote,
+	},
+	{
+		name: "lg",
+		logo: lg,
+	},
+	{
+		name: "rexona",
+		logo: rexona,
+	},
+	{
+		name: "unilever",
+		logo: unilever,
+	},
+	{
+		name: "cadbury",
+		logo: cadbury,
+	},
+	{
+		name: "samsung",
+		logo: samsung,
+	},
+	{
+		name: "sony",
+		logo: sony,
+	},
+	{
+		name: "yamaha",
+		logo: yamaha,
+	},
+	{
+		name: "hisense",
+		logo: hisense,
 	},
 ];
