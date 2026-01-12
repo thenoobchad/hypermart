@@ -3,12 +3,20 @@
 import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
 import { useState } from "react";
 
+type AuthModalProp = {
+	isActive: boolean;
+	setActive: (arg: boolean) => void
+}
 
-export default function AuthModal() {
+export default function AuthModal({isActive, setActive}: AuthModalProp) {
 const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN"); 
 	const handleFormSwitch = () => {
 	setAuthType((prev) => prev === 'SIGN_IN' ?'SIGN_UP': 'SIGN_IN' )
-}
+	}
+	
+	const handleClose = () => {
+		setActive(false)
+	}
   return (
 		<div className="w-screen min-h-screen flex items-center justify-center bg-white/20 backdrop-blur-sm ">
 			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50">
@@ -23,7 +31,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 								: "Enter your details to get started"}
 						</p>
 					</span>
-					<span>
+					<span onClick={handleClose}>
 						<X size={16} />
 					</span>
 				</div>
