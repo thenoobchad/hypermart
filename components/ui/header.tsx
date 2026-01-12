@@ -88,7 +88,7 @@ export const Header = () => {
 					</div>
 				</div>
 
-				<Breadcrumbs />
+				{/* <Breadcrumbs /> */}
 			</header>
 			{isActive && (
 				<div className="fixed z-90 top-0">
