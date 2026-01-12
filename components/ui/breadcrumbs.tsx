@@ -10,12 +10,12 @@ export const Breadcrumbs = () => {
 	const paths = usePathname();
 	const pathNames = paths.split("/").filter((path) => path);
 	return (
-		<nav>
+		<nav className="bg-white w-full px-4 py-2 my-1 mx-1">
 			<ul className="flex gap-2">
 				<li>
 					<Link href="/">Home</Link>
 				</li>
-				{pathNames.length > 0 && <span>/</span>}
+				
 
 				{pathNames.map((link, i) => {
 					const href = `/${pathNames.slice(0, i + 1).join("/")}`;

@@ -106,7 +106,7 @@ export default function AdminPage() {
 				<div className="flex flex-col">
 					<div>
 						<p className="text-zinc-400  text-sm">
-							8 delivered out of total orders 911
+							120 delivered out of total orders 911
 						</p>
 					</div>
 					<div className="flex py-2 items-start">
@@ -234,7 +234,7 @@ export default function AdminPage() {
 
 const ProgressBar = ({ progress }: { progress: number }) => {
 	return (
-		<div className="relative w-full h-2 bg-zinc-200 rounded">
+		<div className=" w-full h-2 bg-zinc-200 rounded">
 			<div
 				className=" h-full bg-blue-600 rounded"
 				style={{ width: `${progress}%` }}

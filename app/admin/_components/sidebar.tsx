@@ -1,34 +1,53 @@
-"use client"
+"use client";
 
-import { on } from 'events';
-import {  AlertCircle, BookCheck, Package, Settings, ShoppingCart, Users, Wallet, Workflow, X } from 'lucide-react';
-import Link from 'next/link';
-import React, { useEffect, useRef } from 'react'
+import { on } from "events";
+import {
+	AlertCircle,
+	BookCheck,
+	Package,
+	Settings,
+	ShoppingCart,
+	Users,
+	Wallet,
+	Workflow,
+	X,
+} from "lucide-react";
+import Link from "next/link";
+import  {  useEffect, useRef } from "react";
 
 type Prop = {
-  isActive: boolean,
-  onToggle: (arg:boolean) => void
-}
+	isActive: boolean;
+	onToggle: (arg: boolean) => void;
+};
 
 export default function Sidebar({ isActive, onToggle }: Prop) {
-
 	const containerRef = useRef<HTMLDivElement>(null);
 
-  const toggle = () => {
-    onToggle(!isActive)
-  }
+	const toggle = () => {
+		onToggle(!isActive);
+	};
 
 	useEffect(() => {
-		if (containerRef.current && !containerRef.current.contains(document.activeElement)) {
-			onToggle(false);
-		}
-	}, []);
+		const handleOutsideClick = (e: MouseEvent) => {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(e.target as Node)
+			) {
+				console.log("clicked");
+				onToggle(false);
+			}
+		};
 
-  return (
+		document.addEventListener("mousedown", handleOutsideClick);
+
+		return () => removeEventListener("mousedown", handleOutsideClick)
+	}, []);
+console.log(isActive);
+	return (
 		<div className="h-full flex  w-screen bg-black/50 ">
 			<div
 				ref={containerRef}
-				className="w-[70%] md:w-[20%] bg-zinc-800 py-4 flex flex-col">
+				className=" w-[50%] sm:w-[30%] z-50 md:w-[20%] bg-zinc-800 py-4 flex flex-col">
 				<button onClick={toggle} className=" flex justify-end">
 					<X className="text-white bg-red-500 mr-4" />
 				</button>
@@ -41,8 +60,8 @@ export default function Sidebar({ isActive, onToggle }: Prop) {
 								menu.length - 1 === i ? "" : "border-b "
 							}`}>
 							{" "}
-							<link.icon size={20}/>
-							<p className='capitalize'>{link.link}</p>
+							<link.icon size={20} />
+							<p className="capitalize">{link.link}</p>
 						</Link>
 					))}
 				</ul>
@@ -50,7 +69,6 @@ export default function Sidebar({ isActive, onToggle }: Prop) {
 		</div>
 	);
 }
-
 
 const menu = [
 	{

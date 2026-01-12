@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local"
+import localFont from "next/font/local";
 import "./globals.css";
+import { AlertComponent } from "@/components/alert";
 
 const poppins = localFont({
 	src: [
@@ -24,23 +25,21 @@ const poppins = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Hypermart & Stores",
-  description: "Online market for trusted products...",
+	title: "Hypermart & Stores",
+	description: "Online market for trusted products...",
 };
 
 export default function AppLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`antialiased ${poppins.className} w-full`}
-      >
-			  {children}
-			
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body className={`antialiased ${poppins.className} w-full`}>
+				{children}
+				<AlertComponent/>
+			</body>
+		</html>
+	);
 }

@@ -17,8 +17,8 @@ const [isActive, setIsActive] = useState(false)
 	return (
 		<div className="bg-zinc-50 w-full flex flex-col overflow-hidden">
 			<div
-				className={`fixed h-screen ${
-					isActive ? "translate-x-0" : "-left-[100%]"
+				className={`fixed h-screen  ${
+					isActive ? "translate-x-0" : "-left-full transition-all delay-350"
 				} `}>
 				<Sidebar isActive={isActive} onToggle={setIsActive} />
 			</div>
