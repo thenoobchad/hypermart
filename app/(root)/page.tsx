@@ -2,33 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import {
-	Bookmark,
-	ChevronDown,
-	Clipboard,
-	Clock,
-	Eye,
 	Headphones,
 	LayoutGrid,
-
-	Link,
-
-	LocateFixed,
-	LocateIcon,
-	LogIn,
 	
-	Menu,
-
+	LocateFixed,
 	RotateCcw,
-	Search,
 	Shield,
 	ShoppingBag,
-	ShoppingCart,
 	Sparkles,
-	Star,
 	Store,
-	Sun,
 	Truck,
-	User,
 } from "lucide-react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -37,61 +20,61 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay } from "swiper/modules";
-import Image from "next/image";
 
+
+import Image from "next/image";
 
 import { brands, categories } from "@/public/images";
 import { fashionbg } from "@/public/images";
 import Footer from "@/components/ui/footer";
 import { ProductCard } from "@/components/ui/product-card";
+import Link from "next/link";
 
 export default function Home() {
-
-	console.log(categories[0].name)
+	console.log(categories[0].name);
 	return (
 		<main className="min-h-screen w-full">
-
 			{/* CATEGORIES */}
 			<section className=" px-4 flex flex-col gap-2 w-full pb-4">
-			<div className="flex w-full overflow-hidden">
-				<div className="flex flex-col items-center gap-1 mr-6 border-b-3">
-					<div className="p-2 mt-1 bg-zinc-100 rounded-sm">
-						<LayoutGrid size={20} />
+				<div className="flex w-full overflow-hidden">
+					<div className="flex flex-col items-center gap-1 mr-6 border-b-3">
+						<div className="p-2 mt-1 bg-zinc-100 rounded-sm">
+							<LayoutGrid size={20} />
+						</div>
+						<span className="text-sm">All</span>
 					</div>
-					<span className="text-sm">All</span>
-				</div>
-				<div className="flex gap-6 overflow-x-auto py-1">
-					<Swiper
-						slidesPerView={5}
-						spaceBetween={30}
-						breakpoints={{
-							620: {
-								slidesPerView: 6,
-								spaceBetween: 25,
-							},
-						}}
-						modules={[Pagination]}
-						className="mySwiper">
-						{categories.map((cat, index) => (
-							<SwiperSlide key={index}>
-								<div className="flex flex-col items-center gap-1">
-									<div className="p-2 bg-zinc-100 rounded-sm w-fit">
-										<div className="w-5 h-5 flex">
-											<img
-												src={`${cat?.img.src}`}
-												alt="category image"
-												className="object-cover"
-											/>
+					<div className="flex gap-6 overflow-x-auto py-1">
+						<Swiper
+							slidesPerView={5}
+							spaceBetween={30}
+							breakpoints={{
+								620: {
+									slidesPerView: 6,
+									spaceBetween: 25,
+								},
+							}}
+							modules={[Pagination]}
+							className="mySwiper">
+							{categories.map((cat, index) => (
+								<SwiperSlide key={index}>
+									<div className="flex flex-col items-center gap-1">
+										<div className="p-2 bg-zinc-100 rounded-sm w-fit">
+											<div className="w-5 h-5 flex">
+												<img
+													src={`${cat?.img.src}`}
+													alt="category image"
+													className="object-cover"
+												/>
+											</div>
 										</div>
+										<span className="text-sm capitalize">{cat.name}</span>
 									</div>
-									<span className="text-sm capitalize">{cat.name}</span>
-								</div>
-							</SwiperSlide>
-						))}
-					</Swiper>
+								</SwiperSlide>
+							))}
+						</Swiper>
+					</div>
 				</div>
-				</div>
-				</section>
+			</section>
 
 			{/* BANNERS */}
 			<section className=" px-4 flex flex-col gap-2 w-full">
@@ -102,7 +85,7 @@ export default function Home() {
 						modules={[Pagination]}
 						pagination={{
 							clickable: true,
-							dynamicBullets: true
+							dynamicBullets: true,
 						}}
 						className="mySwiper">
 						{Array.from({ length: 5 }).map((_, index) => (
@@ -172,6 +155,8 @@ export default function Home() {
 					</Swiper>
 				</div>
 			</section>
+
+			{/* BROWSE STORES */}
 			<section className=" px-4 flex flex-col gap-2 w-full h-full ">
 				<div className="py-4 flex justify-between items-center">
 					<div className="flex items-center gap-2">
@@ -235,7 +220,8 @@ export default function Home() {
 					</Swiper>
 				</div>
 			</section>
-			{/* Products */}
+
+			{/* PRODUCTS */}
 			<section className=" px-4 flex flex-col gap-2 w-full h-full ">
 				<div className="py-2 flex justify-between items-center">
 					<div className="flex items-center gap-2">
@@ -249,7 +235,9 @@ export default function Home() {
 							</p>
 						</div>
 					</div>
-					<span className="text-">See All</span>
+					<Link href="/products" className="text-">
+						See All
+					</Link>
 				</div>
 				<div className="h-full">
 					<Swiper
@@ -273,7 +261,7 @@ export default function Home() {
 						}}>
 						{Array.from({ length: 9 }).map((_, index) => (
 							<SwiperSlide key={index}>
-								<ProductCard/>
+								<ProductCard />
 							</SwiperSlide>
 						))}
 					</Swiper>
@@ -373,7 +361,6 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			
 		</main>
 	);
 }

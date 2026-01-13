@@ -20,6 +20,7 @@ import { Breadcrumbs } from "./breadcrumbs";
 import { CartBadge } from "./cart-badge";
 import AuthModal from "../auth-modal";
 import { ThemeSwitcher } from "../theme-switcher";
+import Link from "next/link";
 
 export const Header = () => {
 	const [isActive, setIsActive] = useState(false)
@@ -33,7 +34,7 @@ export const Header = () => {
 					<div className="flex flex-col gap-2 md:flex-row justify-center md:justify-start">
 						<div className="flex gap-4 items-center">
 							<Menu className="md:hidden" />
-							<span>Hyper</span>
+							<Link href="/">Hyper</Link>
 						</div>
 						<div className="flex gap-2 items-center justify-start">
 							<LocateIcon size={20} />

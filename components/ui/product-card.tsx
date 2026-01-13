@@ -6,7 +6,6 @@ import { Bookmark, Clock, Eye, ShoppingCart, Star } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-
 const item = {
 	id: "1223",
 };
@@ -18,13 +17,10 @@ export const ProductCard = () => {
 		addItem("455544");
 
 		setOpen(true);
-    };
-    
+	};
 
-
-    
 	return (
-		<>
+		
 			<div className="w-full rounded-md overflow-hidden border border-zinc-300 mb-4 relative">
 				<span className="absolute bg-green-500 text-white px-2 rounded-br-sm text-sm ">
 					7% off
@@ -33,7 +29,7 @@ export const ProductCard = () => {
 					<Bookmark size={20} className="text-zinc-50" fill="white" />
 					<Eye size={20} className="bg-" />
 				</span>
-				<Link href="/real-me-dream">
+				<Link href="/products/real-me-dream">
 					<img
 						src="/images/amori.jpg"
 						alt="slige-image"
@@ -46,7 +42,7 @@ export const ProductCard = () => {
 							<Clock size={16} />
 							<p className="text-xs">21 Mins</p>
 						</div>
-						<Link href="/real-me-dream">
+						<Link href="/products/real-me-dream">
 							<h1 className="my-1 text-sm mb-2">
 								Palekar Tea Time Rusk | Trans Fat free(300g)
 							</h1>
@@ -74,7 +70,6 @@ export const ProductCard = () => {
 					</div>
 				</div>
 			</div>
-			
-		</>
+	
 	);
 };
