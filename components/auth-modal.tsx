@@ -19,10 +19,10 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 	}
   return (
 		<div className="w-screen min-h-screen flex items-center justify-center bg-white/20 backdrop-blur-sm ">
-			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50">
+			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50 dark:bg-zinc-900">
 				<div className="flex justify-between border-b py-4 px-4">
 					<span>
-						<h4 className="flex gap-2 items-center">
+						<h4 className="flex gap-2 items-center text-xl font-semibold">
 							<TruckElectric size={20} /> Welcome back
 						</h4>
 						<p className="text-sm">

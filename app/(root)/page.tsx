@@ -160,7 +160,7 @@ export default function Home() {
 						}}>
 						{brands.map((brand, index) => (
 							<SwiperSlide key={index}>
-								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100 flex items-center justify-center border border-zinc-300">
+								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center border border-zinc-300 dark:border-zinc-700">
 									<img
 										src={brand.logo.src}
 										alt="slige-image"

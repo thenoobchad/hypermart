@@ -19,6 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Breadcrumbs } from "./breadcrumbs";
 import { CartBadge } from "./cart-badge";
 import AuthModal from "../auth-modal";
+import { ThemeSwitcher } from "../theme-switcher";
 
 export const Header = () => {
 	const [isActive, setIsActive] = useState(false)
@@ -45,7 +46,7 @@ export const Header = () => {
 							<button onClick={handleAuthModal}>
 								<User size={20} className="md:hidden" />
 							</button>
-							<Sun size={20} className="hidden md:flex text-yellow-500" />
+						<ThemeSwitcher/>
 							<CartBadge />
 							<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
 								<LogIn size={20} />
