@@ -97,8 +97,11 @@ export default function ProductPage({
 						<button
 							key={i}
 							className={`${
-								item.tag === tab && "bg-white text-zinc-950"
-							} flex gap-2 items-center w-full justify-center p-1 px-2 hover:bg-white hover:text-zinc-950 rounded text-zinc-700 text-sm`}
+								item.tag === tab && "bg-white border border-zinc-300 text-zinc-950"
+								} flex gap-2 items-center w-full justify-center p-1 px-2 hover:bg-white hover:text-zinc-950 rounded 
+								hover:border
+								hover:border-zinc-300
+							text-zinc-700 text-sm`}
 							onClick={() =>
 								handleClick(
 									item.tag as "details" | "reviews" | "faqs" | "soldby"

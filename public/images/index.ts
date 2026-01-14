@@ -17,6 +17,10 @@ import sony from "../../public/images/brands/sony.png";
 import yamaha from "../../public/images/brands/yamaha.png";
 import hisense from "../../public/images/brands/hisense.png";
 
+import watch from "../../public/images/products/image6.jpg";
+import generator from "../../public/images/products/image5.png";
+import flatscreen from "../../public/images/products/image4.png";
+
 export { fashionbg };
 
 export const categories = [
@@ -86,5 +90,20 @@ export const brands = [
 	{
 		name: "hisense",
 		logo: hisense,
+	},
+];
+
+export const products = [
+	{
+		name: "Wrist watch",
+		img: watch,
+	},
+	{
+		name: "LCD Smart Screen",
+		img: flatscreen,
+	},
+	{
+		name: "Generator Elepaq",
+		img: generator,
 	},
 ];

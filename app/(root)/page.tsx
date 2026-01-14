@@ -24,7 +24,7 @@ import { Autoplay } from "swiper/modules";
 
 import Image from "next/image";
 
-import { brands, categories } from "@/public/images";
+import { brands, categories, products } from "@/public/images";
 import { fashionbg } from "@/public/images";
 import Footer from "@/components/ui/footer";
 import { ProductCard } from "@/components/ui/product-card";
@@ -143,7 +143,7 @@ export default function Home() {
 						}}>
 						{brands.map((brand, index) => (
 							<SwiperSlide key={index}>
-								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100 dark:bg-zinc-700 flex items-center justify-center border border-zinc-300 dark:border-zinc-700">
+								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100  flex items-center justify-center border border-zinc-300 ">
 									<img
 										src={brand.logo.src}
 										alt="slige-image"
@@ -259,9 +259,9 @@ export default function Home() {
 								spaceBetween: 6,
 							},
 						}}>
-						{Array.from({ length: 9 }).map((_, index) => (
+						{products.map((item, index) => (
 							<SwiperSlide key={index}>
-								<ProductCard />
+								<ProductCard  {...item} />
 							</SwiperSlide>
 						))}
 					</Swiper>
