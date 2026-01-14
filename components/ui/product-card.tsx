@@ -14,7 +14,7 @@ type ProductType = {
 	img:StaticImageData
 }
 
-export const ProductCard = ( item  : ProductType) => {
+export const ProductCard = ({ item }: { item: ProductType }) => {
 	const { addItem, items } = useCartStore();
 	const [open, setOpen] = useState(false);
 	const handleCartClick = () => {
@@ -32,12 +32,12 @@ export const ProductCard = ( item  : ProductType) => {
 				<Bookmark size={20} className="text-zinc-50" fill="white" />
 				<Eye size={20} className="bg-" />
 			</span>
-			<Link href="/products/real-me-dream">
+			<Link href={`${item.slug}`}>
 				<div className="w-40 py-4 h-40 flex items-center justify-center">
 					<img src={item.img.src} alt="slige-image" className="w-full h-full object-cover" />
 				</div>
 			</Link>
-			<div className="relative">
+			<div className="relative w-full">
 				<div className="flex flex-col p-2  ">
 					<div className="flex items-center gap-1 p-1 text-blue-600 bg-blue-600/10 rounded-sm w-fit">
 						<Clock size={16} />
@@ -45,7 +45,7 @@ export const ProductCard = ( item  : ProductType) => {
 					</div>
 					<Link href="/products/real-me-dream">
 						<h1 className="my-1 text-sm mb-2">
-							Palekar Tea Time Rusk | Trans Fat free(300g)
+							{item.name}
 						</h1>
 					</Link>
 

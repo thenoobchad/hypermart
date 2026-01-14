@@ -261,7 +261,7 @@ export default function Home() {
 						}}>
 						{products.map((item, index) => (
 							<SwiperSlide key={index}>
-								<ProductCard  {...item} />
+								<ProductCard  item={item} />
 							</SwiperSlide>
 						))}
 					</Swiper>

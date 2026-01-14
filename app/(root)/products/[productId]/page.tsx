@@ -1,5 +1,5 @@
 "use client";
-import { AArrowDown, ArrowRight, ClipboardList, Clock, HelpCircle, Minus, Plus, Receipt, ShoppingBag, Star, Store, Timer } from "lucide-react";
+import {  ArrowRight, ClipboardList, Clock, HelpCircle, Minus, Plus,  ShoppingBag, Star, Store } from "lucide-react";
 import { use, useState } from "react";
 
 export default function ProductPage({
