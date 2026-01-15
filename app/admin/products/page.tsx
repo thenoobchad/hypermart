@@ -19,7 +19,7 @@ export default function ProductsPage() {
 		category: "",
 		description: ""
 	})
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const pathname = usePathname;
 
 	return (
@@ -57,7 +57,7 @@ const ProductModal = ({setOpen, data} : {setOpen: (arg:boolean) => void, data : 
 	};
 	return (
 		<div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-zinc-950/30">
-			<form onSubmit={handleSubmit} className="bg-white text-sm">
+			<form onSubmit={handleSubmit} className="bg-white text-sm w-[80%] sm:max-w-120">
 				<div className="flex justify-end  pt-4 px-4">
 					<span onClick={handleClose}>
 						<X size={16} />
@@ -70,7 +70,7 @@ const ProductModal = ({setOpen, data} : {setOpen: (arg:boolean) => void, data : 
 							<div className=" pb-2 flex ">
 								Upload Image<span className="text-red-600">*</span>
 							</div>
-							<div className="flex items-center justify-center text-zinc-500 border-2 border-dashed border-zinc-200 py-4 bg-zinc-100">
+							<div className="flex items-center justify-center text-zinc-500 border-2 border-dotted border-zinc-200 py-4 bg-zinc-100">
 								<Upload size={40} />
 							</div>
 							<input hidden id="image" type="file" />
@@ -90,27 +90,27 @@ const ProductModal = ({setOpen, data} : {setOpen: (arg:boolean) => void, data : 
 						</div>
 					</div>
 
-					<div className="flex w-75  gap-2 px-4">
-						<div className="flex flex-col gap-2">
+					<div className="flex w-full  gap-2 px-4">
+						<div className="flex flex-col gap-2 w-full">
 							<label htmlFor="phone" className="text-sm ">
 								Price PU<span className="text-red-600">*</span>
 							</label>
-							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
+							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded w-full">
 								<input
 									type="text"
-									className="outline-none w-1/2"
+									className="outline-none w-full"
 									placeholder="$40"
 								/>{" "}
 							</div>
 						</div>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 w-full">
 							<label htmlFor="phone" className="text-sm">
 								Stock<span className="text-red-600">*</span>
 							</label>
-							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
+							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded w-full">
 								<input
 									type="text"
-									className="outline-none w-1/2"
+									className="outline-none w-full"
 									placeholder="20"
 								/>{" "}
 							</div>
