@@ -32,7 +32,7 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 				<Bookmark size={20} className="text-zinc-50" fill="white" />
 				<Eye size={20} className="bg-" />
 			</span>
-			<Link href={`${item.slug}`}>
+			<Link href={`${item.name}`}>
 				<div className="w-40 py-4 h-40 flex items-center justify-center">
 					<img src={item.img.src} alt="slige-image" className="w-full h-full object-cover" />
 				</div>
