@@ -24,7 +24,7 @@ const [isActive, setIsActive] = useState(false)
 			</div>
 			<div className="w-full">
 				<Header isActive={isActive} onToggle={setIsActive} />
-				<div className="flex min-w-">{children}</div>
+				<div className="flex h-full">{children}</div>
 				<Footer />
 			</div>
 		</div>
