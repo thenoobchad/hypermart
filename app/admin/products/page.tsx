@@ -52,7 +52,7 @@ export default async function ProductsPage() {
 							{allProducts.map((product) => (
 									<tr
 										key={product.id}
-										className="border-t border-zinc-200 text-sm">
+										className="border-t border-zinc-200 text-sm text-zinc-700">
 										<td className=" p-2">{product.title}</td>
 										<td className=" p-2">{product.category}</td>
 										<td className=" p-2">{product.price}</td>
