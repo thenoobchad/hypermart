@@ -1,5 +1,6 @@
 
 import {
+	Edit,
 	File,
 	
 	Package,
@@ -14,6 +15,7 @@ import { fetchAllProducts } from "@/lib/query";
 import { ProductModal } from "../_components/product-modal";
 import { CreateProductBtn } from "../_components/create-product-btn";
 import { DeleteBtn } from "../_components/deletebtn";
+import { EditBtn } from "../_components/editbtn";
 
 
 
@@ -55,9 +57,11 @@ export default async function ProductsPage() {
 										<td className=" p-2">{product.category}</td>
 										<td className=" p-2">{product.price}</td>
 										<td className=" p-2">{product.stock}</td>
-									<td className=" p-2">
+									<td className=" p-2 flex gap-4">
 										<DeleteBtn productId={product.id} />
-										</td>
+										<EditBtn productId={product.id} />
+									</td>
+									
 									</tr>
 								))
 							}

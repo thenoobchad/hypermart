@@ -20,8 +20,8 @@ export const DeleteBtn = ({ productId }) => {
   };
 
   return (
-		<button className="text-red-500" onClick={handleDelete}>
-			<Trash size={16} />
+		<button className="text-red-500 cursor-pointer" onClick={handleDelete}>
+			<Trash size={16} fill="red" />
 		</button>
 	);
 }
