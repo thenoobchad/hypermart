@@ -16,14 +16,14 @@ import { ProductModal } from "../_components/product-modal";
 import { CreateProductBtn } from "../_components/create-product-btn";
 import { DeleteBtn } from "../_components/deletebtn";
 import { EditBtn } from "../_components/editbtn";
-
-
+import Image from "next/image";
 
 
 
 export default async function ProductsPage() {
 	
-	 const allProducts = await fetchAllProducts() ;
+	const allProducts = await fetchAllProducts();
+	
 	return (
 		<section className="h-full w-full">
 			
@@ -53,13 +53,19 @@ export default async function ProductsPage() {
 									<tr
 										key={product.id}
 										className="border-t border-zinc-200 text-sm text-zinc-700">
-										<td className=" p-2">{product.title}</td>
-										<td className=" p-2">{product.category}</td>
+										<td className=" p-2"><div className="relative w-20 h-10"><Image fill src={product.imageUrl} alt={product.title} className="object-cover rounded" /></div></td>
+									<td className=" p-2">
+										<div className="flex flex-col">
+											<p className="truncate max-w-20">{product.description}</p><p className="text-blue-600 text-xs ">{product.category}</p>
+										
+										</div></td>
 										<td className=" p-2">{product.price}</td>
 										<td className=" p-2">{product.stock}</td>
-									<td className=" p-2 flex gap-4">
+									<td className=" p-2 flex  gap-4">
+										<div className="flex gap-4 p-2">
 										<DeleteBtn productId={product.id} />
-										<EditBtn productId={product.id} />
+											<EditBtn productId={product.id} />
+											</div>
 									</td>
 									
 									</tr>

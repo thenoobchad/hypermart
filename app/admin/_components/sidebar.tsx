@@ -42,30 +42,29 @@ export default function Sidebar({ isActive, onToggle }: Prop) {
 
 		return () => removeEventListener("mousedown", handleOutsideClick)
 	}, []);
-console.log(isActive);
+
 	return (
 		<div className="h-full flex  w-screen bg-black/50 ">
 			<div
 				ref={containerRef}
-				className=" w-[50%] sm:w-[30%] z-50 md:w-[20%] bg-blue-950 py-4 flex flex-col">
+				className=" w-[50%] sm:w-[30%] z-50 md:w-[20%] bg-blue-950 py-4 flex flex-col relative">
 				<button onClick={toggle} className=" flex justify-end">
 					<X className="text-white bg-red-500 mr-4" />
 				</button>
 				<ul className="text-zinc-50 flex flex-col g w-full">
 					{menu.map((link, i) => {
-
 						return (
 							<Link
 								onClick={() => onToggle(false)}
 								key={i}
 								href={`/admin/${link.link}`}
-								className={`flex  border-zinc-700 px-4 py-2 gap-3 text-zinc-300 hover:ml-1 transition-all delay-100 ${menu.length - 1 === i ? "" : "border-b "
-									}`}>
-							
+								className={`flex  border-zinc-700 px-4 py-2 gap-3 text-zinc-300 hover:ml-1 transition-all delay-100 ${
+									menu.length - 1 === i ? "" : "border-b "
+								}`}>
 								<link.icon size={20} />
 								<p className="capitalize">{link.link}</p>
 							</Link>
-						)
+						);
 					})}
 				</ul>
 			</div>
