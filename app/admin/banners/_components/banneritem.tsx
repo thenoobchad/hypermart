@@ -1,6 +1,7 @@
 "use client"
 
 
+import { toggleVisibility, updateOrder } from "@/lib/actions"
 import { useState } from "react"
 
 export const BannerItem = ({ banner }) => {
@@ -10,14 +11,14 @@ export const BannerItem = ({ banner }) => {
     const handleToggle = async () => {
         const newState = !isActive;
         setIsActive(newState)
-        // await toggleVisibility(banners.id, newState)
+        await toggleVisibility(banner.id, newState)
     }
 
 
     const handleOrderChange = async (newOrder:number) => {
-			const newState = !isActive;
+			
 			setOrder(newOrder);
-			// await updateOrder(banner.id, newOrder)
+			await updateOrder(banner.id, newOrder)
 		};
 
   return (
@@ -41,7 +42,7 @@ export const BannerItem = ({ banner }) => {
 			{/* visibility toggle */}
 			<div className=" flex gap-2">
 				<label>
-					<input type="checkbox" onChange={handleToggle} checked={isActive} />
+					<input type="checkbox" onChange={ handleToggle} checked={isActive} />
 				</label>
 				<span>{isActive ? "Visible" : "Hidden"}</span>
 			</div>

@@ -7,7 +7,7 @@ import { banners } from "@/database/db/schema";
 export default async function BannerPage() {
 	const currentBanners = await db
 		.select()
-		.from(banners)
+		.from(banners).orderBy(asc(banners.displayOrder));
 		
 
 
