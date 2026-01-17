@@ -91,7 +91,7 @@ const menu = [
 		icon: Settings,
 	},
 	{
-		link: "website",
+		link: "banners",
 		icon: Workflow,
 	},
 	{

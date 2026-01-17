@@ -31,7 +31,7 @@ export default async function ProductsPage() {
 				{/* DISPLAY ALL PRODUCTS HERE */}
 				<div className="flex w-full justify-between items-center">
 					<h4 className="flex items-center gap-2">
-						<Package size={18} /> All Products
+						<Package size={18} />  Products
 					</h4>
 					<CreateProductBtn />
 				</div>

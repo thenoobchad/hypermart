@@ -1,5 +1,6 @@
-import { integer, pgTable, varchar, text, decimal, timestamp, uuid } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, text, decimal, timestamp, uuid, boolean } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
+import { link } from "fs";
 
 
 export const users = pgTable("users", {
@@ -9,6 +10,19 @@ export const users = pgTable("users", {
 	email: varchar({ length: 255 }).notNull().unique(),
 });
 
+
+export const banners = pgTable("banners", {
+	id: uuid()
+		.primaryKey()
+		.default(sql`gen_random_uuid()`),
+	title: varchar("title", { length: 255 }).notNull(),
+	link: text("link"),
+	imageUrl: text("image_url"),
+	imagePublicId: text("image_id"),
+	displayOrder: integer("display_order").default(0),
+	updatedAt: timestamp("updated_at").defaultNow().notNull(),
+	isActive: boolean("is_active").default(true)
+});
 
 export const products = pgTable("products", {
 	id: uuid().primaryKey().default(sql`gen_random_uuid()`),

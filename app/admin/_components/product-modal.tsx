@@ -1,9 +1,8 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import React, { ChangeEvent, FormEvent,  useState } from "react";
 
-import { File, Package, Plus, Upload, X } from "lucide-react";
+
+import { File, Upload, X } from "lucide-react";
 import { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { createProduct } from "@/lib/actions";
 import Image from "next/image";
