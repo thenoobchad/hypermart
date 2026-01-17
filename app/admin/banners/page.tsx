@@ -5,12 +5,12 @@ import { asc } from "drizzle-orm";
 import { banners } from "@/database/db/schema";
 
 export default async function BannerPage() {
-	// const currentBanners = await db
-	// 	.select()
-	// 	.from(banners)
-	// 	.orderBy(asc(banners.displayOrder));
+	const currentBanners = await db
+		.select()
+		.from(banners)
+		
 
-	const currentBanners = []
+
 	return (
 		<main className="w-full m-4 flex flex-col">
 			<div className="flex justify-between ">

@@ -23,17 +23,18 @@ export const BannerItem = ({ banner }) => {
   return (
 		<div className="flex gap-2 p-4 border-b">
 			{/* Thumbnail */}
-			<div
-				className="w-24 h-12 bg-zinc-950 object-cover rounded border "
-				//   alt="Banner"
+		  <img
+			  src={banner.imageUrl}
+				className="w-24 h-12 object-cover rounded  "
+				alt="Banner"
 			/>
 
 			{/* Title/details */}
 
 			<div className="flex-1">
-				<p>Untitled Slide</p>
+				<p>{banner.title || "Untitled Slide"}</p>
 				<p className="truncate max-w-[150px]">
-					banner link is here so take note
+					{banner.link || "Banner link is here so take note"}
 				</p>
 			</div>
 
