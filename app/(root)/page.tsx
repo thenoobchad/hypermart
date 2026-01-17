@@ -29,9 +29,22 @@ import { fashionbg } from "@/public/images";
 import Footer from "@/components/ui/footer";
 import { ProductCard } from "@/components/ui/product-card";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { fetchActiveBanners } from "@/lib/query";
+
 
 export default function Home() {
-	console.log(categories[0].name);
+	const [banners, setBanners] = useState([]);
+	
+
+	useEffect(() => {
+		const fetchBanner = async () => {
+			const banners = await fetchActiveBanners();
+			setBanners(banners);
+			console.log(banners);
+		};
+		fetchBanner();
+	}, []);
 	return (
 		<main className="min-h-screen w-full">
 			{/* CATEGORIES */}
@@ -88,13 +101,13 @@ export default function Home() {
 							dynamicBullets: true,
 						}}
 						className="mySwiper">
-						{Array.from({ length: 5 }).map((_, index) => (
-							<SwiperSlide key={index}>
-								<div className=" rounded-sm overflow-hidden w-full md:max-h-100">
+						{banners.map((banner) => (
+							<SwiperSlide key={banner.id}>
+								<div className=" rounded-sm overflow-hidden w-full h-70">
 									<img
-										src={`${fashionbg.src}`}
+										src={`${banner.imageUrl}`}
 										alt="slige-image"
-										className="h-full w-full "
+										className="h-full w-full object-cover"
 									/>
 								</div>
 							</SwiperSlide>

@@ -1,8 +1,9 @@
 "use server";
 
 import { db } from "@/database";
-import { products } from "@/database/db/schema";
-import { desc } from "drizzle-orm";
+import { banners, products } from "@/database/db/schema";
+import { desc, eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export async function fetchAllProducts() {
 	try {
@@ -16,3 +17,25 @@ export async function fetchAllProducts() {
 		return [];
 	}
 }
+
+export async function fetchActiveBanners() {
+	try {
+		const activeBanners = await db
+			.select()
+			.from(banners)
+			.where(eq(banners.isActive, true))
+			.orderBy(desc(banners.displayOrder));
+		
+		
+
+		return activeBanners ? activeBanners : [];
+
+		
+
+	} catch (error) {
+		console.error("Database unreachable:", error);
+		return [];
+	}
+}
+
+
