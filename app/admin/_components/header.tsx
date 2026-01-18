@@ -71,7 +71,7 @@ export default function Header() {
 							);
 						})}
 					</ul>
-					<div className="px-6 text-sm">
+					<div className="px-6 text-sm mt-auto">
 						<p className="text-white">Contact the admin: </p>
 						<p className="flex gap-1 items-center text-white"><MailCheck size={15}/>chidielueme@gmail.com</p>
 					</div>
