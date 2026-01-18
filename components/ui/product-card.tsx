@@ -10,15 +10,21 @@ import { useState } from "react";
 
 
 type ProductType = {
-	name: string;
-	img:StaticImageData
+	id: string
+	title: string;
+	imageUrl: string;
+	description: string;
+	price: string;
+	slug: string;
+	stock: number;
+	category: string;
 }
 
 export const ProductCard = ({ item }: { item: ProductType }) => {
 	const { addItem, items } = useCartStore();
 	const [open, setOpen] = useState(false);
-	const handleCartClick = () => {
-		addItem("455544");
+	const handleCartClick = (id: string) => {
+		addItem(id);
 
 		setOpen(true);
 	};
@@ -32,9 +38,9 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 				<Bookmark size={20} className="text-zinc-50" fill="white" />
 				<Eye size={20} className="bg-" />
 			</span>
-			<Link href={`${item.name}`}>
+			<Link href={`${item.slug}`}>
 				<div className="w-40 py-4 h-40 flex items-center justify-center">
-					<img src={item.img.src} alt="slige-image" className="w-full h-full object-cover" />
+					<img src={item?.imageUrl} alt="slige-image" className="w-full h-full object-cover" />
 				</div>
 			</Link>
 			<div className="relative w-full">
@@ -45,7 +51,7 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 					</div>
 					<Link href="/products/real-me-dream">
 						<h1 className="my-1 text-sm mb-2">
-							{item.name}
+							{item.title}
 						</h1>
 					</Link>
 
@@ -56,16 +62,16 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 							))}
 							(0)
 						</span>
-						<span>Kilimanjaro iwofe</span>
+						<span>{item.stock} in stock</span>
 					</p>
 
 					<div className="flex justify-between">
 						<div>
-							<p className="text-sm leading-4 ">$29.0</p>
+							<p className="text-sm leading-4 ">${item.price}</p>
 							<p className="text-xs text-zinc-500">$32.0</p>
 						</div>
 						<div className="bg-blue-500 p-2 text-white rounded-full">
-							<ShoppingCart size={18} onClick={handleCartClick} />
+							<ShoppingCart size={18} onClick={() => handleCartClick(item.id)} />
 						</div>
 					</div>
 				</div>

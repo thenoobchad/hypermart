@@ -30,20 +30,22 @@ import Footer from "@/components/ui/footer";
 import { ProductCard } from "@/components/ui/product-card";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { fetchActiveBanners } from "@/lib/query";
+import { fetchActiveBanners, fetchAllProducts } from "@/lib/query";
 
 
 export default function Home() {
 	const [banners, setBanners] = useState([]);
-	
+	const [products, setProducts] = useState([])
 
 	useEffect(() => {
-		const fetchBanner = async () => {
+		const initializeStore = async () => {
 			const banners = await fetchActiveBanners();
+			const products = await fetchAllProducts()
 			setBanners(banners);
-			console.log(banners);
+			setProducts(products)
+			console.log(products);
 		};
-		fetchBanner();
+		initializeStore();
 	}, []);
 	return (
 		<main className="min-h-screen w-full">

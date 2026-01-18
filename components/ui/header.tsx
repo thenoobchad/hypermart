@@ -13,7 +13,7 @@ import {
 	Sun,
 	User,
 } from "lucide-react";
-import  { useState } from "react";
+import { useState } from "react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Breadcrumbs } from "./breadcrumbs";
@@ -23,9 +23,9 @@ import { ThemeSwitcher } from "../theme-switcher";
 import Link from "next/link";
 
 export const Header = () => {
-	const [isActive, setIsActive] = useState(false)
+	const [isActive, setIsActive] = useState(false);
 	const handleAuthModal = () => {
-		setIsActive(true)
+		setIsActive(true);
 	};
 	return (
 		<>
@@ -47,7 +47,7 @@ export const Header = () => {
 							<button onClick={handleAuthModal}>
 								<User size={20} className="md:hidden" />
 							</button>
-						<ThemeSwitcher/>
+							<ThemeSwitcher />
 							<CartBadge />
 							<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
 								<LogIn size={20} />
@@ -82,7 +82,6 @@ export const Header = () => {
 											<p className="text-zinc-500">Search &quot;Sweet&quot;</p>
 										</SwiperSlide>
 									</Swiper>
-									
 								</div>
 								<Clipboard size={20} />
 							</div>
