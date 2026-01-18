@@ -77,7 +77,7 @@ export const CartBadge = () => {
 										className="h-14 w-16 bg-black rounded object-cover"
 									/>
 								</span>
-								{/*  */}
+								
 								<div className="flex-1">
 									{/* title & trash */}
 									<div className="flex justify-between">
