@@ -11,6 +11,7 @@ import {
 	Wallet,
 	Workflow,
 	X,
+	MailCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -62,7 +63,7 @@ export default function Header() {
 									onClick={() => setIsActive(false)}
 									key={i}
 									href={`/admin/${link.link}`}
-									className={`flex rounded  border-zinc-700 px-4 py-2 gap-3 text-zinc-300 hover:ml-[1px] hover: hover:bg-blue-900 transition-all delay-100 border-zinc-500! 
+									className={`flex rounded  border-zinc-700 px-4 py-3 gap-3 text-white hover:ml-px hover: hover:bg-blue-900 transition-all delay-100  
 									}`}>
 									<link.icon size={20} />
 									<p className="capitalize">{link.link}</p>
@@ -70,6 +71,10 @@ export default function Header() {
 							);
 						})}
 					</ul>
+					<div className="px-6 text-sm">
+						<p className="text-white">Contact the admin: </p>
+						<p className="flex gap-1 items-center text-white"><MailCheck size={15}/>chidielueme@gmail.com</p>
+					</div>
 				</div>
 			</div>
 		</>
