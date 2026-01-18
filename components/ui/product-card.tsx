@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/store/cart-store";
 import { Bookmark, Clock, Eye, ShoppingCart, Star } from "lucide-react";
-import { StaticImageData } from "next/image";
+
 
 import Link from "next/link";
 import { useState } from "react";
