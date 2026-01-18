@@ -81,8 +81,10 @@ export const CartBadge = () => {
 								<div className="flex-1">
 									{/* title & trash */}
 									<div className="flex justify-between">
-										<h4 className="truncate max-w-60 text-lg capitalize">{item?.title}</h4>
-										<Trash size={18} onClick={() =>removeItem(item.id)}/>
+										<h4 className="truncate max-w-60 text-lg capitalize">
+											{item?.title}
+										</h4>
+										<Trash size={18} onClick={() => removeItem(item.id)} />
 									</div>
 
 									{/* desc & Qty */}
@@ -116,16 +118,18 @@ export const CartBadge = () => {
 						))
 					:	"Nothing to see here"}
 
-					{ itemsInCart.length != 0 && <div className="flex  w-full  p-3 border border-zinc-200 rounded flex-col text-sm gap-2">
-						<div className="justify-between flex w-full">
-							<h4>Items Total</h4>
-							<h4>$ 656.00</h4>
+					{itemsInCart.length != 0 && (
+						<div className="flex  w-full  p-3 border border-zinc-200 rounded flex-col text-sm gap-2">
+							<div className="justify-between flex w-full">
+								<h4>Items Total</h4>
+								<h4>$ 656.00</h4>
+							</div>
+							<div className="justify-between flex w-full">
+								<p>items</p>
+								<p>{totalItems}</p>
+							</div>
 						</div>
-						<div className="justify-between flex w-full">
-							<p>items</p>
-							<p>{totalItems}</p>
-						</div>
-					</div>}
+					)}
 
 					<div className="mt-auto w-full flex gap-2">
 						<button className="bg-blue-600 py-1.5 text-white rounded w-full">
@@ -134,7 +138,12 @@ export const CartBadge = () => {
 						<button
 							className="bg-red-600 py-1.5 text-white rounded w-full"
 							onClick={() => clearCart()}>
-							Clear cart <span className="text-xs">({totalItems})</span>
+							{totalItems && totalItems > 0 ?
+								"Cart total"
+							:	"Add items to Cart"}
+							<span className="text-xs">
+								{totalItems && totalItems != 0 ? totalItems : ""}
+							</span>
 						</button>
 					</div>
 				</div>
