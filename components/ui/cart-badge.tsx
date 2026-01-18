@@ -11,7 +11,7 @@ export const CartBadge = () => {
 	const totalItems = items ? Object.values(items).reduce((a,b) => a+b, 0): 0
 	return (
 		<>
-			<div className="relative" onClick={() => setIsOpen(true)}>
+			<div className="cursor-pointer relative" onClick={() => setIsOpen(true)}>
 				<ShoppingCart size={20} className=" md:flex" fill="black" />
 				{items && totalItems > 0 && (
 					<div className="absolute -top-1.5 -right-1.5 bg-red-600 h-4 w-4 flex items-center justify-center rounded-full text-white text-xs">
@@ -26,7 +26,7 @@ export const CartBadge = () => {
 							<h4 className="text-lg">Cart</h4>
 							<p>Please login to continue</p>
 						</div>
-						<button onClick={() => setIsOpen(false)}>
+						<button onClick={() => setIsOpen(false)} className="cursor-pointer">
 							<X />
 						</button>
 					</div>

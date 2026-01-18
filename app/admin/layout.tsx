@@ -1,30 +1,19 @@
-"use client"
-
 
 import Header from "./_components/header";
 import Footer from "./_components/footer";
-import Sidebar from "./_components/sidebar";
-import { useState } from "react";
+
 
 
 export default function AdminLayout({
 	children,
-}: Readonly<{
+}: {
 	children: React.ReactNode;
-}>) {
-const [isActive, setIsActive] = useState(false)
-
+}) {
 	return (
 		<div className="bg-zinc-50 w-full flex flex-col overflow-hidden ">
-			<div
-				className={`fixed h-screen  z-90 ${
-					isActive ? "translate-x-0" : "-left-full transition-all delay-350"
-				} `}>
-				<Sidebar  isActive={isActive} onToggle={setIsActive} />
-			</div>
 			<div className="w-full h-full">
-				<Header isActive={isActive} onToggle={setIsActive} />
-				<div className="flex h-dvh">{children}</div>
+				<Header />
+				<div className="flex ">{children}</div>
 				<Footer />
 			</div>
 		</div>
