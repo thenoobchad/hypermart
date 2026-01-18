@@ -56,14 +56,14 @@ export default function Header() {
 						className=" flex justify-end">
 						<X className="text-white  mr-4" />
 					</button>
-					<ul className="text-zinc-50 px-2 flex flex-col g w-full mb-4">
+					<ul className="text-zinc-50 px-2 flex flex-col g w-full mb-4 overflow-y-auto">
 						{menu.map((link, i) => {
 							return (
 								<Link
 									onClick={() => setIsActive(false)}
 									key={i}
 									href={`/admin/${link.link}`}
-									className={`flex rounded  border-zinc-700 px-4 py-3 gap-3 text-white hover:ml-px hover: hover:bg-blue-900 transition-all delay-100  
+									className={`flex rounded  border-zinc-700 px-4 py-4 gap-3 text-white hover:ml-px hover: hover:bg-blue-900 transition-all delay-100  
 									}`}>
 									<link.icon size={20} />
 									<p className="capitalize">{link.link}</p>
