@@ -6,7 +6,6 @@ import { Minus, Plus, ShoppingCart, Trash, X } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 
 export const CartBadge = () => {
-	
 	const [products, setProducts] = useState([]);
 
 	const { items, removeItem, clearCart, addItem } = useCartStore();
@@ -24,8 +23,8 @@ export const CartBadge = () => {
 	}, []);
 
 	const itemsInCart = useMemo(() => {
-		if (!products || products.length === 0) return []
-		
+		if (!products || products.length === 0) return [];
+
 		const productLookup = products.reduce<
 			Record<string, (typeof products)[number]>
 		>((acc, product) => {
@@ -34,12 +33,21 @@ export const CartBadge = () => {
 		}, {});
 
 		return Object.keys(items).map((id) => {
-			const product = productLookup[id]
+			const product = productLookup[id];
 			return { ...product, quantity: items[id] };
 		});
-
-		
 	}, [items, products]);
+
+	const total = useMemo(() => {
+		if (!itemsInCart || itemsInCart.length === 0) return "0.00";
+
+		const totalPrice = itemsInCart.reduce((acc, product) => {
+			return (acc += product.quantity * Number(product.price));
+			
+		}, 0);
+
+		return totalPrice.toFixed(2);
+	}, [itemsInCart]);
 
 	
 	return (
@@ -77,7 +85,7 @@ export const CartBadge = () => {
 										className="h-14 w-16 bg-black rounded object-cover"
 									/>
 								</span>
-								
+
 								<div className="flex-1">
 									{/* title & trash */}
 									<div className="flex justify-between">
@@ -122,7 +130,7 @@ export const CartBadge = () => {
 						<div className="flex  w-full  p-3 border border-zinc-200 rounded flex-col text-sm gap-2">
 							<div className="justify-between flex w-full">
 								<h4>Items Total</h4>
-								<h4>$ 656.00</h4>
+								<h4>${total}</h4>
 							</div>
 							<div className="justify-between flex w-full">
 								<p>items</p>
@@ -139,7 +147,7 @@ export const CartBadge = () => {
 							className="bg-red-600 py-1.5 text-white rounded w-full"
 							onClick={() => clearCart()}>
 							{totalItems && totalItems > 0 ?
-								"Cart total"
+								"Clear Cart"
 							:	"Add items to Cart"}
 							<span className="text-xs">
 								{totalItems && totalItems != 0 ? totalItems : ""}
