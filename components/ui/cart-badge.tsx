@@ -62,70 +62,75 @@ export const CartBadge = () => {
 			</div>
 			<div
 				className={`w-screen z-80  backdrop-blur-xs right-0 top-0 fixed h-dvh flex justify-end transition-all delay-150 ${!isOpen ? "translate-x-full" : "translate-x-0"}`}>
-				<div className="flex bg-white right-0 relative  z-99 w-[80dvw] sm:w-[60dvw] md:w-[40dvw] lg:w-[30dvw] p-4 flex-col gap-4">
-					<div className="flex justify-between w-full items-start">
+				<div className="flex bg-white right-0 relative  z-99 w-[80dvw] sm:w-[60dvw] md:w-[50dvw] lg:w-[40dvw] p-4 flex-col gap-4">
+					<div className="flex justify-between w-full items-start border-b pb-2">
 						<div>
-							<h4 className="text-lg">Cart</h4>
+							<h4 className="text-lg ">Cart</h4>
 							<p>Please login to continue</p>
 						</div>
 						<button onClick={() => setIsOpen(false)} className="cursor-pointer">
 							<X />
 						</button>
 					</div>
-					{itemsInCart && itemsInCart.length > 0 ?
-						itemsInCart.map((item) => (
-							<div
-								key={item.id}
-								className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center">
-								{/* Image */}
-								<span>
-									<img
-										src={`${item.imageUrl}`}
-										alt="product-image"
-										className="h-14 w-16 bg-black rounded object-cover"
-									/>
-								</span>
+					<div className="flex flex-col gap-3 max-h-[60vh] overflow-auto">
+						{itemsInCart && itemsInCart.length > 0 ?
+							itemsInCart.map((item) => (
+								<div
+									key={item.id}
+									className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center">
+									{/* Image */}
+									<span>
+										<img
+											src={`${item.imageUrl}`}
+											alt="product-image"
+											className="h-14 w-16 bg-black rounded object-cover"
+										/>
+									</span>
 
-								<div className="flex-1">
-									{/* title & trash */}
-									<div className="flex justify-between">
-										<h4 className="truncate max-w-60 text-lg capitalize">
-											{item?.title}
-										</h4>
-										<Trash size={18} onClick={() => removeItem(item.id)} />
-									</div>
-
-									{/* desc & Qty */}
-
-									<div className="flex flex-col text-sm text-zinc-600">
-										<p className="leading-3 mt-1">{item.description}</p>
+									<div className="flex-1">
+										{/* title & trash */}
 										<div className="flex justify-between">
-											{" "}
-											<p>
-												Qty: {item.quantity} Stock: {item.stock} available
-											</p>{" "}
-											<p>${item.price}/ item</p>
+											<h4 className="truncate max-w-60 text-lg capitalize">
+												{item?.title}
+											</h4>
+											<Trash
+												className="cursor-pointer"
+												size={18}
+												onClick={() => removeItem(item.id)}
+											/>
 										</div>
-									</div>
 
-									{/* Btns and price */}
-									<div className="flex justify-between">
-										<div className="flex gap-2">
-											<button onClick={() => removeItem(item.id)}>
-												<Minus size={18} />
-											</button>
-											<span>1</span>
-											<button onClick={() => addItem(item.id)}>
-												<Plus size={18} />
-											</button>
+										{/* desc & Qty */}
+
+										<div className="flex flex-col text-sm text-zinc-600">
+											<p className="leading-3 mt-1">{item.description}</p>
+											<div className="flex justify-between">
+												{" "}
+												<p>
+													Qty: {item.quantity} Stock: {item.stock} available
+												</p>{" "}
+												<p>${item.price}/ item</p>
+											</div>
 										</div>
-										<span>${item.price}</span>
+
+										{/* Btns and price */}
+										<div className="flex justify-between">
+											<div className="flex gap-2">
+												<button onClick={() => removeItem(item.id)}>
+													<Minus size={18} />
+												</button>
+												<span>1</span>
+												<button onClick={() => addItem(item.id)}>
+													<Plus size={18} />
+												</button>
+											</div>
+											<span>${item.price}</span>
+										</div>
 									</div>
 								</div>
-							</div>
-						))
-					:	"Nothing to see here"}
-
+							))
+						:	"Nothing to see here"}
+					</div>
 					{itemsInCart.length != 0 && (
 						<div className="flex  w-full  p-3 border border-zinc-200 rounded flex-col text-sm gap-2">
 							<div className="justify-between flex w-full">
@@ -149,9 +154,11 @@ export const CartBadge = () => {
 							{totalItems && totalItems > 0 ?
 								"Clear Cart"
 							:	"Add items to Cart"}
-							<span className="text-xs">
-								{totalItems && totalItems != 0 ? totalItems : ""}
-							</span>
+							
+							{" "}{totalItems && totalItems != 0 ?
+									<span className="text-xs">({totalItems})</span>
+								:	""}
+							
 						</button>
 					</div>
 				</div>

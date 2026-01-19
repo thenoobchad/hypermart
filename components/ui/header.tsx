@@ -48,10 +48,10 @@ export const Header = () => {
 							<CartBadge />
 							<button onClick={handleAuthModal}>
 								<User size={20} className="md:hidden" />
-								<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
+								<span className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
 									<LogIn size={20} />
 									Login
-								</button>
+								</span>
 							</button>
 						</div>
 						<div className="flex-1 w-full">

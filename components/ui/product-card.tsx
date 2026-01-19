@@ -38,7 +38,7 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 				<Bookmark size={20} className="text-zinc-50" fill="white" />
 				<Eye size={20} className="bg-" />
 			</span>
-			<Link href={`${item.slug}`}>
+			<Link href={`${item.id}`}>
 				<div className="w-40 py-4 h-40 flex items-center justify-center">
 					<img src={item?.imageUrl} alt="slige-image" className="w-full h-full object-cover" />
 				</div>
@@ -49,7 +49,7 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 						<Clock size={16} />
 						<p className="text-xs">21 Mins</p>
 					</div>
-					<Link href="/products/real-me-dream">
+					<Link href={`/products/${item.id}`}>
 						<h1 className="my-1 text-sm mb-2">
 							{item.title}
 						</h1>
