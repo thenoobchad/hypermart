@@ -19,16 +19,16 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 	}
   return (
 		<div className="w-screen min-h-screen flex items-center justify-center bg-white/20 backdrop-blur-sm ">
-			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50 dark:bg-zinc-900">
+			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50 ">
 				<div className="flex justify-between border-b py-4 px-4">
 					<span>
 						<h4 className="flex gap-2 items-center text-xl font-semibold">
 							<TruckElectric size={20} /> Welcome back
 						</h4>
 						<p className="text-sm">
-							{authType === "SIGN_IN"
-								? "Sign in to your account to continue"
-								: "Enter your details to get started"}
+							{authType === "SIGN_IN" ?
+								"Sign in to your account to continue"
+							:	"Enter your details to get started"}
 						</p>
 					</span>
 					<span onClick={handleClose}>
@@ -36,7 +36,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 					</span>
 				</div>
 
-				<div className="flex flex-col gap-3">
+				<div className="flex flex-col gap-3 max-h-[60vh] overflow-auto">
 					{authType === "SIGN_UP" && (
 						<div className="flex flex-col gap-2 px-4">
 							<label htmlFor="phone" className="text-sm">
@@ -111,10 +111,12 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 							</div>
 						</div>
 					)}
-					<p className="text-sm text-right px-4">Forgot password?</p>
+					{authType === "SIGN_IN" && (
+						<p className="text-sm text-right px-4">Forgot password?</p>
+					)}
 
-					<button className="bg-blue-600 my-2 mx-4 text-zinc-50 py-2 rounded">
-						Sign in
+					<button className="bg-blue-600 my-2 mx-4 text-zinc-50 py-2 mt-4 rounded">
+						{authType === "SIGN_UP" ? "Sign up" : "Sign in"}
 					</button>
 					<div className="flex items-center gap-2">
 						<div className="w-full h-px bg-zinc-200" />
@@ -127,17 +129,24 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 				</div>
 
 				<div className=" border-t">
-					{authType === "SIGN_UP" ? (
+					{authType === "SIGN_UP" ?
 						<p className="text-sm py-3 text-center">
-							Don&apos;t have an account?{" "}
-							<span onClick={handleFormSwitch}>Create Account</span>
+							Already have an account?{"  "}
+							<span
+								onClick={handleFormSwitch}
+								className="cursor-pointer underline">
+								Login
+							</span>
 						</p>
-					) : (
-						<p className="text-sm py-3 text-center">
-							Already have an account?{" "}
-							<span onClick={handleFormSwitch}>Login</span>
+					:	<p className="text-sm py-3 text-center">
+							Don&apos;t have an account?{"  "}
+							<span
+								onClick={handleFormSwitch}
+								className="cursor-pointer underline">
+								Create account
+							</span>
 						</p>
-					)}
+					}
 				</div>
 			</div>
 		</div>

@@ -44,14 +44,14 @@ export const Header = () => {
 					</div>
 					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
 						<div className="flex gap-4 items-center">
-							<button onClick={handleAuthModal}>
-								<User size={20} className="md:hidden" />
-							</button>
 							<ThemeSwitcher />
 							<CartBadge />
-							<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
-								<LogIn size={20} />
-								Login
+							<button onClick={handleAuthModal}>
+								<User size={20} className="md:hidden" />
+								<button className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
+									<LogIn size={20} />
+									Login
+								</button>
 							</button>
 						</div>
 						<div className="flex-1 w-full">
