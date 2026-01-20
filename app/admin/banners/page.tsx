@@ -10,7 +10,6 @@ export default async function BannerPage() {
 		.from(banners).orderBy(asc(banners.displayOrder));
 		
 
-
 	return (
 		<main className="w-full m-4 flex flex-col">
 			<div className="flex justify-between ">

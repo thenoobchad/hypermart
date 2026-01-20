@@ -64,7 +64,7 @@ export default async function ProductsPage() {
 									<td className=" p-2 flex  gap-4">
 										<div className="flex gap-4 p-2">
 										<DeleteBtn productId={product.id} />
-											<EditBtn productId={product.id} />
+										<EditBtn product={product} />
 											</div>
 									</td>
 									

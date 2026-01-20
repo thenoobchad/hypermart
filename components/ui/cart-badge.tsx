@@ -74,9 +74,9 @@ export const CartBadge = () => {
 					</div>
 					<div className="flex flex-col gap-3 max-h-[60vh] overflow-auto">
 						{itemsInCart && itemsInCart.length > 0 ?
-							itemsInCart.map((item) => (
+							itemsInCart.map((item, i) => (
 								<div
-									key={item.id}
+									key={i}
 									className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center">
 									{/* Image */}
 									<span>
@@ -146,7 +146,7 @@ export const CartBadge = () => {
 
 					<div className="mt-auto w-full flex gap-2">
 						<button className="bg-blue-600 py-1.5 text-white rounded w-full">
-							Please login to continue
+							Login to continue
 						</button>
 						<button
 							className="bg-red-600 py-1.5 text-white rounded w-full"

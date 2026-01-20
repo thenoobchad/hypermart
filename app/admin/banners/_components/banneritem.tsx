@@ -1,7 +1,8 @@
 "use client"
 
 
-import { toggleVisibility, updateOrder } from "@/lib/actions"
+import { deleteBanner, toggleVisibility, updateOrder } from "@/lib/actions"
+import { Trash, Trash2 } from "lucide-react"
 import { useState } from "react"
 
 export const BannerItem = ({ banner }) => {
@@ -21,6 +22,9 @@ export const BannerItem = ({ banner }) => {
 			await updateOrder(banner.id, newOrder)
 		};
 
+	const handleDelete = async (id: string, publicId: string) => {
+		await deleteBanner(id, publicId)
+	}
   return (
 		<div className="flex gap-2 p-4 border-b">
 			{/* Thumbnail */}
@@ -55,9 +59,13 @@ export const BannerItem = ({ banner }) => {
 					type="number"
 					value={order}
 					onChange={(e) => handleOrderChange(parseInt(e.target.value))}
-					className="w-14 border border-zinc-600 rounded-[2px] text-center text-sm "
+					className="w-14 border border-zinc-600 rounded-xs text-center text-sm "
 				/>
-			</div>
+		  </div>
+		  
+		  <button className="flex items-center justify-center h-full pt-1 cursor-pointer" onClick={() => handleDelete(banner.id, banner.imagePublicId)}>
+			  <Trash size={18}/>
+		  </button>
 		</div>
 	);
 }

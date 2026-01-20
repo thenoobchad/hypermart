@@ -12,6 +12,7 @@ import {
 	ShoppingBag,
 	Star,
 	Store,
+	Trash,
 } from "lucide-react";
 import { use, useEffect, useState } from "react";
 
@@ -29,7 +30,7 @@ export default function ProductPage({
 	const { productId } = use(params);
 	const [products, setProducts] = useState([]);
 	
-	const { addItem, removeItem, items } = useCartStore((state) => state)
+	const { addItem, removeItem, items, clearCart } = useCartStore((state) => state)
 	useEffect(() => {
 		const fetchProduct = async () => {
 			const allProducts = await fetchAllProducts();
@@ -105,7 +106,7 @@ export default function ProductPage({
 								<p>Quantity:</p>
 								<div className="flex gap-4 items-center">
 									<button
-										className="bg-blue-500 p-1 rounded-full text-white"
+										className="bg-blue-500 p-1 rounded-full text-white disabled:bg-blue-300"
 										disabled={existingCartItem() === 0}
 										onClick={() => removeItem(filteredItem.id)}>
 										<Minus size={18} />
@@ -124,10 +125,18 @@ export default function ProductPage({
 						</div>
 						<div className="flex w-full justify-between gap-4">
 							<button
-								className="flex gap-2 items-center bg-blue-500 text-zinc-50 py-1.5 px-3 w-full justify-center rounded-sm"
-								onClick={() => addItem(filteredItem.id)}>
-								<ShoppingBag size={20} />
-								Add to Bucket
+								className="flex gap-2 items-center bg-blue-500 text-zinc-50 py-1.5 px-3 w-full justify-center rounded-sm "
+								onClick={
+									existingCartItem() === 0 ?
+										() => addItem(filteredItem.id)
+									:	() => clearCart()
+								}>
+								{existingCartItem() === 0 ?
+									<ShoppingBag size={20} />
+								:	<Trash size={20} />}
+								{existingCartItem() === 0 ?
+									"Add to Bucket"
+								:	"Remove from Bucket"}
 							</button>
 							<button className="flex gap-2 items-center bg-purple-500 text-zinc-50 py-1.5 px-3 w-full justify-center rounded-sm">
 								Buy Now <ArrowRight />

@@ -12,6 +12,7 @@ import {
 	Workflow,
 	X,
 	MailCheck,
+	Home,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -39,18 +40,21 @@ export default function Header() {
 
 	return (
 		<>
-			<header className=" p-4 outline outline-zinc-100 bg-white mx-1 rounded flex flex-col gap-4">
+			<header className=" p-4 outline outline-zinc-100 bg-white mx-1 rounded flex justify-between gap-4">
 				<div>
 					<button onClick={() => setIsActive(true)}>
 						<Equal />
 					</button>
 				</div>
+				<Link href="/" className="bg-zinc-100 p-1 px-1.5 rounded text-zinc-800">
+					<Home size={18}/>
+				</Link>
 			</header>
 			<div
 				className={`h-full flex fixed right-0 top-0 transition-all delay-150 w-screen bg-black/50 ${isActive ? "translate-x-0" : "-translate-x-full"}`}>
 				<div
 					ref={containerRef}
-					className=" w-[50%] sm:w-[30%] z-50 md:w-[20%] bg-blue-950 py-4 flex flex-col relative gap-4">
+					className=" w-[80%] sm:w-[40%] z-50 md:w-[30%] lg:w-[20%] bg-blue-950 py-4 flex flex-col relative gap-4">
 					<button
 						onClick={() => setIsActive(false)}
 						className=" flex justify-end">

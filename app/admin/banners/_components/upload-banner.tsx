@@ -47,8 +47,9 @@ const BannerModal = ({ isOpen, setIsOpen }) => {
 		try {
 			const formData = new FormData(e.currentTarget);
 			formData.append("image", selectedFile);
-			const { url } = await uploadImage(formData);
+			const { url, publicId } = await uploadImage(formData);
 			formData.append("imageUrl", url);
+			formData.append("imagePublicId", publicId);
 
 			const { success } = await uploadBanner(formData);
 			if (success) handleClose();

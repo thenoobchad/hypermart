@@ -2,11 +2,20 @@
 
 import { db } from "@/database";
 import { banners, NewProduct, Product, products } from "@/database/db/schema";
-import { eq, InferInsertModel } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
 import { deleteImage } from "./cloudinary";
 
+type ProductType = {
+	title: string;
+	description: string;
+	price: string;
+	stock: number;
+	category: string;
+	slug: string;
+	imageUrl: string;
+};
 
 //Product Actions
 export async function createProduct(formData: FormData) {
@@ -52,6 +61,17 @@ export async function createProduct(formData: FormData) {
 	}
 }
 
+export async function updateProduct(formData: ProductType, id: string) {
+	try {
+		await db.update(products).set(formData).where(eq(products.id, id));
+		revalidatePath("/admin/products", "page");
+		return { success: true };
+	} catch (error) {
+		console.error("Error updating product:", error);
+		return { success: false };
+	}
+}
+
 export async function deleteProduct(formData: FormData) {
 	// get value and narrow its type
 	const idValue = formData.get("id");
@@ -80,38 +100,53 @@ export async function deleteProduct(formData: FormData) {
 export async function uploadBanner(formData: FormData) {
 	const title = formData.get("title") as string;
 	const link = formData.get("link") as string;
-	const imageUrl = formData.get("imageUrl") as string
-
+	const imageUrl = formData.get("imageUrl") as string;
+	const imagePublicId = formData.get("imagePublicId") as string;
 	try {
 		await db.insert(banners).values({
 			title,
 			link,
 			imageUrl,
+			imagePublicId,
 			displayOrder: 0,
-			isActive: true
-		})
+			isActive: true,
+		});
 
-		revalidatePath("/admin/banners")
-		revalidatePath("/")
+		revalidatePath("/admin/banners");
+		revalidatePath("/");
 
-		return {success: true}
+		return { success: true };
 	} catch (error) {
-		console.error(error)
-		return {success: false, error: "Failed to save banner"}
+		console.error(error);
+		return { success: false, error: "Failed to save banner" };
 	}
 }
 
 export async function toggleVisibility(id: string, status: boolean) {
-	await db.update(banners).set({
-		isActive: status
-	}).where(eq(banners.id, id))
+	await db
+		.update(banners)
+		.set({
+			isActive: status,
+		})
+		.where(eq(banners.id, id));
 
-	revalidatePath("/")
-	revalidatePath("/admin/banners")
+	revalidatePath("/");
+	revalidatePath("/admin/banners");
 }
 
 export async function updateOrder(id: string, newOrder: number) {
-	await db.update(banners).set({ displayOrder: newOrder }).where(eq(banners.id, id))
-	
-	revalidatePath("/")
+	await db
+		.update(banners)
+		.set({ displayOrder: newOrder })
+		.where(eq(banners.id, id));
+
+	revalidatePath("/");
+}
+
+export async function deleteBanner(id: string, publicId: string) {
+	await db.delete(banners).where(eq(banners.id, id));
+
+	await deleteImage(publicId);
+
+	revalidatePath("/admin/banners");
 }
