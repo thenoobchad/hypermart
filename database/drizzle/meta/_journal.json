@@ -8,6 +8,13 @@
       "when": 1768650679626,
       "tag": "0000_parallel_human_cannonball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1768932268037,
+      "tag": "0001_last_karnak",
+      "breakpoints": true
     }
   ]
 }

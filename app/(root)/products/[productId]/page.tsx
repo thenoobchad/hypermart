@@ -67,11 +67,11 @@ export default function ProductPage({
 			<div className=" w-full grid grid-cols-1 gap-6 sm:grid-cols-2">
 				<div className="flex flex-col gap-2">
 					<h4 className="my-2 text-sm">{filteredItem?.title}</h4>
-					<div className="flex flex-col ">
+					<div className="flex flex-col h-80">
 						<img
 							src={`${filteredItem?.imageUrl}`}
 							alt="product-image"
-							className="object-cover w-full h-full"
+							className="object-contain w-full h-full"
 						/>
 					</div>
 				</div>

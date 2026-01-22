@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AlertComponent } from "@/components/ui/alert";
-import { ThemeProvider } from "next-themes"
+
 
 const poppins = localFont({
 	src: [
@@ -40,10 +40,10 @@ export default function AppLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`antialiased ${poppins.className} w-full`}>
-				<ThemeProvider attribute="class" enableSystem>
+				
 					{children}
 					<AlertComponent />
-				</ThemeProvider>
+				
 			</body>
 		</html>
 	);

@@ -31,6 +31,7 @@ export const products = pgTable("products", {
 	category: varchar("category",{ length: 255 }).notNull(),
 	slug: varchar("slug",{length:255}).notNull(),
 	price: decimal("price", {precision: 10, scale:2}).notNull().default("0.00"),
+	actualPrice: decimal("actual_price", {precision: 10, scale:2}).notNull().default("0.00"),
 	stock: integer("stock").notNull().default(0),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at").defaultNow().notNull(),
