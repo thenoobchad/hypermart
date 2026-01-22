@@ -1,4 +1,5 @@
 "use client";
+
 import { fetchAllProducts } from "@/lib/query";
 import { useCartStore } from "@/store/cart-store";
 import {
@@ -6,7 +7,7 @@ import {
 	ClipboardList,
 	Clock,
 	HelpCircle,
-	Hourglass,
+	
 	Minus,
 	Plus,
 	ShoppingBag,
@@ -17,11 +18,7 @@ import {
 import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
-type ProductType = {
-	id: string;
-	title: string;
-	description: string;
-};
+
 
 export default function ProductPage({
 	params,
@@ -69,12 +66,12 @@ export default function ProductPage({
 				<div className="flex flex-col gap-2">
 					<h4 className="my-2 text-sm">{filteredItem?.title}</h4>
 					<div className="flex flex-col h-80 relative">
-						<Image
+						{filteredItem?.imageUrl ? <Image
 							fill
 							src={`${filteredItem?.imageUrl}`}
 							alt="product-image"
 							className="object-contain w-full h-full"
-						/>
+						/>: "Loading..."}
 					</div>
 				</div>
 				<div className="w-full flex flex-col">

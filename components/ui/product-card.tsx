@@ -2,6 +2,7 @@
 
 import { useCartStore } from "@/store/cart-store";
 import { Bookmark, Clock, Eye, ShoppingCart, Star } from "lucide-react";
+import Image from "next/image";
 
 
 import Link from "next/link";
@@ -31,16 +32,21 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 
 	return (
 		<div className="w-full flex flex-col items-center rounded-md overflow-hidden border border-zinc-300 mb-4 relative">
-			<span className="absolute bg-green-500 text-white px-2 rounded-br-sm text-sm left-0">
+			<span className="absolute bg-green-500 text-white px-2 rounded-br-sm text-sm left-0 z-20">
 				7% off
 			</span>
 			<span className="absolute right-2 flex flex-col gap-2 top-2 text-white">
 				<Bookmark size={20} className="text-zinc-50" fill="white" />
 				<Eye size={20} className="bg-" />
 			</span>
-			<Link href={`${item.id}`}>
-				<div className="w-40 py-4 h-40 flex items-center justify-center">
-					<img src={item?.imageUrl} alt="slige-image" className="w-full h-full object-cover" />
+			<Link href={`/products/${item.id}`}>
+				<div className="w-30 py-4 h-30 flex items-center justify-center relative">
+					<Image
+						fill
+						src={item?.imageUrl}
+						alt="slige-image"
+						className="w-full h-full object-cover"
+					/>
 				</div>
 			</Link>
 			<div className="relative w-full">
@@ -50,9 +56,7 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 						<p className="text-xs">21 Mins</p>
 					</div>
 					<Link href={`/products/${item.id}`}>
-						<h1 className="my-1 text-sm mb-2">
-							{item.title}
-						</h1>
+						<h1 className="my-1 text-sm mb-2">{item.title}</h1>
 					</Link>
 
 					<p className="text-xs flex whitespace-nowrap gap-2 text-zinc-500 pb-2 justify-between">
@@ -71,7 +75,10 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 							<p className="text-xs text-zinc-500">$32.0</p>
 						</div>
 						<div className="bg-blue-500 p-2 text-white rounded-full">
-							<ShoppingCart size={18} onClick={() => handleCartClick(item.id)} />
+							<ShoppingCart
+								size={18}
+								onClick={() => handleCartClick(item.id)}
+							/>
 						</div>
 					</div>
 				</div>
