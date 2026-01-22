@@ -28,12 +28,10 @@ export const ProductsShowcase = ({ products }: { products: ProductsArr }) => {
 
 	useEffect(() => {
 		const initializeStore = async () => {
-			const products = await fetchAllProducts();
-
 			setAllProducts(products);
 		};
 		initializeStore();
-    }, []);
+    }, [products]);
     
 	return (
 		<Swiper

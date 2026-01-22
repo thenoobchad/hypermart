@@ -169,11 +169,11 @@ export default function ProductPage({
 							text-zinc-700 text-sm`}
 							onClick={() =>
 								handleClick(
-									item.tag as "details" | "reviews" | "faqs" | "soldby",
+									item.tag as "details" | "reviews" | "faqs" ,
 								)
 							}>
 							<item.icon size={20} />{" "}
-							{item.tag === "soldby" ? "sold by" : item.tag}
+							{item.tag}
 						</button>
 					))}
 				</div>
@@ -205,10 +205,7 @@ const tabs = [
 		tag: "faqs",
 		icon: HelpCircle,
 	},
-	{
-		tag: "soldby",
-		icon: Store,
-	},
+	
 ];
 const Details = () => {
 	return <div>details</div>;

@@ -22,12 +22,10 @@ type ProductType = {
 }
 
 export const ProductCard = ({ item }: { item: ProductType }) => {
-	const { addItem, items } = useCartStore();
-	const [open, setOpen] = useState(false);
+	const { addItem } = useCartStore();
+	
 	const handleCartClick = (id: string) => {
 		addItem(id);
-
-		setOpen(true);
 	};
 
 	return (
@@ -35,17 +33,17 @@ export const ProductCard = ({ item }: { item: ProductType }) => {
 			<span className="absolute bg-green-500 text-white px-2 rounded-br-sm text-sm left-0 z-20">
 				7% off
 			</span>
-			<span className="absolute right-2 flex flex-col gap-2 top-2 text-white">
-				<Bookmark size={20} className="text-zinc-50" fill="white" />
-				<Eye size={20} className="bg-" />
+			<span className="absolute right-2 flex flex-col gap-2 top-2  p-0.5 rounded-xs">
+				{/* <Bookmark size={20} className=""  fill="black" /> */}
+				
 			</span>
-			<Link href={`/products/${item.id}`}>
-				<div className="w-30 py-4 h-30 flex items-center justify-center relative">
+			<Link href={`/products/${item.id}`} className="pt-4">
+				<div className="w-40  h-40 flex items-center justify-center relative">
 					<Image
 						fill
 						src={item?.imageUrl}
 						alt="slige-image"
-						className="w-full h-full object-cover"
+						className="w-full  h-full object-cover"
 					/>
 				</div>
 			</Link>

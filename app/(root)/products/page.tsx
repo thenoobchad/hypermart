@@ -7,6 +7,7 @@ import { products } from "@/database/db/schema";
 export default async function Products() {
 
 	const allProducts = await db.select().from(products)
+	
   return (
 		<div className="px-4">
 			<h4>All Products</h4>

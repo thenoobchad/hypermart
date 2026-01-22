@@ -20,18 +20,15 @@ type BannerArr = BannerType[];
 
 export const HeroBanners = ({ banners }: { banners: BannerArr }) => {
 	const [allBanners, setAllBanners] = useState([]);
-	const [products, setProducts] = useState([]);
+	
 
 	useEffect(() => {
-		const initializeStore = async () => {
-			const banners = await fetchActiveBanners();
-			const products = await fetchAllProducts();
+		const initializeStore = async () => {	
 			setAllBanners(banners);
-			setProducts(products);
-			console.log(products);
+		
 		};
 		initializeStore();
-	}, []);
+	}, [banners]);
 
 	return (
 		<Swiper
@@ -43,14 +40,14 @@ export const HeroBanners = ({ banners }: { banners: BannerArr }) => {
 				dynamicBullets: true,
 			}}
 			className="mySwiper">
-			{banners.map((banner) => (
+			{allBanners.map((banner) => (
 				<SwiperSlide key={banner.id}>
-					<div className=" rounded-sm overflow-hidden w-full h-70 relative">
+					<div className=" rounded-sm overflow-hidden w-full h-70 sm:h-90 lg:h-100 relative">
 						<Image
 							fill
 							src={`${banner.imageUrl}`}
 							alt="slige-image"
-							className="h-full w-full object-cover"
+							className="h-full w-full object-cover bg-bottom"
 						/>
 					</div>
 				</SwiperSlide>
