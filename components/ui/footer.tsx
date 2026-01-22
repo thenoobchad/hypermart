@@ -8,10 +8,8 @@ export default function Footer() {
 				<div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
 					<div>
 						<h1 className="text-white pb-4 text-md font-bold">Hypermart</h1>
-						<p className="text-zinc-100 text-md">
-							Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores,
-							rem quaerat dicta fugit obcaecati ipsam eligendi fuga beatae
-							asperiores voluptates.
+						<p className="text-zinc-100 text-md text-justify">
+							Hyper superstores and mart. Reliable products from trusted brands. Excellent user experience and services all in one place.
 						</p>
 						<div className="flex gap-2 my-4 flex-col">
 							<div className="flex gap-4 text-md items-center ">

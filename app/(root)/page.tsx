@@ -1,11 +1,6 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
 import {
 	Headphones,
 	LayoutGrid,
-	
-	LocateFixed,
 	RotateCcw,
 	Shield,
 	ShoppingBag,
@@ -14,39 +9,18 @@ import {
 	Truck,
 } from "lucide-react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import { Autoplay } from "swiper/modules";
-
-
-import Image from "next/image";
-
-import { brands, categories, products } from "@/public/images";
-import { fashionbg } from "@/public/images";
-import Footer from "@/components/ui/footer";
-import { ProductCard } from "@/components/ui/product-card";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
+import { HeroBanners } from "@/components/hero-banners";
+import { ProductsShowcase } from "@/components/products-showcase";
+import { BrandsBanner } from "@/components/brands-banner";
+import { VendorShowcase } from "@/components/vendor-showcase";
+import { Categories } from "@/components/categories";
 import { fetchActiveBanners, fetchAllProducts } from "@/lib/query";
 
-
-export default function Home() {
-	const [banners, setBanners] = useState([]);
-	const [products, setProducts] = useState([])
-
-	useEffect(() => {
-		const initializeStore = async () => {
-			const banners = await fetchActiveBanners();
-			const products = await fetchAllProducts()
-			setBanners(banners);
-			setProducts(products)
-			console.log(products);
-		};
-		initializeStore();
-	}, []);
+export default async function Home() {
+	const products = await fetchAllProducts()
+	const banners = await fetchActiveBanners()
 	return (
 		<main className="min-h-screen w-full">
 			{/* CATEGORIES */}
@@ -59,34 +33,7 @@ export default function Home() {
 						<span className="text-sm">All</span>
 					</div>
 					<div className="flex gap-6 overflow-x-auto py-1">
-						<Swiper
-							slidesPerView={5}
-							spaceBetween={30}
-							breakpoints={{
-								620: {
-									slidesPerView: 6,
-									spaceBetween: 25,
-								},
-							}}
-							modules={[Pagination]}
-							className="mySwiper">
-							{categories.map((cat, index) => (
-								<SwiperSlide key={index}>
-									<div className="flex flex-col items-center gap-1">
-										<div className="p-2 bg-zinc-100 rounded-sm w-fit">
-											<div className="w-5 h-5 flex">
-												<img
-													src={`${cat?.img.src}`}
-													alt="category image"
-													className="object-cover"
-												/>
-											</div>
-										</div>
-										<span className="text-sm capitalize">{cat.name}</span>
-									</div>
-								</SwiperSlide>
-							))}
-						</Swiper>
+						<Categories />
 					</div>
 				</div>
 			</section>
@@ -94,27 +41,7 @@ export default function Home() {
 			{/* BANNERS */}
 			<section className=" px-4 flex flex-col gap-2 w-full">
 				<div className="h-full w-full">
-					<Swiper
-						slidesPerView={1}
-						spaceBetween={4}
-						modules={[Pagination]}
-						pagination={{
-							clickable: true,
-							dynamicBullets: true,
-						}}
-						className="mySwiper">
-						{banners.map((banner) => (
-							<SwiperSlide key={banner.id}>
-								<div className=" rounded-sm overflow-hidden w-full h-70">
-									<img
-										src={`${banner.imageUrl}`}
-										alt="slige-image"
-										className="h-full w-full object-cover"
-									/>
-								</div>
-							</SwiperSlide>
-						))}
-					</Swiper>
+					<HeroBanners banners={banners} />
 				</div>
 			</section>
 
@@ -133,41 +60,7 @@ export default function Home() {
 					<span className="text-">See All</span>
 				</div>
 				<div className="h-full w-full">
-					<Swiper
-						spaceBetween={4}
-						loop={true}
-						autoplay={{
-							delay: 2500,
-							disableOnInteraction: false,
-						}}
-						modules={[Autoplay]}
-						className="mySwiper"
-						breakpoints={{
-							320: {
-								slidesPerView: 5,
-								spaceBetween: 4,
-							},
-							640: {
-								slidesPerView: 6,
-								spaceBetween: 4,
-							},
-							768: {
-								slidesPerView: 7,
-								spaceBetween: 4,
-							},
-						}}>
-						{brands.map((brand, index) => (
-							<SwiperSlide key={index}>
-								<div className=" rounded-sm overflow-hidden h-20 w-20 bg-zinc-100  flex items-center justify-center border border-zinc-300 ">
-									<img
-										src={brand.logo.src}
-										alt="slige-image"
-										className="h-15 w-15 object-contain"
-									/>
-								</div>
-							</SwiperSlide>
-						))}
-					</Swiper>
+					<BrandsBanner />
 				</div>
 			</section>
 
@@ -188,51 +81,7 @@ export default function Home() {
 					<span className="text-">See All</span>
 				</div>
 				<div className="h-full">
-					<Swiper
-						slidesPerView={2}
-						spaceBetween={10}
-						modules={[Pagination]}
-						className="mySwiper"
-						breakpoints={{
-							320: {
-								slidesPerView: 2,
-								spaceBetween: 4,
-							},
-							640: {
-								slidesPerView: 3,
-								spaceBetween: 4,
-							},
-							768: {
-								slidesPerView: 4,
-								spaceBetween: 6,
-							},
-						}}>
-						{Array.from({ length: 9 }).map((_, index) => (
-							<SwiperSlide key={index}>
-								<div className="w-full rounded-md overflow-hidden border border-zinc-300 mb-4">
-									<img src="/images/amori.jpg" alt="slige-image" />
-									<div className="relative">
-										<div className="w-10 h-10 bg-amber-400 absolute -top-[50%] left-[5%] rounded-full outline-[3px] outline-amber-50" />
-										<div className="flex flex-col p-2 mt-4">
-											<h1 className="my-1 font-semibold text-sm">
-												TechSphere Electronics
-											</h1>
-
-											<p className="text-xs flex whitespace-nowrap gap-2 text-zinc-500 pb-1 justify-between">
-												<span className="flex gap-2">
-													<LocateFixed size={18} />
-													Kilimanjaro iwofe
-												</span>
-												<span className="bg-green-600/20 mx-4 px-1 rounded-sm">
-													0 m
-												</span>
-											</p>
-										</div>
-									</div>
-								</div>
-							</SwiperSlide>
-						))}
-					</Swiper>
+					<VendorShowcase />
 				</div>
 			</section>
 
@@ -255,31 +104,7 @@ export default function Home() {
 					</Link>
 				</div>
 				<div className="h-full">
-					<Swiper
-						slidesPerView={2}
-						spaceBetween={10}
-						modules={[Pagination]}
-						className="mySwiper"
-						breakpoints={{
-							320: {
-								slidesPerView: 2,
-								spaceBetween: 4,
-							},
-							640: {
-								slidesPerView: 3,
-								spaceBetween: 4,
-							},
-							768: {
-								slidesPerView: 4,
-								spaceBetween: 6,
-							},
-						}}>
-						{products.map((item, index) => (
-							<SwiperSlide key={index}>
-								<ProductCard  item={item} />
-							</SwiperSlide>
-						))}
-					</Swiper>
+					<ProductsShowcase products={products} />
 				</div>
 			</section>
 			{/* Features */}

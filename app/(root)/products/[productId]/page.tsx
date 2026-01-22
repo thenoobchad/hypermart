@@ -14,6 +14,7 @@ import {
 	Store,
 	Trash,
 } from "lucide-react";
+import Image from "next/image";
 import { use, useEffect, useState } from "react";
 
 type ProductType = {
@@ -29,8 +30,10 @@ export default function ProductPage({
 }) {
 	const { productId } = use(params);
 	const [products, setProducts] = useState([]);
-	
-	const { addItem, removeItem, items, clearCart } = useCartStore((state) => state)
+
+	const { addItem, removeItem, items, clearCart } = useCartStore(
+		(state) => state,
+	);
 	useEffect(() => {
 		const fetchProduct = async () => {
 			const allProducts = await fetchAllProducts();
@@ -40,8 +43,7 @@ export default function ProductPage({
 		fetchProduct();
 	}, []);
 
-	const [filteredItem]= products.filter((item) => item.id === productId);
-	
+	const [filteredItem] = products.filter((item) => item.id === productId);
 
 	const [tab, setTab] = useState<"details" | "reviews" | "faqs" | "soldby">(
 		"details",
@@ -50,25 +52,25 @@ export default function ProductPage({
 	const handleClick = (tab: "details" | "reviews" | "faqs" | "soldby") => {
 		setTab(tab);
 	};
-	
 
 	const existingCartItem = () => {
-		if (!filteredItem) return 0
-		
+		if (!filteredItem) return 0;
+
 		if (!items[filteredItem.id]) {
-			return 0
+			return 0;
 		}
 
 		return items[filteredItem.id];
-	}
+	};
 
 	return (
 		<main className="px-4">
 			<div className=" w-full grid grid-cols-1 gap-6 sm:grid-cols-2">
 				<div className="flex flex-col gap-2">
 					<h4 className="my-2 text-sm">{filteredItem?.title}</h4>
-					<div className="flex flex-col h-80">
-						<img
+					<div className="flex flex-col h-80 relative">
+						<Image
+							fill
 							src={`${filteredItem?.imageUrl}`}
 							alt="product-image"
 							className="object-contain w-full h-full"
