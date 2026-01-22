@@ -3,6 +3,7 @@
 import { fetchAllProducts } from "@/lib/query";
 import { useCartStore } from "@/store/cart-store";
 import { Minus, Plus, ShoppingCart, Trash, X } from "lucide-react";
+import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 
 export const CartBadge = () => {
@@ -62,11 +63,13 @@ export const CartBadge = () => {
 			</div>
 			<div
 				className={`w-screen z-80  backdrop-blur-xs right-0 top-0 fixed h-dvh flex justify-end transition-all delay-150 ${!isOpen ? "translate-x-full" : "translate-x-0"}`}>
-				<div className="flex bg-white right-0 relative  z-99 w-[80dvw] sm:w-[60dvw] md:w-[50dvw] lg:w-[40dvw] p-4 flex-col gap-4">
+				<div className="flex bg-white right-0 relative  z-99 w-[80dvw] border border-zinc-800 sm:w-[60dvw] md:w-[50dvw] lg:w-[40dvw] p-4 flex-col gap-4">
 					<div className="flex justify-between w-full items-start border-b pb-2">
 						<div>
-							<h4 className="text-lg ">Cart</h4>
-							<p>Please login to continue</p>
+							<h4 className="text-lg ">
+								Cart <span className="text-red-600">*</span>
+							</h4>
+							<p className="text-sm">Please login to continue</p>
 						</div>
 						<button onClick={() => setIsOpen(false)} className="cursor-pointer">
 							<X />
@@ -77,10 +80,11 @@ export const CartBadge = () => {
 							itemsInCart.map((item, i) => (
 								<div
 									key={i}
-									className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center">
+									className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center relative">
 									{/* Image */}
 									<span>
-										<img
+										<Image
+											fill
 											src={`${item.imageUrl}`}
 											alt="product-image"
 											className="h-14 w-16 bg-black rounded object-cover"
@@ -145,20 +149,18 @@ export const CartBadge = () => {
 					)}
 
 					<div className="mt-auto w-full flex gap-2">
-						<button className="bg-blue-600 py-1.5 text-white rounded w-full">
+						<button className="bg-blue-600 py-1.5 text-white rounded-xs text-sm w-full">
 							Login to continue
 						</button>
 						<button
-							className="bg-red-600 py-1.5 text-white rounded w-full"
+							className="bg-red-600 py-1.5 text-white rounded-xs text-sm w-full"
 							onClick={() => clearCart()}>
 							{totalItems && totalItems > 0 ?
 								"Clear Cart"
-							:	"Add items to Cart"}
-							
-							{" "}{totalItems && totalItems != 0 ?
-									<span className="text-xs">({totalItems})</span>
-								:	""}
-							
+							:	"Add items to Cart"}{" "}
+							{totalItems && totalItems != 0 ?
+								<span className="text-xs">({totalItems})</span>
+							:	""}
 						</button>
 					</div>
 				</div>
