@@ -87,7 +87,7 @@ export const CartBadge = () => {
 											fill
 											src={`${item.imageUrl}`}
 											alt="product-image"
-											className=" bg-black rounded object-cover"
+											className="  rounded-xs object-cover"
 										/>
 									</span>
 

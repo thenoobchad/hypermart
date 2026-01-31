@@ -17,6 +17,7 @@ import { BrandsBanner } from "@/components/brands-banner";
 import { VendorShowcase } from "@/components/vendor-showcase";
 import { Categories } from "@/components/categories";
 import { fetchActiveBanners, fetchAllProducts } from "@/lib/query";
+import Image from "next/image";
 
 export default async function Home() {
 	const products = await fetchAllProducts()
@@ -107,6 +108,23 @@ export default async function Home() {
 					<ProductsShowcase products={products} />
 				</div>
 			</section>
+
+
+			<section className="my-10 flex flex-col gap-2 w-full h-[40vh] lg:h-[60vh] relative overflow-hidden">
+				<Image
+					src="/images/backgrounds/fashionbg.jpg"
+					fill
+					alt="banner_large"
+					className="object-cover bg-auto bg-top"
+				/> <div className="absolute text-center h-full w-full flex flex-col items-start justify-center pl-10 lg:pl-30 ">
+					<h4 className="text-5xl lg:text-7xl text-white">23<sup>%</sup>Off Sales</h4>
+					<p className="uppercase text-white font-semibold">Special Offers</p>
+					<button className="bg-blue-600 px-5 py-2 mt-5 text-white rounded-sm">
+Shop Now
+					</button>
+				</div>
+			</section>
+
 			{/* Features */}
 			<section className="my-10 px-4 flex flex-col gap-2 w-full h-full ">
 				<div className="grid grid-cols-2 gap-4 grid-rows-2">
@@ -152,6 +170,9 @@ export default async function Home() {
 					</div>
 				</div>
 			</section>
+
+
+
 			{/* Delivery Info */}
 			<section className="my-10 px-1 flex flex-col gap-2 w-full h-full">
 				<div className="bg-blue-600 px-3 pt-4  rounded-sm flex flex-col gap-2">

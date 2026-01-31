@@ -44,7 +44,7 @@ export const Header = () => {
 					</div>
 					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
 						<div className="flex gap-4 items-center">
-							<ThemeSwitcher />
+							{/* <ThemeSwitcher /> */}
 							<CartBadge />
 							<button onClick={handleAuthModal}>
 								<User size={20} className="md:hidden" />
