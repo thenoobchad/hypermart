@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/database";
-import { banners, NewProduct, Product, products } from "@/database/db/schema";
+import { banners, products } from "@/database/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";

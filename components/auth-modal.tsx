@@ -1,6 +1,5 @@
 "use client"
 
-import { signUpAction } from "@/lib/actions";
 import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
