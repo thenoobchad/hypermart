@@ -3,13 +3,6 @@ import { InferInsertModel, InferSelectModel, sql } from "drizzle-orm";
 import { link } from "fs";
 
 
-export const users = pgTable("users", {
-	id: uuid().primaryKey().default(sql`gen_random_uuid()`),
-	name: varchar({ length: 255 }).notNull(),
-	age: integer().notNull(),
-	email: varchar({ length: 255 }).notNull().unique(),
-});
-
 
 export const banners = pgTable("banners", {
 	id: uuid()
