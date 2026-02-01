@@ -6,9 +6,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
 import { deleteImage } from "./cloudinary";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+
 
 type ProductType = {
 	title: string;
@@ -21,28 +19,7 @@ type ProductType = {
 };
 
 
-export async function signUpAction(formData: FormData) {
-	const email = formData.get("email") as string;
-	const password = formData.get("password") as string;
-	
 
-
-	try {
-		await auth.api.signUpEmail({
-			body: {
-				email,
-				password,
-				name:""
-			},
-			headers: await headers(),
-		});
-
-		
-		redirect("/dashboard");
-	} catch (error: any) {
-		return { error: error.message || "Failed to sign up" };
-	}
-}
 
 //Product Actions
 export async function createProduct(formData: FormData) {

@@ -1,32 +1,26 @@
-"use client";
 
-import { categories } from "@/public/images";
 import {
 	ChevronDown,
 	Clipboard,
-	LayoutGrid,
+
 	LocateIcon,
-	LogIn,
+
 	Menu,
-	Search,
-	ShoppingCart,
-	Sun,
-	User,
+	Search
 } from "lucide-react";
-import { useState } from "react";
-import { Autoplay, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Breadcrumbs } from "./breadcrumbs";
+
+
 import { CartBadge } from "./cart-badge";
-import AuthModal from "../auth-modal";
-import { ThemeSwitcher } from "../theme-switcher";
+
 import Link from "next/link";
 
-export const Header = () => {
-	const [isActive, setIsActive] = useState(false);
-	const handleAuthModal = () => {
-		setIsActive(true);
-	};
+import { SearchInput } from "./search-input";
+import { AuthButton } from "./auth-button";
+import { getSession } from "@/lib/auth";
+
+
+export const Header = async () => {
+	const session = await getSession()
 	return (
 		<>
 			<header className=" p-4 flex flex-col gap-2 w-full">
@@ -44,44 +38,15 @@ export const Header = () => {
 					</div>
 					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
 						<div className="flex gap-4 items-center">
-							{/* <ThemeSwitcher /> */}
+							{session && <p className="text-sm text-zinc-500">{session?.user?.email}</p>}
 							<CartBadge />
-							<button onClick={handleAuthModal}>
-								<User size={20} className="md:hidden" />
-								<span className="hidden md:flex  gap-2 items-center bg-blue-600/10 text-blue-600 text-sm px-4 py-1 rounded">
-									<LogIn size={20} />
-									Login
-								</span>
-							</button>
+							<AuthButton session={session?.user} />
 						</div>
 						<div className="flex-1 w-full">
 							<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">
 								<div className="flex items-center gap-6 overflow-hidden h-5">
 									<Search size={20} />
-									<Swiper
-										direction={"vertical"}
-										slidesPerView={1}
-										loop={true}
-										autoplay={{
-											delay: 3500,
-											disableOnInteraction: false,
-										}}
-										modules={[Autoplay]}
-										className="mySwiper"
-										style={{ height: "100%" }}>
-										<SwiperSlide>
-											<p className="text-zinc-500">Search &quot;Milk&quot;</p>
-										</SwiperSlide>
-										<SwiperSlide>
-											<p className="text-zinc-500">Search &quot;Tea&quot;</p>
-										</SwiperSlide>
-										<SwiperSlide>
-											<p className="text-zinc-500">Search &quot;Milk&quot;</p>
-										</SwiperSlide>
-										<SwiperSlide>
-											<p className="text-zinc-500">Search &quot;Sweet&quot;</p>
-										</SwiperSlide>
-									</Swiper>
+									<SearchInput />
 								</div>
 								<Clipboard size={20} />
 							</div>
@@ -91,11 +56,7 @@ export const Header = () => {
 
 				{/* <Breadcrumbs /> */}
 			</header>
-			{isActive && (
-				<div className="fixed z-90 top-0">
-					<AuthModal isActive={isActive} setActive={setIsActive} />
-				</div>
-			)}
+
 		</>
 	);
 };

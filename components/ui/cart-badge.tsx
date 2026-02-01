@@ -150,7 +150,7 @@ export const CartBadge = () => {
 
 					<div className="mt-auto w-full flex gap-2">
 						<button className="bg-blue-600 py-1.5 text-white rounded-xs text-sm w-full">
-							Login to continue
+							Check Out
 						</button>
 						<button
 							className="bg-red-600 py-1.5 text-white rounded-xs text-sm w-full"

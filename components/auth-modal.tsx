@@ -1,25 +1,66 @@
 "use client"
 
+import { signUpAction } from "@/lib/actions";
 import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { signIn, signUp } from "@/lib/auth-client";
 
 type AuthModalProp = {
 	isActive: boolean;
 	setActive: (arg: boolean) => void
 }
 
-export default function AuthModal({isActive, setActive}: AuthModalProp) {
-const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN"); 
+export default function AuthModal({ isActive, setActive }: AuthModalProp) {
+	const router = useRouter()
+	const [loading, setLoading] = useState(false)
+	const [error, setError] = useState("")
+	const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 	const handleFormSwitch = () => {
-	setAuthType((prev) => prev === 'SIGN_IN' ?'SIGN_UP': 'SIGN_IN' )
+		setAuthType((prev) => prev === 'SIGN_IN' ? 'SIGN_UP' : 'SIGN_IN')
 	}
-	
+
 	const handleClose = () => {
 		setActive(false)
 	}
-  return (
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		setLoading(true)
+
+		const formData = new FormData(e.currentTarget)
+
+		const email = String(formData.get("email"))
+		const password = String(formData.get("password"))
+		try {
+
+			await signUp.email({name:"",
+				email, password,
+			}, {
+				onRequest: () => { },
+				onResponse: () => { },
+				onError: (ctx) => {
+					setError(ctx.error.message)
+				 },
+				onSuccess: () => {
+					setActive(false),
+						router.refresh()
+				 },
+			})
+
+			setLoading(false)
+
+
+
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+
+	return (
 		<div className="w-screen min-h-screen flex items-center justify-center bg-white/20 backdrop-blur-sm ">
-			<div className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50 ">
+			<form onSubmit={handleSubmit} className="flex flex-col gap-4 border rounded-sm w-[80%] sm:w-75 bg-zinc-50 ">
 				<div className="flex justify-between border-b py-4 px-4">
 					<span>
 						<h4 className="flex gap-2 items-center text-xl font-semibold">
@@ -28,7 +69,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 						<p className="text-sm">
 							{authType === "SIGN_IN" ?
 								"Sign in to your account to continue"
-							:	"Enter your details to get started"}
+								: "Enter your details to get started"}
 						</p>
 					</span>
 					<span onClick={handleClose}>
@@ -37,7 +78,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 				</div>
 
 				<div className="flex flex-col gap-3 max-h-[60vh] overflow-auto">
-					{authType === "SIGN_UP" && (
+					{/* {authType === "SIGN_UP" && (
 						<div className="flex flex-col gap-2 px-4">
 							<label htmlFor="phone" className="text-sm">
 								Full Name<span className="text-red-600">*</span>
@@ -50,7 +91,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 								/>{" "}
 							</div>
 						</div>
-					)}
+					)} */}
 
 					<div className="flex flex-col gap-2 px-4">
 						<label htmlFor="phone" className="text-sm">
@@ -58,13 +99,14 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 						</label>
 						<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
 							<input
+								name="email"
 								type="text"
 								className="outline-none"
 								placeholder="Enter your email"
 							/>{" "}
 						</div>
 					</div>
-
+					{/* 
 					<div className="flex flex-col gap-2 px-4">
 						<label htmlFor="phone" className="text-sm">
 							Mobile Number <span className="text-red-600">*</span>
@@ -77,7 +119,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 							/>{" "}
 							<Phone size={18} />
 						</div>
-					</div>
+					</div> */}
 
 					<div className="flex flex-col gap-2 px-4">
 						<label htmlFor="phone" className="text-sm">
@@ -85,6 +127,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 						</label>
 						<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
 							<input
+								name="password"
 								type="text"
 								className="outline-none"
 								placeholder="Enter a 12 digit number"
@@ -114,9 +157,9 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 					{authType === "SIGN_IN" && (
 						<p className="text-sm text-right px-4">Forgot password?</p>
 					)}
-
+					{error && <p className="text-sm italic text-red-500 text-center">{error}</p>}
 					<button className="bg-blue-600 my-2 mx-4 text-zinc-50 py-2 mt-4 rounded">
-						{authType === "SIGN_UP" ? "Sign up" : "Sign in"}
+						{loading ? "loading..." : authType === "SIGN_UP" ? "Sign up" : "Sign in"}
 					</button>
 					<div className="flex items-center gap-2">
 						<div className="w-full h-px bg-zinc-200" />
@@ -138,7 +181,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 								Login
 							</span>
 						</p>
-					:	<p className="text-sm py-3 text-center">
+						: <p className="text-sm py-3 text-center">
 							Don&apos;t have an account?{"  "}
 							<span
 								onClick={handleFormSwitch}
@@ -148,7 +191,7 @@ const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
 						</p>
 					}
 				</div>
-			</div>
+			</form>
 		</div>
 	);
 }
