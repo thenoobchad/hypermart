@@ -40,7 +40,7 @@ export const sessions = pgTable(
 export const accounts = pgTable(
   "accounts",
   {
-	id: text("id").primaryKey(),
+	  id: text("id").primaryKey(),
 	accountId: text("account_id").notNull(),
 	providerId: text("provider_id").notNull(),
 	userId: text("user_id")
@@ -64,7 +64,7 @@ export const accounts = pgTable(
 export const verifications = pgTable(
   "verifications",
   {
-	id: text("id").primaryKey(),
+	  id: text("id").primaryKey(),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: timestamp("expires_at").notNull(),
@@ -79,11 +79,11 @@ export const verifications = pgTable(
 
 
 export const banners = pgTable("banners", {
-	id: uuid()
+	id: uuid("id")
 		.primaryKey()
 		.default(sql`gen_random_uuid()`),
 	title: varchar("title", { length: 255 }).notNull(),
-	link: text("link"),
+	link: text("link"), 
 	imageUrl: text("image_url"),
 	imagePublicId: text("image_id"),
 	displayOrder: integer("display_order").default(0),
@@ -92,7 +92,7 @@ export const banners = pgTable("banners", {
 });
 
 export const products = pgTable("products", {
-	id: uuid().primaryKey().default(sql`gen_random_uuid()`),
+	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
 	title: varchar("title",{ length: 255 }).notNull(),
 	description: text("description"),
 	category: varchar("category",{ length: 255 }).notNull(),
@@ -106,6 +106,21 @@ export const products = pgTable("products", {
 	imagePublicId: text("image_id"),
 });
 
+
+export const carts = pgTable("carts", {
+	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+	userId: text("user_id")
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export const cartItems = pgTable("cart_items", {
+	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+	cartId: uuid("cart_id").notNull().references(() => carts.id, {onDelete: "cascade"}),
+	productId: uuid("product_id").references(() => products.id).notNull(),
+	quantity: integer("quantity").notNull().default(1),
+})
 
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),

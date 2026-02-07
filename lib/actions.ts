@@ -6,6 +6,11 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
 import { deleteImage } from "./cloudinary";
+import { auth } from "./auth";
+import { headers } from "next/headers";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { APIError } from "better-auth/api";
+
 
 
 type ProductType = {
@@ -19,7 +24,36 @@ type ProductType = {
 };
 
 
+export async function signupAction(formData: FormData) {
+	const email = String(formData.get("email"))
+	const password = String(formData.get("password"))
+	
 
+	if (!email) return { error: "Enter a valid email." }
+	if (!password) return { error: "Enter missing credentials." }
+
+	try {
+		await auth.api.signUpEmail({
+			body: {
+				name:"",
+				email,
+				password
+			},
+			headers: await headers()
+		})
+		return {error: null}
+	} catch (err) {
+		if (isRedirectError(err)) throw err;
+
+		if (err instanceof APIError) {
+			return {
+				message: err.message || "Authentication failed."
+			}
+		}
+		console.error(err)
+		return { message: "An unexpected error occured."}
+	}
+}
 
 //Product Actions
 export async function createProduct(formData: FormData) {

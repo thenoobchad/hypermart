@@ -4,6 +4,8 @@ import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/auth-client";
+import { signupAction } from "@/lib/actions";
+import { toast } from "sonner";
 
 type AuthModalProp = {
 	isActive: boolean;
@@ -29,31 +31,22 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 
 		const formData = new FormData(e.currentTarget)
 
-		const email = String(formData.get("email"))
-		const password = String(formData.get("password"))
 		try {
-
-			await signUp.email({name:"",
-				email, password,
-			}, {
-				onRequest: () => { },
-				onResponse: () => { },
-				onError: (ctx) => {
-					setError(ctx.error.message)
-				 },
-				onSuccess: () => {
-					setActive(false),
-						router.refresh()
-				 },
-			})
-
-			setLoading(false)
-
-
-
+			
+			const { error } = await signupAction(formData)
+			if (error) {
+				setError(error)
+				
+				return
+			}
+			toast.success("Account created successfully")
+			router.refresh()
+			setActive(false)
 		} catch (error) {
 			console.error(error)
 		}
+
+		setLoading(false)
 	}
 
 
@@ -158,7 +151,7 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 					)}
 					{error && <p className="text-sm italic text-red-500 text-center">{error}</p>}
 					<button className="bg-blue-600 my-2 mx-4 text-zinc-50 py-2 mt-4 rounded">
-						{loading ? "loading..." : authType === "SIGN_UP" ? "Sign up" : "Sign in"}
+						{loading ? "Signing in..." : authType === "SIGN_UP" ? "Sign up" : "Sign in"}
 					</button>
 					<div className="flex items-center gap-2">
 						<div className="w-full h-px bg-zinc-200" />

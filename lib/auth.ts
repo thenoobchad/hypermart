@@ -19,8 +19,10 @@ export const auth = betterAuth({
         expiresIn: 60 * 60 * 24 * 7, 
         freshAge: 0, 
     },
+    
     user: {
         fields: {
+            
             name: undefined,
         },
         additionalFields: {

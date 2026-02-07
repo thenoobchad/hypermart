@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AlertComponent } from "@/components/ui/alert";
-
+import { Toaster } from 'sonner';
 
 const poppins = localFont({
 	src: [
@@ -43,7 +43,16 @@ export default function AppLayout({
 				
 					{children}
 					<AlertComponent />
-				
+				<Toaster 
+					position="top-center"
+					toastOptions={{
+						classNames: {
+							toast: 'rounded-sm',
+							title: 'text-[16px]',
+							
+						}
+					}}
+				/>
 			</body>
 		</html>
 	);
