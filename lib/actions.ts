@@ -326,3 +326,64 @@ export async function removeProductFromCart(id: string) {
 		console.error("Error adding product to cart:", error);
 	}
 }
+
+export async function clearCart() {
+
+	const session = await auth.api.getSession({
+		headers: await headers()
+	})
+
+	try {
+		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
+
+		if(existingCart.length > 0) {
+			await db.delete(carts).where(eq(carts.id, existingCart[0].id))
+		}
+
+		revalidatePath("/dashboard/cart")
+
+	} catch (error) {
+		console.error("Error clearing cart:", error);
+	}
+}
+
+export async function deleteFromCart(id: string) {
+
+	const session = await auth.api.getSession({
+		headers: await headers()
+	})
+
+	try {
+		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
+		
+		
+		if (existingCart.length > 0) {
+			await db.delete(cartItems).where(
+				and(
+					eq(cartItems.productId, id),
+					eq(cartItems.cartId, existingCart[0].id)
+				)
+			)
+
+			revalidatePath("/dashboard/cart")
+				
+		}
+
+	} catch (error) {
+		console.error("Error deleting product from cart:", error);
+	}
+}
+
+export async function getCartItems(userId:string) { 
+	
+	if (!userId) return []
+	
+	const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))
+
+	if (existingCart.length > 0) {
+		const cartItemsData = await db.select().from(cartItems).where(eq(cartItems.cartId, existingCart[0].id))
+		return cartItemsData
+	}
+
+	return []
+}

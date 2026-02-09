@@ -1,12 +1,17 @@
-import { addProductToCart, removeProductFromCart } from "@/lib/actions";
+
+
+import { addProductToCart, clearCart, deleteFromCart, removeProductFromCart } from "@/lib/actions";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 
 type CartItems = Record<string, number>
 
 interface CartState {
-	items: CartItems;
-	addItem: (id: string) => void;
+	items: Promise<CartItems> | CartItems;
+	
+    setItems: (items: CartItems) => void;
+    addItem: (id: string) => void;
 	removeItem: (id: string) => void;
 	deleteFromCart: (id: string) => void;
     clearCart: () => void;
@@ -15,10 +20,13 @@ interface CartState {
     setAlert: (open: boolean, message?: string) => void;
 }
 
+
+
 export const useCartStore = create<CartState>()(
 	persist(
-		(set) => ({
+		(set) => ({ 
             items: {},
+            setItems: (items: CartItems) => set({items}),
             alertMessage: "",
             setAlert: (open, message ="") => set({isAlertOpen: open, alertMessage: message}),
             isAlertOpen: false,
@@ -50,13 +58,18 @@ export const useCartStore = create<CartState>()(
                
             },
 
-            deleteFromCart: (id) => set((state) => {
+            deleteFromCart: async (id) => set((state) => {
                 const newItems = { ...state.items }
                 delete newItems[id]
-                return { items: newItems}
+                
+                deleteFromCart(id)
+                return { items: newItems }
             }) ,
 
-            clearCart: () => set({ items: {} }),
+            clearCart: async () => {
+                set({ items: {} })
+                await clearCart()
+            },
             
 		}),
 		{ name: "cart-storage" }

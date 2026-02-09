@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo } from "react";
 export const CartBadge = () => {
 	const [products, setProducts] = useState([]);
 
-	const { items, removeItem, clearCart, addItem } = useCartStore();
+	const { items, removeItem, clearCart, addItem, deleteFromCart } = useCartStore();
 	const [isOpen, setIsOpen] = useState(false);
 	const totalItems =
 		items ? Object.values(items).reduce((a, b) => a + b, 0) : 0;
@@ -102,7 +102,7 @@ export const CartBadge = () => {
 											<Trash
 												className="cursor-pointer"
 												size={18}
-												onClick={() => removeItem(item.id)}
+												onClick={() => deleteFromCart(item.id)}
 											/>
 										</div>
 
