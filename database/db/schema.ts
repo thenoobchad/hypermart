@@ -1,7 +1,7 @@
-import { integer, pgTable, varchar, text, decimal, timestamp, uuid, boolean, index } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, text, decimal, timestamp, uuid, boolean, index, pgEnum } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, relations, sql } from "drizzle-orm";
 
-
+export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -15,7 +15,7 @@ export const users = pgTable("users", {
 	.$onUpdate(() => new Date())
 	.notNull(),
   username: text("username"),
-  role: text("role").default("user").notNull(),
+  role: roleEnum("role").default("USER").notNull(),
 });
 
 export const sessions = pgTable(

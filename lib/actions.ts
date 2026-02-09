@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/database";
-import { banners, products } from "@/database/db/schema";
+import { banners, products, users } from "@/database/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
@@ -10,6 +10,9 @@ import { auth } from "./auth";
 import { headers } from "next/headers";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { APIError } from "better-auth/api";
+import { success } from "better-auth/*";
+import { redirect } from "next/navigation";
+
 
 
 
@@ -29,8 +32,8 @@ export async function signupAction(formData: FormData) {
 	const password = String(formData.get("password"))
 	
 
-	if (!email) return { error: "Enter a valid email." }
-	if (!password) return { error: "Enter missing credentials." }
+	if (!email) return { success: false, message: "Enter a valid email." }
+	if (!password) return { success: false, message: "Enter a valid password." }
 
 	try {
 		await auth.api.signUpEmail({
@@ -41,19 +44,62 @@ export async function signupAction(formData: FormData) {
 			},
 			headers: await headers()
 		})
-		return {error: null}
+		return {success: true}
 	} catch (err) {
 		if (isRedirectError(err)) throw err;
 
 		if (err instanceof APIError) {
 			return {
+				success	: false,
 				message: err.message || "Authentication failed."
 			}
 		}
 		console.error(err)
-		return { message: "An unexpected error occured."}
+		return { success: false, message: "An unexpected error occured."}
 	}
 }
+
+export async function signinAction(formData: FormData) {
+	const email = String(formData.get("email"))
+	const password = String(formData.get("password"))
+
+
+	if (!email) return { error: "Enter a valid email." }
+	if (!password) return { error: "Enter missing credentials." }
+
+
+
+	try {
+		const res = await auth.api.signInEmail({
+			body: {
+				
+				email,
+				password
+			},
+			headers: await headers() 
+		})
+		
+		
+		return {
+			success: true,
+			role: res.user?.role || "USER"
+		 } 
+		
+
+	} catch (err) {
+		if (isRedirectError(err)) throw err;
+
+		if (err instanceof APIError) {
+			return {
+				success	: false,
+				message: err.message || "Authentication failed."
+			}
+		}
+		console.error(err)
+		return { success: false, message: "An unexpected error occured." }
+	}
+}
+
 
 //Product Actions
 export async function createProduct(formData: FormData) {

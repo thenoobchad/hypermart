@@ -32,7 +32,8 @@ export const auth = betterAuth({
             },
             role: {
                 type: "string",
-                defaultValue: "user"
+                defaultValue: "USER",
+                input: false,
             }
         }
     },
@@ -44,6 +45,7 @@ export const auth = betterAuth({
         nextCookies() 
     ]
 });
+
 
 export const getSession = async () => auth.api.getSession({
     headers: await headers()

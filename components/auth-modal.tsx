@@ -4,7 +4,7 @@ import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signUp } from "@/lib/auth-client";
-import { signupAction } from "@/lib/actions";
+import { signinAction, signupAction } from "@/lib/actions";
 import { toast } from "sonner";
 
 type AuthModalProp = {
@@ -28,22 +28,46 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setLoading(true)
-
+		setError("")
 		const formData = new FormData(e.currentTarget)
 
 		try {
-			
-			const { error } = await signupAction(formData)
-			if (error) {
-				setError(error)
+
+			if(authType === "SIGN_IN") {
+				const { success, message, role } = await signinAction(formData)
+
+				if (!success) {
+					setError(message || "Sign in failed.")
+				} else {
+
+					if (role === "ADMIN") {
+						toast.success("Welcome back, Admin!")
+						router.push("/admin")
+						setActive(false)
+						return
+					} else { 
+						toast.success("Signed in successfully")
+						setActive(false)
+						router.refresh()
+					}
+					
+				}
 				
-				return
+				
+			} else {
+				const { success, message } = await signupAction(formData)
+
+				if (!success) { setError(message || "Failed to create account") } else {
+					toast.success("Account created successfully")
+					setActive(false)
+					router.refresh()
+				 }
+
 			}
-			toast.success("Account created successfully")
-			router.refresh()
-			setActive(false)
+
 		} catch (error) {
 			console.error(error)
+			setError("An error occurred. Please try again.")
 		}
 
 		setLoading(false)

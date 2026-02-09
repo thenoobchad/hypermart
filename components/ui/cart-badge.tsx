@@ -83,12 +83,14 @@ export const CartBadge = () => {
 									className="flex gap-2 w-full  p-3 border border-zinc-200 rounded items-center relative">
 									{/* Image */}
 									<span className="relative h-20 w-20">
-										<Image
-											fill
-											src={`${item.imageUrl}`}
-											alt="product-image"
-											className="  rounded-xs object-cover"
-										/>
+										{item?.imageUrls && (
+											<Image
+												fill
+												src={`${item?.imageUrls}`}
+												alt="product-image"
+												className="  rounded-xs object-cover"
+											/>
+										)}
 									</span>
 
 									<div className="flex-1">

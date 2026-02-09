@@ -38,9 +38,9 @@ export const Header = async () => {
 					</div>
 					<div className="flex flex-col md:flex-row-reverse items-end gap-2 justify-center  md:items-center">
 						<div className="flex gap-4 items-center">
-							{session && <p className="text-sm text-zinc-500">{session?.user?.email}</p>}
+							{session && <p className="text-sm text-zinc-500">Hi 👋 {session?.user?.email}</p>}
 							<CartBadge />
-							<AuthButton session={session?.user} />
+							<AuthButton session={session} />
 						</div>
 						<div className="flex-1 w-full">
 							<div className="text-sm flex items-center justify-between w-full  p-2 bg-zinc-100 rounded-sm">

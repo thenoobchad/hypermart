@@ -1,82 +1,34 @@
-"use client";
 
 import { Bike, Boxes, Calendar, ChevronDown, Divide, ShoppingBasket, ShoppingCart, Store, TrendingDown, TrendingUp } from "lucide-react";
-import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Tooltip,
-	scales,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-ChartJS.register(
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Tooltip
-);
 
-export default function AdminPage() {
-	const dataArray = Array.from({ length: 20 }).map((_, i) => i)
-	const dataArray2 = Array.from({ length: 20 }).map((_, i) => i);
-	const data = {
-		labels: dataArray,
-		datasets: [
-			{
-				data: [
-					0, 10, 0, 0, 4,  0, 15,0, 0, 0, 0, 4,0, 0, 1, 9,
-					0,0, 8,0,0,0,0
-				],
-				borderColor: "#3b82f6",
-				backgroundColor: "rgba(59, 130, 246, 0.1)",
-				borderWidth: 2,
-				pointRadius: 0,
-				fill: true,
-				tension: 0.4,
-			},
-		],
-	};
 
-	const data2 = {
-		labels: dataArray,
-		datasets: [
-			{
-				data: [0, 0, 0, 0, 4, 0, 15, 0, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-				borderColor: "#c61a09",
-				backgroundColor: "#c61a09",
-				borderWidth: 2,
-				pointRadius: 0,
-				fill: true,
-				stepped: true,
-			},
-		],
-	};
+import { auth, getSession } from "@/lib/auth";
+import { headers } from "next/headers";
+import { Charts } from "./_components/charts";
 
-	const options = {
-		responsive: true,
-		maintainAspectRatio: false,
-		scales: {
-			x: { display: false },
-			y: { display: false, min: 0},
-		},
-		plugins: {
-			legend: {
-				display: false,
-			},
-			tooltip: {
-				enabled: false,
-			},
-		},
-	};
 
+export default async function AdminPage() {
+
+	const session = await getSession()
+
+	
 	const products = Array.from({ length: 5 })
+
+	if (!session || session.user?.role !== "ADMIN") {
+		return (
+			<div className="flex flex-col  items-center justify-center h-screen w-full">
+				<p className="text-xl">Please log in to access the admin dashboard.</p>
+			</div>
+		);
+	}
+
 	return (
 		<main className="flex w-full mx-auto flex-col gap-2 h-full">
 			<section className=" p-4 outline outline-zinc-100 bg-white mx-1 rounded flex flex-col gap-4">
 				<p>Welcome Back, Hyperadmin.</p>
+				<div className="text-sm overflow-clip">
+					{JSON.stringify(session, null, 2)}
+				</div>
 				<div className="flex justify-between">
 					<div>
 						<p className="text-zinc-500 uppercase text-sm">Sales</p>
@@ -115,43 +67,7 @@ export default function AdminPage() {
 				</div>
 			</section>
 
-			<section className=" p-4  outline outline-zinc-100 bg-white mx-1 rounded flex flex-col gap-4 w-full">
-				<div className="flex flex-col gap-5 w-full">
-					<div>
-						<p className="text-zinc-500 uppercase text-sm">Revenue</p>
-						<div className="flex  gap-2 items-end">
-							<h4 className="text-3xl ">$8,980.70 </h4>
-							<span className="flex items-center gap-1 text-green-500 text-sm">
-								31 Days <Calendar size={16} />
-							</span>
-						</div>
-					</div>
-
-					<div className="w-full h-12.5 flex justify-center">
-						<Line data={data} options={options} width={100} height={100} />
-					</div>
-				</div>
-			</section>
-
-			<section className=" p-4  outline outline-zinc-100 bg-white mx-1 rounded flex flex-col gap-4 w-full">
-				<div className="flex flex-col gap-5 w-full">
-					<div>
-						<p className="text-zinc-500 uppercase text-sm">
-							New user regisrations
-						</p>
-						<div className="flex  gap-2 items-end">
-							<h4 className="text-3xl ">24 </h4>
-							<span className="flex items-center gap-1 text-green-500 text-sm">
-								31 Days <Calendar size={16} />
-							</span>
-						</div>
-					</div>
-
-					<div className="w-full h-[50px] ">
-						<Line data={data2} options={options} width={100} height={100} />
-					</div>
-				</div>
-			</section>
+		<Charts />
 
 			{/* Stats boxes */}
 

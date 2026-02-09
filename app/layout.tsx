@@ -45,12 +45,17 @@ export default function AppLayout({
 					<AlertComponent />
 				<Toaster 
 					position="top-center"
+					richColors
+					
 					toastOptions={{
+						style: {
+							borderRadius: '2px',
+							boxShadow:"none"
+						},
 						classNames: {
-							toast: 'rounded-sm',
 							title: 'text-[16px]',
-							
-						}
+							description: 'text-md',
+						},
 					}}
 				/>
 			</body>
