@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/database";
-import { banners, products, users } from "@/database/db/schema";
+import { banners, cartItems, carts, products, users } from "@/database/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
@@ -233,4 +233,80 @@ export async function deleteBanner(id: string, publicId: string) {
 	await deleteImage(publicId);
 
 	revalidatePath("/admin/banners");
+}
+
+export async function addProductToCart(id: string) { 
+
+	const session = await auth.api.getSession({
+		headers: await headers()
+	})	
+
+	try {
+		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
+
+		if (existingCart.length > 0) {
+			const existingCartItem = await db.select().from(cartItems).where(
+				eq(cartItems.productId, id))
+			
+			if (existingCartItem.length > 0) { 
+				await db.update(cartItems).set({
+					quantity: existingCartItem[0].quantity + 1
+				}).where(eq(cartItems.id, existingCartItem[0].id))
+
+				revalidatePath("/dashboard/cart")
+				return
+			}
+		}
+
+		const userCart = await db.insert(carts).values({
+			userId: session?.user?.id
+		}).returning({id: carts.id})
+
+		const insertedProduct = await db.insert(cartItems).values({
+			cartId: userCart[0].id,
+			productId: id,
+			quantity: 1
+		})
+
+		Promise.all([userCart, insertedProduct]).then(() => {
+			revalidatePath("/dashboard/cart")
+		})
+
+	} catch (error) {
+		console.error("Error adding product to cart:", error);
+	}
+}
+
+export async function removeProductFromCart(id: string) {
+
+	const session = await auth.api.getSession({
+		headers: await headers()
+	})
+
+	try {
+		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
+
+		if (existingCart.length > 0) {
+			const existingCartItem = await db.select().from(cartItems).where(
+				eq(cartItems.productId, id))
+
+			if (existingCartItem.length > 1) {
+				await db.update(cartItems).set({
+					quantity: existingCartItem[0].quantity - 1
+				}).where(eq(cartItems.id, existingCartItem[0].id))
+
+				revalidatePath("/dashboard/cart")
+				return
+			}
+
+			if (existingCartItem[0].quantity <= 1) {
+				await db.delete(cartItems).where(eq(cartItems.id, existingCartItem[0].id))
+			}
+		}
+
+		revalidatePath("/dashboard/cart")
+
+	} catch (error) {
+		console.error("Error adding product to cart:", error);
+	}
 }

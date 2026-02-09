@@ -1,3 +1,4 @@
+import { addProductToCart, removeProductFromCart } from "@/lib/actions";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -21,23 +22,33 @@ export const useCartStore = create<CartState>()(
             alertMessage: "",
             setAlert: (open, message ="") => set({isAlertOpen: open, alertMessage: message}),
             isAlertOpen: false,
-            addItem: (id) => set((state) => ({
-                items: {
-                    ...state.items,
-                    [id]: (state.items[id] || 0) + 1
-                },
-                isAlertOpen: true,
-                alertMessage: "Added to cart!"
-            })),
-            removeItem: (id) => set((state) => {
-                const newItems = { ...state.items }
-                if (newItems[id] > 1) {
-                    newItems[id] -= 1;
-                } else {
-                    delete newItems[id]
-                }
-                return {items: newItems}
-            }),
+            addItem: async (id) => {
+                set((state) => ({
+                    items: {
+                        ...state.items,
+                        [id]: (state.items[id] || 0) + 1,
+                    
+                    },
+                    isAlertOpen: true,
+                    alertMessage: "Added to cart!"
+                }))
+
+                await addProductToCart(id)
+            },
+            removeItem: async (id) => {
+                set( (state) => {
+                    const newItems = { ...state.items }
+                    if (newItems[id] > 1) {
+                        newItems[id] -= 1;
+                       
+                    } else {
+                        delete newItems[id]
+                    }
+                    return { items: newItems }
+                })
+                await removeProductFromCart(id)
+               
+            },
 
             deleteFromCart: (id) => set((state) => {
                 const newItems = { ...state.items }
