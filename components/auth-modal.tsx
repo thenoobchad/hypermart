@@ -3,7 +3,7 @@
 import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, signUp } from "@/lib/auth-client";
+
 import { signinAction, signupAction } from "@/lib/actions";
 import { toast } from "sonner";
 

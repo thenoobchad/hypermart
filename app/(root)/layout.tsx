@@ -34,9 +34,7 @@ export default async function RootLayout({
 
 
   return (
-    <div
-      className={`antialiased`}
-    >
+    <div key={session?.user?.id || "guest"} className={`antialiased`}>
       <Header />
       <CartInitializer initialItems={items} />
       {children}

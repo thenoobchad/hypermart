@@ -2,7 +2,7 @@
 
 import { addProductToCart, clearCart, deleteFromCart, removeProductFromCart } from "@/lib/actions";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+// import { persist } from "zustand/middleware";
 
 
 type CartItems = Record<string, number>
@@ -23,7 +23,7 @@ interface CartState {
 
 
 export const useCartStore = create<CartState>()(
-	persist(
+	
 		(set) => ({ 
             items: {},
             setItems: (items: CartItems) => set({items}),
@@ -72,6 +72,5 @@ export const useCartStore = create<CartState>()(
             },
             
 		}),
-		{ name: "cart-storage" }
-	)
+
 );

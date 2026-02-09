@@ -76,13 +76,13 @@ export async function signinAction(formData: FormData) {
 			headers: await headers() 
 		})
 		
-		
+		revalidatePath("/")
 		return {
 			success: true,
 			role: res.user?.role || "USER"
 		 } 
 		
-
+		 
 	} catch (err) {
 		if (isRedirectError(err)) throw err;
 
@@ -385,5 +385,6 @@ export async function getCartItems(userId:string) {
 		return cartItemsData
 	}
 
+	
 	return []
 }
