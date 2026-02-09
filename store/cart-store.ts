@@ -9,7 +9,8 @@ type CartItems = Record<string, number>
 
 interface CartState {
 	items: Promise<CartItems> | CartItems;
-	
+    isHydrated: boolean;
+    setHydrated: (val: boolean) => void;
     setItems: (items: CartItems) => void;
     addItem: (id: string) => void;
 	removeItem: (id: string) => void;
@@ -25,7 +26,9 @@ interface CartState {
 export const useCartStore = create<CartState>()(
 	
 		(set) => ({ 
-            items: {},
+        items: {},
+        isHydrated: false,
+            setHydrated: (val) => set({isHydrated: val}),
             setItems: (items: CartItems) => set({items}),
             alertMessage: "",
             setAlert: (open, message ="") => set({isAlertOpen: open, alertMessage: message}),

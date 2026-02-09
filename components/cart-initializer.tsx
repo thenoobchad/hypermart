@@ -7,10 +7,10 @@ import { useCartStore } from "@/store/cart-store"
 
 export default function CartInitializer({initialItems}: {initialItems: Record<string, number>}) {
 
-
+const setItems = useCartStore((state) => state.setItems)
     useEffect(() => { 
-        useCartStore.getState().setItems(initialItems)
-    },[initialItems])
+        setItems(initialItems)
+    },[initialItems, setItems])
            
      
   return null
