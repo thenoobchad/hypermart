@@ -125,7 +125,7 @@ export const CartBadge = () => {
 												<button onClick={() => removeItem(item.id)}>
 													<Minus size={18} />
 												</button>
-												<span>1</span>
+												<span>{item.quantity || "0"}</span>
 												<button onClick={() => addItem(item.id)}>
 													<Plus size={18} />
 												</button>

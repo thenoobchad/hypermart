@@ -2,7 +2,7 @@
 
 import { db } from "@/database";
 import { banners, cartItems, carts, products, users } from "@/database/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
 import { deleteImage } from "./cloudinary";
@@ -10,9 +10,6 @@ import { auth } from "./auth";
 import { headers } from "next/headers";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { APIError } from "better-auth/api";
-import { success } from "better-auth/*";
-import { redirect } from "next/navigation";
-
 
 
 
@@ -138,6 +135,7 @@ export async function createProduct(formData: FormData) {
 		} as Infer<typeof products>);
 
 		revalidatePath("/admin/products", "page");
+		revalidatePath("/");
 		return { success: true };
 	} catch (error) {
 		console.error("Error creating product:", error);
@@ -241,6 +239,7 @@ export async function addProductToCart(id: string) {
 		headers: await headers()
 	})	
 
+
 	try {
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
 
@@ -254,24 +253,39 @@ export async function addProductToCart(id: string) {
 				}).where(eq(cartItems.id, existingCartItem[0].id))
 
 				revalidatePath("/dashboard/cart")
-				return
+				return {success: true}
+			} else {
+				await db.insert(cartItems).values({
+					cartId: existingCart[0].id,
+					productId: id,
+					quantity: 1
+				})
 			}
+
+
+		} else {
+
+			const userCart = await db.insert(carts).values({
+				userId: session?.user?.id
+			}).returning({ id: carts.id })
+
+			const insertedProduct = await db.insert(cartItems).values({
+				cartId: userCart[0].id,
+				productId: id,
+				quantity: 1
+			})
+			
+			Promise.all([userCart, insertedProduct]).then(() => {
+				revalidatePath("/dashboard/cart")
+			})
 		}
 
-		const userCart = await db.insert(carts).values({
-			userId: session?.user?.id
-		}).returning({id: carts.id})
 
-		const insertedProduct = await db.insert(cartItems).values({
-			cartId: userCart[0].id,
-			productId: id,
-			quantity: 1
-		})
+		
 
-		Promise.all([userCart, insertedProduct]).then(() => {
-			revalidatePath("/dashboard/cart")
-		})
-
+	
+	
+		return { success: true }
 	} catch (error) {
 		console.error("Error adding product to cart:", error);
 	}
@@ -285,24 +299,26 @@ export async function removeProductFromCart(id: string) {
 
 	try {
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
-
+		
+		
 		if (existingCart.length > 0) {
 			const existingCartItem = await db.select().from(cartItems).where(
-				eq(cartItems.productId, id))
+				eq(cartItems.productId, id)
+			)
 
-			if (existingCartItem.length > 1) {
+			if (existingCartItem[0].quantity > 1) {
 				await db.update(cartItems).set({
-					quantity: existingCartItem[0].quantity - 1
-				}).where(eq(cartItems.id, existingCartItem[0].id))
-
+					quantity: sql`${existingCartItem[0].quantity} - 1`
+				})
 				revalidatePath("/dashboard/cart")
-				return
+				
 			}
 
 			if (existingCartItem[0].quantity <= 1) {
 				await db.delete(cartItems).where(eq(cartItems.id, existingCartItem[0].id))
 			}
 		}
+
 
 		revalidatePath("/dashboard/cart")
 
