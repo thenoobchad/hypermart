@@ -122,6 +122,29 @@ export const cartItems = pgTable("cart_items", {
 	quantity: integer("quantity").notNull().default(1),
 })
 
+export const orders = pgTable("orders", {
+	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+	userId: text("user_id")
+		.notNull()
+		.references(() => users.id, { onDelete: "cascade" }),
+	status: varchar("status", { length: 50 }).notNull().default("pending"),
+	totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull().default("0.00"),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export const orderItems = pgTable("order_items", {
+	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+	orderId: uuid("order_id").notNull().references(() => orders.id, { onDelete: "cascade" }),
+	productId: uuid("product_id").notNull().references(() => products.id),
+	quantity: integer("quantity").notNull().default(1),
+	price: decimal("price", { precision: 10, scale: 2 }).notNull().default("0.00"),
+})
+
+
+export const ordersRelations = relations(orders, ({ many }) => ({
+  items: many(orderItems),
+}));
+
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   accounts: many(accounts),
@@ -140,6 +163,7 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 	references: [users.id],
   }),
 }));
+
 
 
 export type Product = InferInsertModel<typeof products>;

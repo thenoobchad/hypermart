@@ -1,13 +1,19 @@
 "use client";
 
+import { checkoutCartAction } from "@/lib/actions";
+import { useSession } from "@/lib/auth-client";
 import { fetchAllProducts } from "@/lib/query";
 import { useCartStore } from "@/store/cart-store";
 import { Minus, Plus, ShoppingCart, Trash, X } from "lucide-react";
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
+import { toast } from "sonner";
 
 export const CartBadge = () => {
 	const [products, setProducts] = useState([]);
+	const session = useSession()
+
+	if (!session) return null;
 
 	const { items, removeItem, clearCart, addItem, deleteFromCart } = useCartStore();
 	const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +56,17 @@ export const CartBadge = () => {
 		return totalPrice.toFixed(2);
 	}, [itemsInCart]);
 
+
+	const handleCheckOut = async () => {
+		console.log("Initiating checkout for user ID:", session?.data?.user.id);
+		const { success, orderId } = await checkoutCartAction(session?.data?.user.id)
+		if (success) {
+			toast.success(`Checkout successful with order ID: ${orderId}`);
+			setIsOpen(false);
+		} else {
+			toast.error("Checkout failed");
+		}
+	}
 	
 	return (
 		<>
@@ -151,7 +168,7 @@ export const CartBadge = () => {
 					)}
 
 					<div className="mt-auto w-full flex gap-2">
-						<button className="bg-blue-600 py-1.5 text-white rounded-xs text-sm w-full">
+						<button onClick={handleCheckOut} className="bg-blue-600 py-1.5 text-white rounded-xs text-sm w-full">
 							Check Out
 						</button>
 						<button

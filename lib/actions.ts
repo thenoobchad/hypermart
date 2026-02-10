@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/database";
-import { banners, cartItems, carts, products, users } from "@/database/db/schema";
-import { and, eq, sql } from "drizzle-orm";
+import { banners, cartItems, carts, orderItems, orders, products, users } from "@/database/db/schema";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { Infer } from "next/dist/compiled/superstruct";
 import { deleteImage } from "./cloudinary";
@@ -27,7 +27,7 @@ type ProductType = {
 export async function signupAction(formData: FormData) {
 	const email = String(formData.get("email"))
 	const password = String(formData.get("password"))
-	
+
 
 	if (!email) return { success: false, message: "Enter a valid email." }
 	if (!password) return { success: false, message: "Enter a valid password." }
@@ -35,24 +35,24 @@ export async function signupAction(formData: FormData) {
 	try {
 		await auth.api.signUpEmail({
 			body: {
-				name:"",
+				name: "",
 				email,
 				password
 			},
 			headers: await headers()
 		})
-		return {success: true}
+		return { success: true }
 	} catch (err) {
 		if (isRedirectError(err)) throw err;
 
 		if (err instanceof APIError) {
 			return {
-				success	: false,
+				success: false,
 				message: err.message || "Authentication failed."
 			}
 		}
 		console.error(err)
-		return { success: false, message: "An unexpected error occured."}
+		return { success: false, message: "An unexpected error occured." }
 	}
 }
 
@@ -69,26 +69,26 @@ export async function signinAction(formData: FormData) {
 	try {
 		const res = await auth.api.signInEmail({
 			body: {
-				
+
 				email,
 				password
 			},
-			headers: await headers() 
+			headers: await headers()
 		})
-		
+
 		revalidatePath("/")
 		return {
 			success: true,
 			role: res.user?.role || "USER"
-		 } 
-		
-		 
+		}
+
+
 	} catch (err) {
 		if (isRedirectError(err)) throw err;
 
 		if (err instanceof APIError) {
 			return {
-				success	: false,
+				success: false,
 				message: err.message || "Authentication failed."
 			}
 		}
@@ -233,11 +233,11 @@ export async function deleteBanner(id: string, publicId: string) {
 	revalidatePath("/admin/banners");
 }
 
-export async function addProductToCart(id: string) { 
+export async function addProductToCart(id: string) {
 
 	const session = await auth.api.getSession({
 		headers: await headers()
-	})	
+	})
 
 
 	try {
@@ -246,14 +246,14 @@ export async function addProductToCart(id: string) {
 		if (existingCart.length > 0) {
 			const existingCartItem = await db.select().from(cartItems).where(
 				eq(cartItems.productId, id))
-			
-			if (existingCartItem.length > 0) { 
+
+			if (existingCartItem.length > 0) {
 				await db.update(cartItems).set({
 					quantity: existingCartItem[0].quantity + 1
 				}).where(eq(cartItems.id, existingCartItem[0].id))
 
 				revalidatePath("/dashboard/cart")
-				return {success: true}
+				return { success: true }
 			} else {
 				await db.insert(cartItems).values({
 					cartId: existingCart[0].id,
@@ -274,17 +274,17 @@ export async function addProductToCart(id: string) {
 				productId: id,
 				quantity: 1
 			})
-			
+
 			Promise.all([userCart, insertedProduct]).then(() => {
 				revalidatePath("/dashboard/cart")
 			})
 		}
 
 
-		
 
-	
-	
+
+
+
 		return { success: true }
 	} catch (error) {
 		console.error("Error adding product to cart:", error);
@@ -299,8 +299,8 @@ export async function removeProductFromCart(id: string) {
 
 	try {
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
-		
-		
+
+
 		if (existingCart.length > 0) {
 			const existingCartItem = await db.select().from(cartItems).where(
 				eq(cartItems.productId, id)
@@ -311,7 +311,7 @@ export async function removeProductFromCart(id: string) {
 					quantity: sql`${existingCartItem[0].quantity} - 1`
 				})
 				revalidatePath("/dashboard/cart")
-				
+
 			}
 
 			if (existingCartItem[0].quantity <= 1) {
@@ -336,7 +336,7 @@ export async function clearCart() {
 	try {
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
 
-		if(existingCart.length > 0) {
+		if (existingCart.length > 0) {
 			await db.delete(carts).where(eq(carts.id, existingCart[0].id))
 		}
 
@@ -355,8 +355,8 @@ export async function deleteFromCart(id: string) {
 
 	try {
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, session?.user?.id))
-		
-		
+
+
 		if (existingCart.length > 0) {
 			await db.delete(cartItems).where(
 				and(
@@ -366,7 +366,7 @@ export async function deleteFromCart(id: string) {
 			)
 
 			revalidatePath("/dashboard/cart")
-				
+
 		}
 
 	} catch (error) {
@@ -374,10 +374,10 @@ export async function deleteFromCart(id: string) {
 	}
 }
 
-export async function getCartItems(userId:string) { 
-	
+export async function getCartItems(userId: string) {
+
 	if (!userId) return []
-	
+
 	const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))
 
 	if (existingCart.length > 0) {
@@ -385,6 +385,54 @@ export async function getCartItems(userId:string) {
 		return cartItemsData
 	}
 
-	
+
 	return []
+}
+
+export async function checkoutCartAction(userId: string) {
+
+	try {
+
+		const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))
+
+		if (existingCart.length === 0) {
+			return {success: false, message: "Cart is empty."}
+		}
+
+		const cartItemsData = await db.select().from(cartItems).where(eq(cartItems.cartId, existingCart[0].id))
+
+		const productIds = cartItemsData.map(item => item.productId)
+
+		const productsData = await db.select().from(products)
+
+		const cartItemsInserted = productIds.map(id => {
+			return productsData.find(item => item.id === id)
+			
+		})
+
+		const order = await db.insert(orders).values({
+			userId,
+		}).returning({ id: orders.id })
+		
+
+
+		const orderItemsInserted = cartItemsInserted.map(item => ({
+			orderId: order[0].id,
+			productId: item.id,
+			price: item.price,
+			quantity: cartItemsData.find(cartItem => cartItem.productId === item.id)?.quantity || 1
+		}))
+
+		await db.insert(orderItems).values(orderItemsInserted)
+
+		await db.delete(carts).where(eq(carts.id, existingCart[0].id))
+		
+		revalidatePath("/dashboard/orders")
+		return { success: true, orderId: order[0].id }
+
+
+	} catch (error) {
+		console.error("Error during checkout:", error);
+		return { success: false, message: "Checkout failed" }
+	}
 }
