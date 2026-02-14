@@ -1,18 +1,13 @@
+export const dynamic = 'force-dynamic';
 
 import {
-	Edit,
-	File,
-	
+
 	Package,
-	Plus,
-	Trash,
-	Upload,
 	
-	X,
 } from "lucide-react";
 
 import { fetchAllProducts } from "@/lib/query";
-import { ProductModal } from "../_components/product-modal";
+
 import { CreateProductBtn } from "../_components/create-product-btn";
 import { DeleteBtn } from "../_components/deletebtn";
 import { EditBtn } from "../_components/editbtn";

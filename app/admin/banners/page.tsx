@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { db } from "@/database";
 import { BannerList } from "./_components/banner-list";
 import { UploadBannerBtn } from "./_components/upload-banner";

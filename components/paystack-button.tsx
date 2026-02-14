@@ -37,6 +37,7 @@ export const PayStackButton = ({ orderData }) => {
       clearCart()
       
       router.push(`/order-success/${orderData?.orderNumber}`)
+      
     } else { alert("We couldn't verify your payment. please contact support.")}
 
 
