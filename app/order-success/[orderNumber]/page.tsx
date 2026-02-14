@@ -77,7 +77,9 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
             </div>
 
             <div className="flex gap-2 ">
-                <Link href="/" className="px-4 py-2 bg-blue-950">Continue Shopping</Link><Link href="/dashboard/orders" className="px-4 py-2 underline">View My Orders</Link>
+                <Link href="/" className="px-4 py-2 bg-blue-950">Continue Shopping</Link>
+                
+                <Link href="/dashboard/orders" className="px-4 py-2 underline">View My Orders</Link>
             </div>
         </div>
     </section> : <div className="w-screen h-screen flex items-center justify-center"><p>Nothing to see here.</p></div>
