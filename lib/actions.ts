@@ -10,6 +10,8 @@ import { auth } from "./auth";
 import { headers } from "next/headers";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { APIError } from "better-auth/api";
+import { uuid } from "drizzle-orm/pg-core";
+import { generateOrderNumber } from "./utils";
 
 
 
@@ -389,8 +391,8 @@ export async function getCartItems(userId: string) {
 	return []
 }
 
-export async function checkoutCartAction(userId: string) {
-
+export async function createPendingOrder(userId: string, shipping: any) {
+console.log(userId)
 	try {
 
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))
@@ -410,9 +412,14 @@ export async function checkoutCartAction(userId: string) {
 			
 		})
 
+		const orderNumber = generateOrderNumber()
+
 		const order = await db.insert(orders).values({
 			userId,
-		}).returning({ id: orders.id })
+			orderNumber,
+			shippingAddress: shipping,
+			status: "PENDING",
+		}).returning({ id: orders.id, data: orders.shippingAddress })
 		
 
 
@@ -423,15 +430,26 @@ export async function checkoutCartAction(userId: string) {
 			quantity: cartItemsData.find(cartItem => cartItem.productId === item.id)?.quantity || 1
 		}))
 
-		await db.insert(orderItems).values(orderItemsInserted)
+		const insertedOrderItems = await db.insert(orderItems).values(orderItemsInserted).returning({
+			id: orderItems.id,
+			quantity: orderItems.quantity,
+			price: orderItems.price,
+			
+		 })
 
-		await db.delete(carts).where(eq(carts.id, existingCart[0].id))
 		
 		revalidatePath("/dashboard/orders")
-		return { success: true, orderId: order[0].id }
+		return {
+			success: true, orderData: {
+				orderId: order[0].id,
+				orderNumber: orderNumber,
+				amount: insertedOrderItems.reduce((acc, item) => acc + (Number(item.price) * item.quantity), 0).toFixed(2),
+				meta: order[0].data
+		} }
 
 
 	} catch (error) {
+
 		console.error("Error during checkout:", error);
 		return { success: false, message: "Checkout failed" }
 	}

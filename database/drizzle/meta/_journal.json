@@ -29,6 +29,20 @@
       "when": 1770675169317,
       "tag": "0003_pretty_ikaris",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1770975763106,
+      "tag": "0004_colossal_the_renegades",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1771005004911,
+      "tag": "0005_dry_kulan_gath",
+      "breakpoints": true
     }
   ]
 }

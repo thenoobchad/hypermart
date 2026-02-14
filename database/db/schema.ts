@@ -1,4 +1,4 @@
-import { integer, pgTable, varchar, text, decimal, timestamp, uuid, boolean, index, pgEnum } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, text, decimal, timestamp, uuid, boolean, index, pgEnum, jsonb } from "drizzle-orm/pg-core";
 import { InferInsertModel, InferSelectModel, relations, sql } from "drizzle-orm";
 
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"]);
@@ -124,12 +124,20 @@ export const cartItems = pgTable("cart_items", {
 
 export const orders = pgTable("orders", {
 	id: uuid("id").primaryKey().default(sql`gen_random_uuid()`),
+	
 	userId: text("user_id")
 		.notNull()
 		.references(() => users.id, { onDelete: "cascade" }),
-	status: varchar("status", { length: 50 }).notNull().default("pending"),
+	status: varchar("status").$type<"PENDING" | "PAID" | "SHIPPED" | "CANCELLED">().default("PENDING"),
+	shippingAddress: jsonb("shipping_address").notNull(),
+	paystackReference: text("paystack_reference").unique(),
+	paystackTransactionId: text("paystack_tx_id"),
 	totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull().default("0.00"),
+	paidAt:timestamp("paid_at"),
+	orderNumber: text("order_number"),
+	trackingNumber: text("tracking_number"),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
 export const orderItems = pgTable("order_items", {
