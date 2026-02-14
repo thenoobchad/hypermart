@@ -35,7 +35,7 @@ export const PayStackButton = ({ orderData }) => {
     <PaystackButton
       {...config}
       onSuccess={handleSuccess}
-      text="Complete Purchase"
+      text="Pay Now"
       className="bg-green-600 text-white p-4"
     />
   )

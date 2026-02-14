@@ -1,44 +1,75 @@
+import { db } from "@/database"
+import { orderItems, orders, products } from "@/database/db/schema"
+import { eq } from "drizzle-orm"
 
 
-export default function OrderSuccess({params}: {params: {orderNumber: string}}) {
-    return (
-      <section className='min-h-screen flex items-center justify-center gap-6'>
-      <div className='max-w-3xl max-auto p-6 flex flex-col items-center justify-center'>
-          <div className="flex flex-col items-center justify-center">
-              
-              <h4 className="text-3xl">Payment Successful!</h4>
-              <p className="text-gray-600">Thank you for your purchase! Henry Elueme</p>
-              <p className="font-mono mt-2">Order ID: ORD-545DFE</p>
-          </div>
+export default async function OrderSuccess({ params }: { params: Promise<{ orderNumber: string }> }) {
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-8 pt-5'>
-              
-              <div>
-                  <h4>Order Summary</h4>
-                  <div>
-                      <p>Product 1 - $10.00</p>
-                  </div>
+    const { orderNumber } = await params
+    const order = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber))
 
-                  <div className='flex justify-between pt-4'>
-                      <span>Total Paid :$10.00</span>
-                  </div>
-              </div>
+    const { email, address } = order[0].shippingAddress as {
+        email: string,
+        address: string,
+        fullName: string
+    }
 
-              <div>
-                  <h4>Shipping To:</h4>
-                  <p>Chief Stanley Iwofe</p>
-                  <p>Port Harcourt, Rivers State</p>
-                  <p>
-                      Phone: +234 803 123 4567
-                  </p>
+    const orderItemsData = await db.select().from(orderItems).where(eq(orderItems.orderId, order[0].id))
 
-                  <div>
-                      <p>Status: <span className='text-green-600'>Processing</span></p>
-                     <p>You will recieve a notification when your order is shipped.</p>
-                  </div>
-              </div>
-          </div>
+    const allProducts = await db.select().from(products)
+
+    const orderProducts = orderItemsData.map(item => {
+        return allProducts.find(p => p.id === item.productId)
+
+    })
+
+    const total = orderProducts.reduce((acc, item) => {
+        if (!item) return acc;
+        const qty = orderItemsData.find(p => p.productId === item.id).quantity;
+        
+        return acc + Number(item.price) * Number(qty);
+    }, 0)
+
+    console.log("data here", total)
+
+    return orderProducts.length > 0 ? <section className='min-h-screen flex items-center justify-center gap-6'>
+        <div className='max-w-3xl max-auto p-6 flex flex-col items-center justify-center'>
+            <div className="flex flex-col items-center justify-center">
+
+                <h4 className="text-3xl">Payment Successful!</h4>
+                <p className="text-gray-600">Thank you for your purchase! Henry Elueme</p>
+                <p className="font-mono mt-2">Order ID: {order[0].orderNumber}</p>
             </div>
-            </section>
-  )
+
+            <div className='grid grid-cols-1 sm:grid-cols-2 gap-8 pt-5'>
+
+                <div>
+                    <h4>Order Summary</h4>
+                    <div>{orderProducts.map((p, i) => (
+                        <div key={i} className="flex justify-between"><strong>{p?.title}</strong> <span>{p?.price}</span></div>
+                    ))}
+
+                    </div>
+
+                    <div className='flex justify-between pt-4'>
+                        <span>Total Paid : {total}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Shipping To:</h4>
+                    <p>{address}</p>
+                    <p>
+                        Email: {email}
+                    </p>
+
+                    <div>
+                        <p>Status: <span className='text-sm text-green-600'>{order[0].status}</span></p>
+                        <p>You will recieve a notification when your order is shipped.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> : <div className="w-screen h-screen flex items-center justify-center"><p>Nothing to see here.</p></div>
 }
+
