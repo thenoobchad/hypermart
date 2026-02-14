@@ -76,8 +76,8 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
                
             </div>
 
-            <div className="flex gap-2 ">
-                <Link href="/" className="px-4 py-2 bg-blue-950">Continue Shopping</Link>
+            <div className="flex gap-2 mt-4 text-sm">
+                <Link href="/" className="px-4 text-white py-2 bg-blue-950">Continue Shopping</Link>
                 
                 <Link href="/dashboard/orders" className="px-4 py-2 underline">View My Orders</Link>
             </div>
