@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
+import { Eye, EyeClosed, Phone, RectangleGogglesIcon, TruckElectric, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -14,6 +14,7 @@ type AuthModalProp = {
 
 export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 	const router = useRouter()
+	const [view, setView] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState("")
 	const [authType, setAuthType] = useState<"SIGN_IN" | "SIGN_UP">("SIGN_IN");
@@ -94,20 +95,7 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 				</div>
 
 				<div className="flex flex-col gap-3 max-h-[60vh] overflow-auto">
-					{/* {authType === "SIGN_UP" && (
-						<div className="flex flex-col gap-2 px-4">
-							<label htmlFor="phone" className="text-sm">
-								Full Name<span className="text-red-600">*</span>
-							</label>
-							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
-								<input
-									type="text"
-									className="outline-none"
-									placeholder="Enter your name"
-								/>{" "}
-							</div>
-						</div>
-					)} */}
+					
 
 					<div className="flex flex-col gap-2 px-4">
 						<label htmlFor="phone" className="text-sm">
@@ -122,20 +110,7 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 							/>{" "}
 						</div>
 					</div>
-					{/* 
-					<div className="flex flex-col gap-2 px-4">
-						<label htmlFor="phone" className="text-sm">
-							Mobile Number <span className="text-red-600">*</span>
-						</label>
-						<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
-							<input
-								type="text"
-								className="outline-none"
-								placeholder="Enter a 12 digit number"
-							/>{" "}
-							<Phone size={18} />
-						</div>
-					</div> */}
+					
 
 					<div className="flex flex-col gap-2 px-4">
 						<label htmlFor="phone" className="text-sm">
@@ -144,11 +119,14 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 						<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
 							<input
 								name="password"
-								type="text"
+								type={`${!view? "password" :"text"}`}
 								className="outline-none"
-								placeholder="Enter a 12 digit number"
+								placeholder="********"
 							/>{" "}
-							<Eye size={18} />
+							<span  onClick={() => setView(!view)} >
+								{!view ? <Eye size={18} /> : <EyeClosed size={18} />}
+							</span>
+						
 						</div>
 						{authType === "SIGN_UP" && (
 							<p className="text-xs -mt-1">Must be 8+ characters</p>
@@ -156,18 +134,25 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 					</div>
 
 					{authType === "SIGN_UP" && (
-						<div className="flex flex-col gap-2 px-4 ">
-							<label htmlFor="password" className="text-sm">
+						<div className="flex flex-col gap-2 px-4">
+							<label htmlFor="phone" className="text-sm">
 								Confirm Password <span className="text-red-600">*</span>
 							</label>
 							<div className="flex bg-zinc-100 items-center text-zinc-700 justify-between px-2 py-2 rounded">
 								<input
-									type="password"
+									name="password"
+									type={`${!view ? "password" : "text"}`}
 									className="outline-none"
-									placeholder="*********"
+									placeholder="********"
 								/>{" "}
-								<Eye size={18} />
+								<span onClick={() => setView(!view)} >
+									{!view ? <Eye size={18} /> : <EyeClosed size={18} />}
+								</span>
+
 							</div>
+							{authType === "SIGN_UP" && (
+								<p className="text-xs -mt-1">Must be 8+ characters</p>
+							)}
 						</div>
 					)}
 					{authType === "SIGN_IN" && (
@@ -177,14 +162,7 @@ export default function AuthModal({ isActive, setActive }: AuthModalProp) {
 					<button className="bg-blue-600 my-2 mx-4 text-zinc-50 py-2 mt-4 rounded">
 						{loading ? "Signing in..." : authType === "SIGN_UP" ? "Sign up" : "Sign in"}
 					</button>
-					<div className="flex items-center gap-2">
-						<div className="w-full h-px bg-zinc-200" />
-						<span className="text-sm">OR</span>
-						<div className="w-full h-px bg-zinc-200" />
-					</div>
-					<button className="text-sm my-2 text-zinc-900 flex justify-center items-center mx-4 gap-2 border py-2 rounded">
-						<RectangleGogglesIcon /> Continue with Google
-					</button>
+					
 				</div>
 
 				<div className=" border-t">

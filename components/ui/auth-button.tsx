@@ -24,8 +24,8 @@ export const AuthButton = ({session}:{session: SessionType }) => {
   const handleAuthModal = () => { 
     setIsActive(!isActive)
   }
+  
   let href: string
-
  
 
   if (session?.user?.role === "ADMIN") {

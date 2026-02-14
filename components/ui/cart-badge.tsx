@@ -9,7 +9,6 @@ import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 
-import { useRouter } from "next/navigation";
 
 
 import dynamic from "next/dynamic";
@@ -302,13 +301,10 @@ const ShippingForm = ({ setStep, total }: { setStep: (step: number) => void, tot
 				{!orderData ? (<button onClick={handleCreateOrder} className="bg-blue-600 py-1.5 text-white rounded-xs text-sm w-full disabled:bg-zinc-400">
 					Save & Continue
 				</button>) : (
-
-					// <button onClick={() => initializePayment({ onSuccess, onClose })} className="bg-green-600 py-1.5 text-white rounded-xs text-sm w-full disabled:bg-zinc-400">Pay ₦{total} Now </button>
-
 					<PayStackButton orderData={orderData}/>
 				)}
 				<button
-					className="bg-red-600 py-1.5 text-white rounded-xs text-sm w-full"
+					className="bg-red-600 py-1.5 text-white rounded-xs text-sm "
 				>
 					Cancel Order
 				</button>
