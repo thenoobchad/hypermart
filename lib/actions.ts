@@ -392,7 +392,6 @@ export async function getCartItems(userId: string) {
 }
 
 export async function createPendingOrder(userId: string, shipping: any) {
-console.log(userId)
 	try {
 
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))
@@ -452,5 +451,47 @@ console.log(userId)
 
 		console.error("Error during checkout:", error);
 		return { success: false, message: "Checkout failed" }
+	}
+}
+
+export async function verifyPayment(reference) {
+
+	
+	try {
+		const url = `https://api.paystack.co/transaction/verify/${reference.reference}`
+
+		const res = await fetch(url, {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`
+			}
+		})
+		
+
+		if (!res.ok) {
+			const errorText = await res.text()
+			console.error("Paystack Error Body:", errorText)
+			return {success: false, message: "Paystack API error"}
+		}
+		const data = await res.json()
+
+	
+		
+		if(data.status === true && data.data.status === "success"){
+
+			//update db
+			await db.update(orders).set({
+				status: "PAID",
+				paidAt: new Date()
+			}).where(eq(orders.orderNumber, reference.reference))
+
+			return {success: true}
+		}
+
+		return { success: false }
+
+	} catch (error) {
+		console.error("Error during verificatioin:", error);
+		return { success: false, message: "Verification failed" }
 	}
 }

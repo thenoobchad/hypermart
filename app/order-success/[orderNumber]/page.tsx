@@ -1,6 +1,8 @@
 import { db } from "@/database"
 import { orderItems, orders, products } from "@/database/db/schema"
 import { eq } from "drizzle-orm"
+import Link from "next/link"
+
 
 
 export default async function OrderSuccess({ params }: { params: Promise<{ orderNumber: string }> }) {
@@ -8,7 +10,7 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
     const { orderNumber } = await params
     const order = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber))
 
-    const { email, address } = order[0].shippingAddress as {
+    const { email, address, fullName } = order[0].shippingAddress as {
         email: string,
         address: string,
         fullName: string
@@ -37,7 +39,7 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
             <div className="flex flex-col items-center justify-center">
 
                 <h4 className="text-3xl">Payment Successful!</h4>
-                <p className="text-gray-600">Thank you for your purchase! Henry Elueme</p>
+                <p className="text-gray-600">Thank you for your purchase! {fullName}</p>
                 <p className="font-mono mt-2">Order ID: {order[0].orderNumber}</p>
             </div>
 
@@ -67,7 +69,15 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
                         <p>Status: <span className='text-sm text-green-600'>{order[0].status}</span></p>
                         <p>You will recieve a notification when your order is shipped.</p>
                     </div>
+
+                   
                 </div>
+
+               
+            </div>
+
+            <div className="flex gap-2 ">
+                <Link href="/" className="px-4 py-2 bg-blue-950">Continue Shopping</Link><Link href="/dashboard/orders" className="px-4 py-2 underline">View My Orders</Link>
             </div>
         </div>
     </section> : <div className="w-screen h-screen flex items-center justify-center"><p>Nothing to see here.</p></div>

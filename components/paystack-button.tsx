@@ -1,5 +1,7 @@
 "use client"
 
+import { verifyPayment } from '@/lib/actions';
+import { useCartStore } from '@/store/cart-store';
 import dynamic from 'next/dynamic';
 
 
@@ -12,7 +14,7 @@ const PaystackButton = dynamic(
 import { useRouter } from "next/navigation"
 
 export const PayStackButton = ({ orderData }) => {
-    
+   const { clearCart } = useCartStore()
     const router = useRouter()
 
     const config = {
@@ -25,16 +27,25 @@ export const PayStackButton = ({ orderData }) => {
             custom_fields: [],
         },
     }
+ 
   
-  console.log("This is the meta is:", orderData.amount)
+  const handleSuccess = async (ref) => {
+
+    const {success} = await verifyPayment(ref)
+    if (success) {
+
+      clearCart()
+      
+      router.push(`/order-success/${orderData?.orderNumber}`)
+    } else { alert("We couldn't verify your payment. please contact support.")}
+
+
   
-  const handleSuccess = () => {
-    router.push(`/order-success/${orderData?.orderNumber}`)
   }
   return (
     <PaystackButton
       {...config}
-      onSuccess={handleSuccess}
+      onSuccess={(reference) => handleSuccess(reference)}
       text="Pay Now"
       className="bg-green-600 text-white p-4"
     />

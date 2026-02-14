@@ -204,13 +204,16 @@ const ShippingForm = ({ setStep, total }: { setStep: (step: number) => void, tot
 		address: "",
 	})
 
+	console.log("session" ,session)
 	
 
 	const handleCreateOrder = async () => {
 
 		const { success, orderData } = await createPendingOrder(session?.data?.user.id, data)
 		if (success) {
-			toast.success(`Order successful with order ID: ${orderData?.orderNumber}`);
+			toast.success(`Order with ID: ${orderData?.orderNumber} placed`);
+
+
 			setOrderData({
 				orderNumber: orderData.orderNumber,
 				dbId: orderData.orderId,
