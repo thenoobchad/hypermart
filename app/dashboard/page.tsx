@@ -16,6 +16,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import { Header } from './_components/header';
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function Dashboard() {
       change: '+20.1%',
       trend: 'up',
       icon: DollarSign,
-      color: 'from-emerald-500 to-teal-600',
+      color: 'bg-teal-600',
     },
     {
       title: 'Total Orders',
@@ -35,7 +36,7 @@ export default function Dashboard() {
       change: '+15.3%',
       trend: 'up',
       icon: ShoppingCart,
-      color: 'from-blue-500 to-indigo-600',
+      color: 'bg-indigo-600',
     },
     {
       title: 'Active Users',
@@ -43,7 +44,7 @@ export default function Dashboard() {
       change: '-4.2%',
       trend: 'down',
       icon: Users,
-      color: 'from-purple-500 to-pink-600',
+      color: 'bg-pink-600',
     },
     {
       title: 'Products Sold',
@@ -51,7 +52,7 @@ export default function Dashboard() {
       change: '+12.5%',
       trend: 'up',
       icon: Package,
-      color: 'from-orange-500 to-red-600',
+      color: 'bg-red-600',
     },
   ];
 
@@ -110,145 +111,22 @@ export default function Dashboard() {
   const maxValue = Math.max(...salesData.map((d) => d.value));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      {/* Sidebar */}
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white/80 backdrop-blur-xl border-r border-slate-200/60 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0`}
-      >
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200/60">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">K</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Kartly
-              </span>
-            </div>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg shadow-indigo-200 transition-all"
-            >
-              <BarChart3 className="w-5 h-5" />
-              Dashboard
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
-            >
-              <ShoppingCart className="w-5 h-5" />
-              Orders
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
-            >
-              <Package className="w-5 h-5" />
-              Products
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
-            >
-              <Users className="w-5 h-5" />
-              Customers
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
-            >
-              <TrendingUp className="w-5 h-5" />
-              Analytics
-            </a>
-          </nav>
-
-          {/* User Profile */}
-          <div className="px-4 py-4 border-t border-slate-200/60">
-            <div className="flex items-center gap-3 px-4 py-3 hover:bg-slate-100 rounded-xl cursor-pointer transition-colors">
-              <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
-                JD
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-slate-900 truncate">
-                  John Doe
-                </p>
-                <p className="text-xs text-slate-500 truncate">Admin</p>
-              </div>
-              <ChevronDown className="w-4 h-4 text-slate-400" />
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <div className="lg:pl-64">
-        {/* Header */}
-        <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/60">
-          <div className="flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition-colors"
-              >
-                <Menu className="w-5 h-5" />
-              </button>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
-                <p className="text-sm text-slate-500">
-                  Welcome back! Here's your overview
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {/* Search */}
-              <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-xl">
-                <Search className="w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="bg-transparent border-none outline-none text-sm text-slate-600 placeholder:text-slate-400 w-48"
-                />
-              </div>
-
-              {/* Notifications */}
-              <button className="relative p-2 hover:bg-slate-100 rounded-lg transition-colors">
-                <Bell className="w-5 h-5 text-slate-600" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Dashboard Content */}
+    <div>
+    
         <main className="p-6 space-y-6">
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={index}
-                  className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-                  }}
+                  className=" relative bg-white/80 backdrop-blur-sm rounded-lg p-4"
+                  
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div
-                      className={`w-12 h-12 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      className={`w-12 h-12  ${stat.color} rounded-lg flex items-center justify-center shadow-sm`}
                     >
                       <Icon className="w-6 h-6 text-white" />
                     </div>
@@ -277,7 +155,7 @@ export default function Dashboard() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Sales Chart */}
-            <div className="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60">
+            <div className="lg:col-span-2 bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">
@@ -287,7 +165,7 @@ export default function Dashboard() {
                     Monthly revenue trends
                   </p>
                 </div>
-                <button className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors">
+                <button className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-md hover:bg-slate-200 transition-colors">
                   Last 6 months
                 </button>
               </div>
@@ -297,7 +175,7 @@ export default function Dashboard() {
                   <div key={index} className="flex-1 flex flex-col items-center">
                     <div className="w-full flex items-end h-48 mb-3">
                       <div
-                        className="w-full bg-gradient-to-t from-indigo-600 to-purple-500 rounded-t-lg hover:from-indigo-500 hover:to-purple-400 transition-all duration-300 cursor-pointer relative group"
+                        className="w-full rounded-t-lg bg-indigo-600  cursor-pointer relative group"
                         style={{
                           height: `${(item.value / maxValue) * 100}%`,
                           animation: `growUp 1s ease-out ${index * 0.1}s both`,
@@ -317,7 +195,7 @@ export default function Dashboard() {
             </div>
 
             {/* Top Products */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60">
+            <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
               <h2 className="text-xl font-bold text-slate-900 mb-6">
                 Top Products
               </h2>
@@ -369,7 +247,7 @@ export default function Dashboard() {
           </div>
 
           {/* Recent Orders */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60">
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-slate-900">
                 Recent Orders
@@ -445,8 +323,6 @@ export default function Dashboard() {
             </div>
           </div>
         </main>
-      </div>
-
       {/* Overlay for mobile sidebar */}
       {sidebarOpen && (
         <div

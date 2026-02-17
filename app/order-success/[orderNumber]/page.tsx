@@ -4,7 +4,6 @@ import { eq } from "drizzle-orm"
 import Link from "next/link"
 
 
-
 export default async function OrderSuccess({ params }: { params: Promise<{ orderNumber: string }> }) {
 
     const { orderNumber } = await params
@@ -31,8 +30,6 @@ export default async function OrderSuccess({ params }: { params: Promise<{ order
         
         return acc + Number(item.price) * Number(qty);
     }, 0)
-
-    console.log("data here", total)
 
     return orderProducts.length > 0 ? <section className='min-h-screen flex items-center justify-center gap-6'>
         <div className='max-w-3xl max-auto p-6 flex flex-col items-center justify-center'>

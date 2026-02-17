@@ -1,15 +1,26 @@
-import type { Metadata } from "next";
+"use client"
 
 
-export const metadata: Metadata = {
-  title: "Hypermart & Stores",
-  description: "Online market for trusted products...",
-};
+import { AsideMenu } from "./_components/aside-menu";
+import { Header } from "./_components/header";
+import { useState } from "react";
+
+
 
 export default function ClientLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className={`antialiased`}>{children}</div>;
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+
+  return <div className={`antialiased min-h-screen bg-zinc-100`}>
+    <AsideMenu sidebarOpen={sidebarOpen} setSidebar={setSidebarOpen} />
+    <div className="lg:pl-64">
+     <Header setSidebar={setSidebarOpen}/>
+    {children}
+    </div>
+  </div>
 }

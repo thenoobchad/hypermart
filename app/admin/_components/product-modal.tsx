@@ -62,7 +62,7 @@ export const ProductModal = ({ isOpen, setIsOpen }) => {
 	};
 
 	return (
-		<div className="absolute z-90 top-0 left-0 flex items-center justify-center w-full min-h-screen bg-zinc-950/30 overflow-auto">
+		<div className="absolute z-1000 top-0 left-0 flex items-center justify-center w-full min-h-screen bg-zinc-950/30 overflow-auto">
 			{loading ?
 				<p className="bg-white p-4 rounded shadow">Creating product...</p>
 			:	<form

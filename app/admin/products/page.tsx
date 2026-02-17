@@ -13,21 +13,64 @@ import { DeleteBtn } from "../_components/deletebtn";
 import { EditBtn } from "../_components/editbtn";
 import Image from "next/image";
 
-
+const recentOrders = [
+	{
+		id: '#3456',
+		customer: 'John Cooper',
+		product: 'Wireless Headphones',
+		amount: '$299.00',
+		status: 'Completed',
+		date: '2 hours ago',
+	},
+	{
+		id: '#3455',
+		customer: 'Sarah Johnson',
+		product: 'Smart Watch Pro',
+		amount: '$599.00',
+		status: 'Processing',
+		date: '5 hours ago',
+	},
+	{
+		id: '#3454',
+		customer: 'Michael Chen',
+		product: 'Laptop Stand',
+		amount: '$89.00',
+		status: 'Shipped',
+		date: '1 day ago',
+	},
+	{
+		id: '#3453',
+		customer: 'Emma Williams',
+		product: 'USB-C Hub',
+		amount: '$49.00',
+		status: 'Completed',
+		date: '2 days ago',
+	},
+	{
+		id: '#3452',
+		customer: 'David Brown',
+		product: 'Mechanical Keyboard',
+		amount: '$159.00',
+		status: 'Cancelled',
+		date: '3 days ago',
+	},
+];
 
 export default async function ProductsPage() {
 	
 	const allProducts = await fetchAllProducts();
 	
 	return (
-		<section className="h-full w-full">
+		<section className="p-6 space-y-6">
 			
-			<div className="mx-4">
+			<div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
 				{/* DISPLAY ALL PRODUCTS HERE */}
-				<div className="flex w-full justify-between items-center">
-					<h4 className="flex items-center gap-2">
-						<Package size={18} />  Products
+				<div className="flex w-full justify-between items-">
+					
+					<h4 className="text-xl font-bold text-slate-900">
+						Products
 					</h4>
+					
 					<CreateProductBtn />
 				</div>
 
@@ -70,6 +113,82 @@ export default async function ProductsPage() {
 					</table> ): (
 								<p>Nothing to see here </p>
 							)}
+				</div>
+			</div>
+
+			<div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
+				<div className="flex items-center justify-between mb-6">
+					<h2 className="text-xl font-bold text-slate-900">
+						Recent Orders
+					</h2>
+					<button className="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+						View all
+					</button>
+				</div>
+
+				<div className="overflow-x-auto">
+					<table className="w-full">
+						<thead>
+							<tr className="border-b border-slate-200">
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Order ID
+								</th>
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Customer
+								</th>
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Product
+								</th>
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Amount
+								</th>
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Status
+								</th>
+								<th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+									Date
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{recentOrders.map((order, index) => (
+								<tr
+									key={index}
+									className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
+								>
+									<td className="py-4 px-4 text-sm font-medium text-slate-900">
+										{order.id}
+									</td>
+									<td className="py-4 px-4 text-sm text-slate-600">
+										{order.customer}
+									</td>
+									<td className="py-4 px-4 text-sm text-slate-600">
+										{order.product}
+									</td>
+									<td className="py-4 px-4 text-sm font-semibold text-slate-900">
+										{order.amount}
+									</td>
+									<td className="py-4 px-4">
+										<span
+											className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${order.status === 'Completed'
+												? 'bg-emerald-100 text-emerald-700'
+												: order.status === 'Processing'
+													? 'bg-blue-100 text-blue-700'
+													: order.status === 'Shipped'
+														? 'bg-purple-100 text-purple-700'
+														: 'bg-red-100 text-red-700'
+												}`}
+										>
+											{order.status}
+										</span>
+									</td>
+									<td className="py-4 px-4 text-sm text-slate-500">
+										{order.date}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</section>

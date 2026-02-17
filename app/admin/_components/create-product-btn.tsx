@@ -9,7 +9,7 @@ export const CreateProductBtn = () => {
 	return (
 		<>
 			<button
-				className="bg-blue-600 my-2 mx-4 text-zinc-50 py-1.5 px-3 rounded items-center flex gap-2 text-sm"
+				className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-100 bg-blue-950 rounded-md transition-colors"
 				onClick={() => setIsOpen(true)}>
 				<Plus size={18} /> New Product
 			</button>

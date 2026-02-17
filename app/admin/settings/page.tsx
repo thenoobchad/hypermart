@@ -6,20 +6,20 @@ import { UploadBannerBtn } from "./_components/upload-banner";
 import { asc } from "drizzle-orm";
 import { banners } from "@/database/db/schema";
 
-export default async function BannerPage() {
-	
-	const currentBanners = await db
-		.select()
-		.from(banners).orderBy(asc(banners.displayOrder));
-		
+export default async function Settings() {
+	// const Banners = (await db
+	// 	.select()
+	// 	.from(banners).orderBy(asc(banners.displayOrder))) || [] 
 
+	const currentBanners =  []
+		
 	return (
-		<main className="w-full m-4 flex flex-col">
+		<section className="p-6 space-y-6">
 			<div className="flex justify-between ">
 				<h4>Banners (Slides)</h4>
 				<UploadBannerBtn />
 			</div>
 			<BannerList banners={currentBanners} />
-		</main>
+		</section>
 	);
 }

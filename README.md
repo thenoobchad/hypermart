@@ -1,2 +1,2 @@
-## An Ecommerce market
+## Ecommerce market
 # hypermart
