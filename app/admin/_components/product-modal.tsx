@@ -62,12 +62,12 @@ export const ProductModal = ({ isOpen, setIsOpen }) => {
 	};
 
 	return (
-		<div className="absolute z-1000 top-0 left-0 flex items-center justify-center w-full min-h-screen bg-zinc-950/30 overflow-auto">
+		<div className="fixed top-0 left-0 flex items-center justify-center w-full min-h-screen bg-zinc-950/30 overflow-auto">
 			{loading ?
 				<p className="bg-white p-4 rounded shadow">Creating product...</p>
 			:	<form
 					onSubmit={handleSubmit}
-					className="bg-white text-sm w-[80%] sm:max-w-100 h-full sm:h-auto max-h-[90vh] rounded shadow-lg overflow-auto flex flex-col">
+					className="bg-white relative z-999 text-sm w-[80%] sm:max-w-100 h-full sm:h-auto max-h-[90vh] rounded shadow-lg overflow-auto flex flex-col">
 					<div className="flex justify-end  pt-4 px-4">
 						<span onClick={handleClose}>
 							<X size={16} />

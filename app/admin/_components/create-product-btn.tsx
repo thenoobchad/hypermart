@@ -13,7 +13,9 @@ export const CreateProductBtn = () => {
 				onClick={() => setIsOpen(true)}>
 				<Plus size={18} /> New Product
 			</button>
-			{isOpen && <ProductModal isOpen={isOpen} setIsOpen={setIsOpen} />}
+			{isOpen && <div className="absolute "><ProductModal isOpen={isOpen} setIsOpen={setIsOpen} />
+			</div>
+			}
 		</>
 	);
 };

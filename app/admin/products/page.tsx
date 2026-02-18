@@ -61,17 +61,17 @@ export default async function ProductsPage() {
 	const allProducts = await fetchAllProducts();
 	
 	return (
-		<section className="p-6 space-y-6">
+		<section className="p-6 space-y-6 ">
 			
 			<div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
 				{/* DISPLAY ALL PRODUCTS HERE */}
 				<div className="flex w-full justify-between items-">
 					
-					<h4 className="text-xl font-bold text-slate-900">
+					<h4 className="text-2xl font-bold text-slate-900">
 						Products
 					</h4>
 					
-					<CreateProductBtn />
+					
 				</div>
 
 				<div className="w-full h-full items-center justify-center py-4 flex">
@@ -116,7 +116,7 @@ export default async function ProductsPage() {
 				</div>
 			</div>
 
-			<div className="bg-white/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
+			<div className="bg-white/80  backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
 				<div className="flex items-center justify-between mb-6">
 					<h2 className="text-xl font-bold text-slate-900">
 						Recent Orders

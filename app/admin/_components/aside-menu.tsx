@@ -1,11 +1,11 @@
 "use client"
 
-import { BarChart3, ChevronDown, Package, Settings, ShoppingCart, TrendingUp, Users, X } from "lucide-react";
+import { BarChart3, ChevronDown, ChevronRight, Package, Settings, ShoppingCart, TrendingUp, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 export const AsideMenu = ({ sidebarOpen, setSidebar }) => {
-
+const [dropDown, setDropdown] = useState(false)
 
   return (
     <aside
@@ -48,13 +48,24 @@ export const AsideMenu = ({ sidebarOpen, setSidebar }) => {
             <ShoppingCart className="w-5 h-5" />
             Orders
           </Link>
-          <a
-            href="/admin/products"
-            className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-md transition-colors"
-          >
+          <button
+            onClick={() => setDropdown(!dropDown)}
+            className="flex items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-md transition-colors relative w-full"
+          ><span className="flex gap-3">
             <Package className="w-5 h-5" />
-            Products
-          </a>
+              Products
+            </span>
+            <ChevronRight className="w-5 h-5" />
+           
+          </button>
+          {dropDown && <ul className="pl-12 text-sm font-medium text-slate-600 pb-1 flex flex-col space-y-4">
+            <a className=""
+              href="/admin/products/create-product"
+            >Create Product</a>
+            <a className=""
+              href="/admin/products"
+            >View Products</a>
+          </ul>}
           <a
             href="/admin/customers"
             className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-md transition-colors"

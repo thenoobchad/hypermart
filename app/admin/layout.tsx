@@ -18,7 +18,7 @@ export default function ClientLayout({
 
   return <div className={`antialiased min-h-screen bg-zinc-100`}>
 	<AsideMenu sidebarOpen={sidebarOpen} setSidebar={setSidebarOpen} />
-	<div className="lg:pl-64">
+	<div className="lg:pl-64 relative">
 	 <Header setSidebar={setSidebarOpen}/>
 	{children}
 	</div>
