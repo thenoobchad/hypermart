@@ -4,6 +4,7 @@
 import { deleteProduct } from '@/lib/actions';
 import { deleteImage } from '@/lib/cloudinary';
 import { Trash } from 'lucide-react';
+import { toast } from 'sonner';
 
 
 export const DeleteBtn = ({ productId }) => {
@@ -13,15 +14,15 @@ export const DeleteBtn = ({ productId }) => {
 
     const result = await deleteProduct(formData);
     if (result.success) {
-      
+      toast.success("Product Deleted Successfully")
     } else {
-      // Handle deletion error (e.g., show an error message)
+      toast.error("Error deleting product")
     }
   };
 
   return (
-		<button className="text-red-500 cursor-pointer" onClick={handleDelete}>
-			<Trash size={16} fill="red" />
+		<button className=" cursor-pointer" onClick={handleDelete}>
+			<Trash className='text-red-600' size={16} strokeWidth={2}  />
 		</button>
 	);
 }

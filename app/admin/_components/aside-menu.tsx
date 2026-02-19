@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "@/lib/auth-client";
 import { BarChart3, ChevronDown, ChevronRight, Package, Settings, ShoppingCart, TrendingUp, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { useState } from "react";
 export const AsideMenu = ({ sidebarOpen, setSidebar }) => {
 const [dropDown, setDropdown] = useState(false)
 
+  const session = useSession()
   return (
     <aside
       className={`fixed inset-y-0 left-0 z-50 w-64 bg-white backdrop-blur-xl border-r border-slate-200/60 transform transition-transform duration-300 ease-in-out ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -55,7 +57,7 @@ const [dropDown, setDropdown] = useState(false)
             <Package className="w-5 h-5" />
               Products
             </span>
-            <ChevronRight className="w-5 h-5" />
+            {!dropDown ?<ChevronRight className="w-5 h-5" />: <ChevronDown/>}
            
           </button>
           {dropDown && <ul className="pl-12 text-sm font-medium text-slate-600 pb-1 flex flex-col space-y-4">
@@ -97,7 +99,7 @@ const [dropDown, setDropdown] = useState(false)
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-slate-900 truncate">
-                Chidi 
+                {session?.data?.user?.email}
               </p>
               <p className="text-xs text-slate-500 truncate">Admin</p>
             </div>

@@ -3,15 +3,17 @@
 import { createProduct } from '@/lib/actions';
 import { uploadImage } from '@/lib/cloudinary';
 import { fetchAllProducts } from '@/lib/query';
+import { router } from 'better-auth/api';
 import { File, Upload, X } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 import React, { FormEvent, useState, useTransition } from 'react'
 import { toast } from 'sonner';
 
 export default function CreateProduct() {
 
   const [error, setError] = useState<string | null>(null);
-
+const router = useRouter()
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -41,6 +43,7 @@ export default function CreateProduct() {
           toast.error("Failed to add product.")
         } else {
           toast.success("Product  added successfully.")
+          router.push("/admin/products")
         }
 
       })
@@ -79,7 +82,7 @@ export default function CreateProduct() {
             className=" w-full text-sm  h-full   flex flex-col">
 
 
-            <div className="flex flex-col gap-3 py-3">
+            <div className="flex flex-col space-y-6 py-3">
               <div className="flex flex-col gap-2">
                 <div className=" pb-2 flex ">
                   Upload Image<span className="text-red-600">*</span>
