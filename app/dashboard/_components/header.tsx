@@ -1,7 +1,7 @@
 "use client"
 
 import { ulid } from 'better-auth/*';
-import { Bell, Menu, Search } from 'lucide-react';
+import { Bell, Menu, Search, X } from 'lucide-react';
 import React, { useState } from 'react'
 
 export const Header = ({ setSidebar }) => {
@@ -60,13 +60,16 @@ const [msgArr, setMsgArr] = useState(messages)
 
                             <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                         </button>
-                        {!isOpenMessage && <ul className='absolute min-w-50 max-h-40  -left-40 top-10 overflow-auto bg-white  outline-slate-200 outline rounded-lg text-xs flex text-justify flex-col'>
-                            
-                          
+                        {isOpenMessage && <div className='absolute min-w-50  overflow-hidden outline-slate-200 outline bg-white rounded-lg -left-40 top-10 '>
+                            <div className='flex justify-end p-1'>
+                                <button onClick={() => setIsOpenMessage(false)}><X className='h-6 w-6 hover:bg-slate-100 rounded-lg p-1' /></button>
+                            </div>
+                            <ul className=' bg-white  text-xs flex text-justify flex-col overflow-auto max-h-40'>
                             {msgArr.map(msg => (
-                                <li onClick={() => handleViewed(msg.id)} className='px-5 py-4  hover:bg-slate-100'>{(msg.content).slice(1, msg.isOpen === true ? 500 : 30)}{msg.isOpen === true ? "" : "..."}</li>
+                                <li key={msg.id} onClick={() => handleViewed(msg.id)} className='px-5 py-4  hover:bg-slate-100'>{(msg.content).slice(1, msg.isOpen === true ? 500 : 30)}{msg.isOpen === true ? "" : "..."}</li>
                             ))}
-                        </ul>}
+                            </ul>
+                        </div>}
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ export const Header = ({setSidebar}) => {
 									   
 									   <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
 								   </button>
-								   {!isOpenMessage && <ul className='absolute -left-20 top-10 bg-white  outline-slate-200 outline rounded-lg text-sm'>
+								   {isOpenMessage && <ul className='absolute -left-20 top-10 bg-white  outline-slate-200 outline rounded-lg text-sm'>
 									   <li className='px-5 py-4 whitespace-nowrap hover:bg-slate-100'>New message</li>
 										   <li className='px-5 py-4 whitespace-nowrap hover:bg-slate-100'>Old message</li>
 									   </ul>}

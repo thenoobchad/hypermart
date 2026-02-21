@@ -1,32 +1,28 @@
 import { db } from '@/database'
-import {  orders, users } from '@/database/db/schema'
+import { orderItems, orders, products } from '@/database/db/schema'
 import { eq } from 'drizzle-orm'
 
-import Link from 'next/link'
 
+export default async function OrderPage({ params }: { params: Promise<{ orderId: string }> }) {
 
-export default async function Customers() {
+  const { orderId } = await params
 
-  const allUsers = await db.select().from(users).where(eq(users.role, "USER"))
+  const userOrders = await db.select().from(orders).where(eq(orders.id, orderId))
 
-  
-  const allOrders = await db.select().from(orders)
+  const orderedItems = await db.select().from(orderItems).where(eq(orderItems.orderId, userOrders[0].id))
 
-  const userOrder = allOrders.map(u => {
-    const ordered = allUsers.find(ord => ord.id === u.userId)
+  const allProducts = await db.select().from(products)
 
-    return ordered
+  const orderedProducts = orderedItems.map(item => {
+    const ordItm = allProducts.find(p => p.id == item.productId)
+    return ordItm
   })
 
   return (
     <section className="p-6 space-y-6 ">
-      {allUsers.length > 0 ? <div className="bg-white/80  backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-slate-900">
-            Customers
-          </h2>
-         
-        </div>
+      <div className="bg-white/80  backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
+        <p>OrderId: {orderId}</p>
+
 
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -37,22 +33,26 @@ export default async function Customers() {
                 </th>
 
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
-                  User
-                </th>
-              
-
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
-                  Email
+                  Order Number
                 </th>
 
-               
+
                 <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
-                  Action
+                  Items
+                </th>
+
+
+                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+                  Status
+                </th>
+
+                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500 uppercase">
+                  Paid At
                 </th>
               </tr>
             </thead>
             <tbody>
-              {allUsers.length > 0 && allUsers.map((user, index) => (
+              {userOrders.length > 0 && userOrders.map((order, index) => (
                 <tr
                   key={index}
                   className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
@@ -63,17 +63,22 @@ export default async function Customers() {
                   </td>
 
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    NULL
+                    {order.orderNumber}
                   </td>
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    {user.email}
+                    <ul className='flex flex-col'>
+                      {orderedProducts.map(item => (
+                        <li key={item.id}>{item.title}</li>
+                      ))}
+                    </ul>
                   </td>
-                  
+
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    <Link href={`/admin/orders/${userOrder[0].id}`} className='underline'>
-                      
-                      Order History
-                    </Link>
+{order.status}
+                  </td>
+
+                  <td className="py-4 px-4 text-sm text-slate-600">
+                    {(order.paidAt).toLocaleDateString()}
                   </td>
                 </tr>
               ))}
@@ -81,7 +86,7 @@ export default async function Customers() {
           </table>
 
         </div>
-      </div> : <p>No orders created yet. </p>}
+      </div>
     </section>
   )
 }
