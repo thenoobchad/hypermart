@@ -308,7 +308,7 @@ export default function Dashboard() {
 								: order.status === 'Shipped'
 								  ? 'bg-purple-100 text-purple-700'
 								  : 'bg-red-100 text-red-700'
-							}`}
+						  }`}
 						>
 						  {order.status}
 						</span>

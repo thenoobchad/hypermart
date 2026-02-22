@@ -392,6 +392,7 @@ export async function getCartItems(userId: string) {
 }
 
 export async function createPendingOrder(userId: string, shipping: any) {
+	
 	try {
 
 		const existingCart = await db.select().from(carts).where(eq(carts.userId, userId))

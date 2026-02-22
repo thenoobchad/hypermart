@@ -16,15 +16,15 @@ const globalForDb = global as unknown as {
 const connectionString = process.env.DATABASE_URL! ;
 
 
-// const client = postgres(connectionString as string, { prepare: false });
+const client = postgres(connectionString as string, { prepare: false });
 
 
-// export const db = drizzle( client, { schema });
+export const db = drizzle( client, { schema });
 
-const conn = globalForDb.conn ?? postgres(connectionString, {
-	max: process.env.NODE_ENV === 'development' ? 1 : undefined
-});
+// const conn = globalForDb.conn ?? postgres(connectionString, {
+// 	max: process.env.NODE_ENV === 'development' ? 1 : undefined
+// });
 
-if (process.env.NODE_ENV !== 'production') globalForDb.conn = conn;
+// if (process.env.NODE_ENV !== 'production') globalForDb.conn = conn;
 
-export const db = drizzle(conn, {schema});
+// export const db = drizzle(conn, {schema});

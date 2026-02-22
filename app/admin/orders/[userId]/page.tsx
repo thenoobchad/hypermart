@@ -3,25 +3,27 @@ import { orderItems, orders, products } from '@/database/db/schema'
 import { eq } from 'drizzle-orm'
 
 
-export default async function OrderPage({ params }: { params: Promise<{ orderId: string }> }) {
+export default async function OrderPage({ params }: { params: Promise<{ userId: string }> }) {
 
-  const { orderId } = await params
+  const { userId } = await params
 
-  const userOrders = await db.select().from(orders).where(eq(orders.id, orderId))
+  const userOrders = await db.select().from(orders).where(eq(orders.userId, userId))
 
-  const orderedItems = await db.select().from(orderItems).where(eq(orderItems.orderId, userOrders[0].id))
+  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, userOrders[0].id))
 
-  const allProducts = await db.select().from(products)
+  // const orderedItems = await db.select().from(orderItems).where(eq(orderItems.orderId, userOrders[0].id))
 
-  const orderedProducts = orderedItems.map(item => {
-    const ordItm = allProducts.find(p => p.id == item.productId)
-    return ordItm
-  })
+  // const allProducts = await db.select().from(products)
+
+  // const orderedProducts = orderedItems.map(item => {
+  //   const ordItm = allProducts.find(p => p.id == item.productId)
+  //   return ordItm
+  // })
 
   return (
     <section className="p-6 space-y-6 ">
       <div className="bg-white/80  backdrop-blur-sm rounded-lg p-6 border border-slate-200/60">
-        <p>OrderId: {orderId}</p>
+        <p>OrderId: {userId}</p>
 
 
         <div className="overflow-x-auto">
@@ -67,8 +69,8 @@ export default async function OrderPage({ params }: { params: Promise<{ orderId:
                   </td>
                   <td className="py-4 px-4 text-sm text-slate-600">
                     <ul className='flex flex-col'>
-                      {orderedProducts.map(item => (
-                        <li key={item.id}>{item.title}</li>
+                      {items.map(it=> (
+                        <li key={it.id}>{it.productId}</li>
                       ))}
                     </ul>
                   </td>
@@ -78,7 +80,7 @@ export default async function OrderPage({ params }: { params: Promise<{ orderId:
                   </td>
 
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    {(order.paidAt).toLocaleDateString()}
+                    2:12PM
                   </td>
                 </tr>
               ))}

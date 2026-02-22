@@ -1,22 +1,20 @@
 import { db } from '@/database'
-import {  orders, users } from '@/database/db/schema'
+import {  orderItems, orders, users } from '@/database/db/schema'
 import { eq } from 'drizzle-orm'
 
 import Link from 'next/link'
 
 
 export default async function Customers() {
+  
+  
 
   const allUsers = await db.select().from(users).where(eq(users.role, "USER"))
 
   
   const allOrders = await db.select().from(orders)
 
-  const userOrder = allOrders.map(u => {
-    const ordered = allUsers.find(ord => ord.id === u.userId)
-
-    return ordered
-  })
+ 
 
   return (
     <section className="p-6 space-y-6 ">
@@ -63,14 +61,14 @@ export default async function Customers() {
                   </td>
 
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    NULL
+                    {user.email}
                   </td>
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    {user.email}
+                    {user?.username}
                   </td>
                   
                   <td className="py-4 px-4 text-sm text-slate-600">
-                    <Link href={`/admin/orders/${userOrder[0].id}`} className='underline'>
+                    <Link href={`/admin/orders/${user.id}`} className='underline'>
                       
                       Order History
                     </Link>
@@ -81,7 +79,7 @@ export default async function Customers() {
           </table>
 
         </div>
-      </div> : <p>No orders created yet. </p>}
+      </div> : <p>Nothing to see here. </p>}
     </section>
   )
 }
